@@ -1,6 +1,6 @@
 # Medical.Office.Net8WebApi
 
-![enter image description here](./Img/caduceo.png)
+![enter image description here](./Documentacion//Img/caduceo.png)
 
 [TODO](./Documentacion/TODO.md)
 
