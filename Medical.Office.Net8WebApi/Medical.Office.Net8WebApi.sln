@@ -3,15 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical.Office.Net8WebApi", "Medical.Office.Net8WebApi.csproj", "{4A4D8B4B-F568-4ECA-8750-D44216F6170C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Office.Net8WebApi", "Medical.Office.Net8WebApi.csproj", "{4A4D8B4B-F568-4ECA-8750-D44216F6170C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Office.Common", "..\Medical.Office.Common\Medical.Office.Common.csproj", "{10894902-0393-46E9-B95C-F1DBDA8AC48F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical.Office.App", "..\Medical.Office.App\Medical.Office.App.csproj", "{2D20E374-5E70-409F-AB82-9427C013F5C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Office.App", "..\Medical.Office.App\Medical.Office.App.csproj", "{2D20E374-5E70-409F-AB82-9427C013F5C1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical.Office.Domain", "..\Medical.Office.Domain\Medical.Office.Domain.csproj", "{DB5810FB-D3BB-4DBF-950C-41D3D97A8C28}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Office.Domain", "..\Medical.Office.Domain\Medical.Office.Domain.csproj", "{DB5810FB-D3BB-4DBF-950C-41D3D97A8C28}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical.Office.Infra", "..\Medical.Office.Infra\Medical.Office.Infra.csproj", "{FBE9B176-044E-4632-8FDC-AD5C818E3427}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Office.Infra", "..\Medical.Office.Infra\Medical.Office.Infra.csproj", "{FBE9B176-044E-4632-8FDC-AD5C818E3427}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{87EEEE5F-D753-4BB2-9E7F-B12499AF742F}"
+	ProjectSection(SolutionItems) = preProject
+		..\Documentacion\CHANGELOG.md = ..\Documentacion\CHANGELOG.md
+		..\README.md = ..\README.md
+		..\Documentacion\TODO.md = ..\Documentacion\TODO.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

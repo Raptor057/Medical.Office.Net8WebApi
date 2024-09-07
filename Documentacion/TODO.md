@@ -8,3 +8,17 @@
 
 [CHANGELOG](/Documentacion/CHANGELOG.md)
 
+### List
+
+- [ ] Adding entities for POS.
+- [ ] Implementing Endpoints.
+- [ ] Finish the Proyect.
+- [ ] Deployd the proyect.
+
+### In Progress
+
+- [ ] Creating patient use cases.
+
+### Done ✓
+
+- [x] Start Proyect []
