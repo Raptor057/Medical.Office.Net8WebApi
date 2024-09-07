@@ -4,9 +4,9 @@
 
 ![enter image description here](./Img/caduceo.png)
 
-[TODO](./TODO.md)
+[TODO](/Documentacion/TODO.md)
 
-[README](./README.md)
+[README](/README.md)
 
 
 

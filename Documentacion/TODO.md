@@ -4,7 +4,7 @@
 
 ![enter image description here](./Img/caduceo.png)
 
-[README](./README.md)
+[README](/README.md)
 
-[CHANGELOG](./CHANGELOG.md)
+[CHANGELOG](/Documentacion/CHANGELOG.md)
 
