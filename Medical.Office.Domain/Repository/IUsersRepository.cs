@@ -4,17 +4,26 @@ namespace Medical.Office.Domain.Repository
 {
     public interface IUsersRepository
     {
+
         /// <summary>
-        /// Register New User
+        /// 
         /// </summary>
         /// <param name="Usr"></param>
         /// <param name="Psswd"></param>
+        /// <param name="Name"></param>
+        /// <param name="Lastname"></param>
+        /// <param name="Role"></param>
+        /// <param name="Position"></param>
+        /// <param name="Status"></param>
+        /// <param name="Specialtie"></param>
         /// <returns></returns>
-        Task RegisterUsersAsync(string Usr, string Psswd);
+        Task RegisterUsersAsync(string Usr, string Psswd, string Name, string Lastname, string Role, string Position, string Status, string Specialtie);
 
         /// <summary>
-        /// Login User
+        /// 
         /// </summary>
+        /// <param name="Usr"></param>
+        /// <param name="Psswd"></param>
         /// <returns></returns>
         Task LoginUserAsync(string Usr, string Psswd);
 
@@ -36,6 +45,6 @@ namespace Medical.Office.Domain.Repository
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Task<Users> GetDataUserByIdAsync(string Id);
+        Task<Users> GetDataUserByIdAsync(int Id);
     }
 }
