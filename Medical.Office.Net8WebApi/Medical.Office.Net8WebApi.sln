@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Office.Common", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Office.App", "..\Medical.Office.App\Medical.Office.App.csproj", "{2D20E374-5E70-409F-AB82-9427C013F5C1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Office.Domain", "..\Medical.Office.Domain\Medical.Office.Domain.csproj", "{DB5810FB-D3BB-4DBF-950C-41D3D97A8C28}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Office.Infra", "..\Medical.Office.Infra\Medical.Office.Infra.csproj", "{FBE9B176-044E-4632-8FDC-AD5C818E3427}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{87EEEE5F-D753-4BB2-9E7F-B12499AF742F}"
@@ -19,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\README.md = ..\README.md
 		..\Documentacion\TODO.md = ..\Documentacion\TODO.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical.Office.Domain", "..\Medical.Office.Domain\Medical.Office.Domain.csproj", "{31CEE679-F151-408C-AE58-112240924623}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,14 +38,14 @@ Global
 		{2D20E374-5E70-409F-AB82-9427C013F5C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D20E374-5E70-409F-AB82-9427C013F5C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D20E374-5E70-409F-AB82-9427C013F5C1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DB5810FB-D3BB-4DBF-950C-41D3D97A8C28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DB5810FB-D3BB-4DBF-950C-41D3D97A8C28}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DB5810FB-D3BB-4DBF-950C-41D3D97A8C28}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DB5810FB-D3BB-4DBF-950C-41D3D97A8C28}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FBE9B176-044E-4632-8FDC-AD5C818E3427}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FBE9B176-044E-4632-8FDC-AD5C818E3427}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FBE9B176-044E-4632-8FDC-AD5C818E3427}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FBE9B176-044E-4632-8FDC-AD5C818E3427}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31CEE679-F151-408C-AE58-112240924623}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31CEE679-F151-408C-AE58-112240924623}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31CEE679-F151-408C-AE58-112240924623}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31CEE679-F151-408C-AE58-112240924623}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

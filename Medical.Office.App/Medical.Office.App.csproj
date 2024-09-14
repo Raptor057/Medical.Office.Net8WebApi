@@ -9,12 +9,14 @@
   <ItemGroup>
     <ProjectReference Include="..\Medical.Office.Common\Medical.Office.Common.csproj" />
     <ProjectReference Include="..\Medical.Office.Domain\Medical.Office.Domain.csproj" />
+    <ProjectReference Include="..\Medical.Office.Infra\Medical.Office.Infra.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
     <Folder Include="Services\" />
-    <Folder Include="UseCases\" />
+    <Folder Include="UseCases\Users\GetUsersByEmail\" />
+    <Folder Include="UseCases\Users\LoginUsers\" />
+    <Folder Include="UseCases\Users\GetUsersById\" />
   </ItemGroup>
 
 </Project>

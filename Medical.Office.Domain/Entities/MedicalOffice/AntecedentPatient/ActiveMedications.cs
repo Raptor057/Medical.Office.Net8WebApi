@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace Medical.Office.Infra.DataSources.Entities.MedicalOffice.AntecedentPatient
+namespace Medical.Office.Domain.Entities.MedicalOffice.AntecedentPatient
 {
     [DebuggerDisplay("{Name}")]
     public class ActiveMedications

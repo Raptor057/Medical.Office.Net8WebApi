@@ -1,4 +1,4 @@
-﻿namespace Medical.Office.Infra.DataSources.Entities.MedicalOffice
+﻿namespace Medical.Office.Domain.DataSources.Entities.MedicalOffice
 {
     public class Users
     {
