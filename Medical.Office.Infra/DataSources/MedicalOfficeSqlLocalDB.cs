@@ -13,6 +13,76 @@ namespace Medical.Office.Infra.DataSources
         {
             _con=con;   
         }
+
+        #region Configuracion
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task <IEnumerable<UserStatuses>> GetUserStatuses()
+            => await _con.QueryAsync<UserStatuses>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[UserStatuses]").ConfigureAwait(false);
+
+        public async Task StartInsertUserStatuses()
+            => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[UserStatuses] (TypeUserStatuses) VALUES ('Activo'),('Inactivo');").ConfigureAwait(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Roles>> GetRoles()
+            => await _con.QueryAsync<Roles>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Roles]").ConfigureAwait(false);
+
+        public async Task StartInsertRoles()
+            => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Roles] (RolesName) VALUES ('Programador'),('Doctor'),('Enfermera'),('Secretaria'),('Asistente');").ConfigureAwait(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Positions>> GetPositions()
+            => await _con.QueryAsync<Positions>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Positions]").ConfigureAwait(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public async Task StartInsertPositions()
+            => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Positions] (PositionName) VALUES ('Programador');").ConfigureAwait(false);
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        public async Task InsertPositions(string position)
+            => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Positions] (PositionName) VALUES (@position);", new { position }).ConfigureAwait(false);
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task <IEnumerable<Specialties>> GetSpecialties()
+            => await _con.QueryAsync<Specialties>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Specialties]").ConfigureAwait (false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task StartInsertSpecialties()
+            => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Specialties] (Specialty) VALUES ('Desarollador');").ConfigureAwait(false);
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="specialtie"></param>
+        /// <returns></returns>
+        public async Task InsertSpecialties(string specialtie)
+            => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Specialties] (Specialty) VALUES (@specialtie);", new { specialtie }).ConfigureAwait(false);
+
+        #endregion
+
         #region Users
         /// <summary>
         /// 
@@ -58,9 +128,10 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="Status"></param>
         /// <param name="Specialtie"></param>
         /// <returns></returns>
-        public async Task<Users> RegisterUsers(string Usr, string Psswd, string Name, string Lastname, string Role, string Position, string Status, string Specialtie) =>
-            await _con.QuerySingleAsync<Users>("INSERT INTO [dbo].[Users] ([Usr], [Psswd] ,[Name] ,[Lastname] ,[Role] ,[Position] ,[Status] ,[Specialtie]) VALUES(@Usr, @Psswd, @Name, @Lastname, @Role, @Position,  @Status, @Specialtie);", new { Usr, Psswd, Name, Lastname, Role, Position,  Status, Specialtie }).ConfigureAwait(false);
+        public async Task<Users> RegisterUsers(string Usr, string Psswd, string Name, string Lastname, string Role, string Position, string Specialtie) =>
+            await _con.QuerySingleAsync<Users>("INSERT INTO [dbo].[Users] ([Usr], [Psswd] ,[Name] ,[Lastname] ,[Role] ,[Position],[Specialtie]) VALUES(@Usr, @Psswd, @Name, @Lastname, @Role, @Position, @Specialtie);", new { Usr, Psswd, Name, Lastname, Role, Position, Specialtie }).ConfigureAwait(false);
         #endregion
+
 
     }
 }

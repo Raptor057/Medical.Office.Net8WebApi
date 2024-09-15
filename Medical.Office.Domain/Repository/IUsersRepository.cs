@@ -17,7 +17,7 @@ namespace Medical.Office.Domain.Repository
         /// <param name="Status"></param>
         /// <param name="Specialtie"></param>
         /// <returns></returns>
-        Task RegisterUsersAsync(string Usr, string Psswd, string Name, string Lastname, string Role, string Position, string Status, string Specialtie);
+        Task RegisterUsersAsync(string Usr, string Psswd, string Name, string Lastname, string Role, string Position, string Specialtie);
 
         /// <summary>
         /// 
@@ -31,7 +31,7 @@ namespace Medical.Office.Domain.Repository
         /// Get All's Users
         /// </summary>
         /// <returns></returns>
-        Task<Users> GetUsersAsync();
+        Task<IEnumerable<Users>> GetUsersAsync();
 
         /// <summary>
         /// Get data users by user

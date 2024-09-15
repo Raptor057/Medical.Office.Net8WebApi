@@ -1,6 +1,6 @@
-﻿namespace Medical.Office.App.Dtos.Users
+﻿namespace Medical.Office.Net8WebApi.EndPoints.Users.RegisterUsers
 {
-    public class RegisterUsersDto
+    public class RegisterUsersRequestBody
     {
         public string Usr { get; set; }
 
@@ -15,6 +15,5 @@
         public string Position { get; set; }
 
         public string Specialtie { get; set; }
-
     }
 }

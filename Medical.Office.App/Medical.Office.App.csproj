@@ -13,10 +13,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
     <Folder Include="UseCases\Users\GetUsersByEmail\" />
     <Folder Include="UseCases\Users\LoginUsers\" />
     <Folder Include="UseCases\Users\GetUsersById\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="XAct.Core.PCL" Version="0.0.5014" />
   </ItemGroup>
 
 </Project>

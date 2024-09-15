@@ -13,21 +13,50 @@ namespace Medical.Office.Infra.Repositories
             _db=db;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         public async Task<Users> GetDataUserByIdAsync(int Id)
             => await _db.GetGetDataUserById(Id).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Usr"></param>
+        /// <returns></returns>
         public async Task<Users> GetDataUserByUsrAsync(string Usr)
-        => await _db.GetDataUserByUsr(Usr).ConfigureAwait(false);
+            => await _db.GetDataUserByUsr(Usr).ConfigureAwait(false);
 
-        public async Task<Users> GetUsersAsync()
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Users>> GetUsersAsync()
+            => await _db.GetUsers().ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Usr"></param>
+        /// <param name="Psswd"></param>
+        /// <returns></returns>
         public async Task LoginUserAsync(string Usr, string Psswd)
             => await _db.LoginUser(Usr, Psswd).ConfigureAwait(false);
 
-        public async Task RegisterUsersAsync(string Usr, string Psswd, string Name, string Lastname, string Role, string Position, string Status, string Specialtie)
-            => await _db.RegisterUsers(Usr,Psswd,Name,Lastname,Role,Position,Status,Specialtie).ConfigureAwait(false);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Usr"></param>
+        /// <param name="Psswd"></param>
+        /// <param name="Name"></param>
+        /// <param name="Lastname"></param>
+        /// <param name="Role"></param>
+        /// <param name="Position"></param>
+        /// <param name="Specialtie"></param>
+        /// <returns></returns>
+        public async Task RegisterUsersAsync(string Usr, string Psswd, string Name, string Lastname, string Role, string Position, string Specialtie)
+            => await _db.RegisterUsers(Usr,Psswd,Name,Lastname,Role,Position,Specialtie).ConfigureAwait(false);
     }
 }
