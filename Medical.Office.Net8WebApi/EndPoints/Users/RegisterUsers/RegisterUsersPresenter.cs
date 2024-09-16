@@ -1,11 +1,11 @@
-﻿using Common.Common;
-using Common.Common.CleanArch;
-using Medical.Office.App.UseCases.Users.RegisterUsers;
-
+﻿using Common.Common.CleanArch;
+using Medical.Office.App.UseCases.Users.RegisterUsers.Responses;
+using Microsoft.AspNetCore.SignalR;
+using Newtonsoft.Json;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Users.RegisterUsers
 {
-    public sealed class RegisterUsersPresenter<T> : IPresenter<RegisterUsersResponse>
+    public sealed class RegisterUsersPresenter<T> : IPresenter<RegisterUsersSuccessResponse>, IPresenter<RegisterUsersFailureResponse>
         where T : RegisterUsersResponse
     {
         private readonly GenericViewModel<RegisterUsersController> _viewModel;
@@ -14,18 +14,16 @@ namespace Medical.Office.Net8WebApi.EndPoints.Users.RegisterUsers
         {
             _viewModel=viewModel;
         }
-        public async Task Handle(RegisterUsersResponse notification, CancellationToken cancellationToken)
-        {
-            if (notification is RegisterUsersResponse registerUsersResponse)
-            {
-                _viewModel.OK(registerUsersResponse.Message);
-            }
-            if (notification is IFailure failure)
-            {
-                _viewModel.Fail(failure.Message);
-            }
 
+        public async Task Handle(RegisterUsersSuccessResponse notification, CancellationToken cancellationToken)
+        {
+            _viewModel.OK(notification.registerUsersDto);
         }
 
+        public Task Handle(RegisterUsersFailureResponse notification, CancellationToken cancellationToken)
+        {
+            _viewModel.Fail(notification.Message);
+            return Task.CompletedTask;
+        }
     }
 }

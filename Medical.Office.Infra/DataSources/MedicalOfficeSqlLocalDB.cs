@@ -98,7 +98,7 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="Usr"></param>
         /// <returns></returns>
         public async Task<Users> GetDataUserByUsr(string Usr) =>
-            await _con.QuerySingleAsync<Users>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr", new { Usr }).ConfigureAwait(false);
+            await _con.QuerySingleAsync<Users>("SELECT top 1 * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr", new { Usr }).ConfigureAwait(false);
 
         /// <summary>
         /// 

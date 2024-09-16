@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Common.Common.CleanArch;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using Medical.Office.App.UseCases.Users.RegisterUsers;
 using Medical.Office.App.Dtos.Users;
@@ -26,7 +25,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Users.RegisterUsers
         [Route("/api/RegisterUsers")]
         public async Task<IActionResult> RegisterUsers([FromBody] RegisterUsersRequestBody requestBody)
         {
-            // Crear un DTO a partir del requestBody
+            //// Crear un DTO a partir del requestBody
             var registerUsersDto = new RegisterUsersDto
             {
                 Usr = requestBody.Usr,
@@ -38,15 +37,17 @@ namespace Medical.Office.Net8WebApi.EndPoints.Users.RegisterUsers
                 Specialtie = requestBody.Specialtie
             };
 
-            // Validar el DTO usando CanCreate
-            if (!RegisterUsersRequest.CanCreate(registerUsersDto, out var errors))
-            {
-                return StatusCode(400, _viewModel.Fail(errors.ToString()));
-            }
+            //// Validar el DTO usando CanCreate
+            //if (!RegisterUsersRequest.CanCreate(registerUsersDto, out var errors))
+            //{
+            //    //return StatusCode(400, _viewModel.Fail(errors.ToString()));
+            //    return StatusCode(400, _viewModel.Fail(string.Join(", ", errors)));
+            //}
 
-            // Crear la solicitud usando el DTO
-            var request = RegisterUsersRequest.Create(registerUsersDto);
+            //// Crear la solicitud usando el DTO
+            //var request = RegisterUsersRequest.Create(registerUsersDto);
 
+            var request = new RegisterUsersRequest(registerUsersDto);
             try
             {
                 _ = await _mediator.Send(request).ConfigureAwait(false);
