@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 namespace Medical.Office.Net8WebApi.EndPoints.Users.RegisterUsers
 {
     public sealed class RegisterUsersPresenter<T> : IPresenter<RegisterUsersSuccessResponse>, IPresenter<RegisterUsersFailureResponse>
-        where T : RegisterUsersResponse
+        where T : RegisterUsersSuccessResponse //RegisterUsersResponse
     {
         private readonly GenericViewModel<RegisterUsersController> _viewModel;
 
@@ -15,9 +15,10 @@ namespace Medical.Office.Net8WebApi.EndPoints.Users.RegisterUsers
             _viewModel=viewModel;
         }
 
-        public async Task Handle(RegisterUsersSuccessResponse notification, CancellationToken cancellationToken)
+        public  Task Handle(RegisterUsersSuccessResponse notification, CancellationToken cancellationToken)
         {
             _viewModel.OK(notification.registerUsersDto);
+            return Task.CompletedTask;
         }
 
         public Task Handle(RegisterUsersFailureResponse notification, CancellationToken cancellationToken)

@@ -2,5 +2,5 @@
 
 namespace Medical.Office.App.UseCases.Users.RegisterUsers.Responses
 {
-    public sealed record RegisterUsersSuccessResponse(RegisterUsersDto registerUsersDto) : RegisterUsersResponse;
+    public record RegisterUsersSuccessResponse(RegisterUsersDto registerUsersDto) : RegisterUsersResponse;
 }
