@@ -1,126 +1,199 @@
-﻿using Common.Common.CleanArch;
+﻿using System.Text;
+using Common.Common;
+using Common.Common.CleanArch;
+using System.Security.Cryptography;
 using Medical.Office.App.Dtos.Users;
 using Medical.Office.App.UseCases.Users.RegisterUsers.Responses;
+using System.Text.RegularExpressions;
 
 
 namespace Medical.Office.App.UseCases.Users.RegisterUsers
 {
-    public sealed class RegisterUsersRequest : IRequest<RegisterUsersResponse>
+    public sealed class RegisterUsersRequest :IRequest<RegisterUsersResponse>
     {
-        public RegisterUsersDto RegisterUsersDto { get; }
 
-        public RegisterUsersRequest(RegisterUsersDto registerUsersDto)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="registerUsersDto"></param>
+        /// <param name="errors"></param>
+        /// <returns></returns>
+        public static bool CanCreate(RegisterUsersDto registerUsersDto, out ErrorList errors)
         {
-            // Validar Usr
-            if (string.IsNullOrWhiteSpace(registerUsersDto.Usr))
-            {
-                throw new ArgumentException("El nombre de usuario no puede estar vacío.", nameof(registerUsersDto.Usr));
-            }
-
-            // Validar Psswd
-            if (string.IsNullOrWhiteSpace(registerUsersDto.Psswd) || registerUsersDto.Psswd.Length < 8)
-            {
-                throw new ArgumentException("La contraseña es obligatoria y debe tener al menos 8 caracteres.", nameof(registerUsersDto.Psswd));
-            }
-
-            // Validar Name
-            if (string.IsNullOrWhiteSpace(registerUsersDto.Name))
-            {
-                throw new ArgumentException("El nombre no puede estar vacío.", nameof(registerUsersDto.Name));
-            }
-
-            // Validar Lastname
-            if (string.IsNullOrWhiteSpace(registerUsersDto.Lastname))
-            {
-                throw new ArgumentException("El apellido no puede estar vacío.", nameof(registerUsersDto.Lastname));
-            }
-
-            // Validar Role
-            if (string.IsNullOrWhiteSpace(registerUsersDto.Role))
-            {
-                throw new ArgumentException("El rol es obligatorio.", nameof(registerUsersDto.Role));
-            }
-
-            // Validar Position
-            if (string.IsNullOrWhiteSpace(registerUsersDto.Position))
-            {
-                throw new ArgumentException("La posición es obligatoria.", nameof(registerUsersDto.Position));
-            }
-
-            // Validar Specialtie
-            if (string.IsNullOrWhiteSpace(registerUsersDto.Specialtie))
-            {
-                throw new ArgumentException("La especialidad es obligatoria.", nameof(registerUsersDto.Specialtie));
-            }
-
-            // Asignar el DTO después de validar
-            RegisterUsersDto = registerUsersDto;
+            errors = new();
+            ValidateUsr(registerUsersDto.Usr, errors);
+            ValidatePassword(registerUsersDto.Psswd, errors);
+            ValidateName(registerUsersDto.Name, errors);
+            ValidateLastname(registerUsersDto.Lastname, errors);
+            ValidatePosition(registerUsersDto.Position, errors);
+            ValidateRole(registerUsersDto.Role, errors);
+            ValidateSpecialtie(registerUsersDto.Specialtie, errors);
+            return errors.IsEmpty;
         }
+
+        private static void ValidateUsr(string usr, ErrorList errors)
+        {
+            if (string.IsNullOrWhiteSpace(usr))
+            {
+                errors.Add("El usuario es obligatorio");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="psswd"></param>
+        /// <param name="errors"></param>
+        private static void ValidatePassword(string psswd, ErrorList errors)
+        {
+            if (string.IsNullOrWhiteSpace(psswd))
+            {
+                errors.Add("La contraseña es obligatoria");
+            }
+            if (psswd.Length < 8)
+            {
+                errors.Add("La contraseña debe de ser de al menos 8 caracteres o más");
+            }
+            if(!Regex.IsMatch(psswd, @"^(?=.*[A-Z])(?=.*[\W_])(?=.*\d).+$"))
+            {
+                errors.Add("La contraseña debe contener al menos una letra mayúscula, un carácter especial y un número");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="errors"></param>
+        private static void ValidateName(string name, ErrorList errors)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                errors.Add("El nombre es obligatorio");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="lastname"></param>
+        /// <param name="errors"></param>
+        private static void ValidateLastname(string lastname, ErrorList errors)
+        {
+            if (string.IsNullOrWhiteSpace(lastname))
+            {
+                errors.Add("El apellido es obligatorio");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="errors"></param>
+        private static void ValidatePosition(string position, ErrorList errors)
+        {
+            if (string.IsNullOrWhiteSpace(position))
+            {
+                errors.Add("La posicion es obligatoria");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="role"></param>
+        /// <param name="errors"></param>
+        private static void ValidateRole(string role, ErrorList errors)
+        {
+            if (string.IsNullOrWhiteSpace(role))
+            {
+                errors.Add("El rol es obligatorio");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="specialtie"></param>
+        /// <param name="errors"></param>
+        private static void ValidateSpecialtie(string specialtie, ErrorList errors)
+        {
+            if (string.IsNullOrWhiteSpace(specialtie))
+            {
+                errors.Add("La especialidad es obligatoria");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="registerUsersDto"></param>
+        /// <returns></returns>
+        public static RegisterUsersRequest Create(RegisterUsersDto registerUsersDto)
+        {
+            if (!CanCreate(registerUsersDto, out var errors)) throw errors.AsException();
+            return new RegisterUsersRequest(registerUsersDto);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        private static string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                return Convert.ToHexString(hashedBytes);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="enteredPassword"></param>
+        /// <param name="storedHash"></param>
+        /// <returns></returns>
+        private static bool VerifyPassword(string enteredPassword, string storedHash)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(enteredPassword));
+                var enteredHash = Convert.ToHexString(hashedBytes);
+                return enteredHash.Equals(storedHash, StringComparison.OrdinalIgnoreCase);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="registerUsersDto"></param>
+        private RegisterUsersRequest(RegisterUsersDto registerUsersDto)
+        {
+            User = registerUsersDto.Usr;
+            Passwd = registerUsersDto.Psswd;
+            //Passwd = HashPassword(registerUsersDto.Psswd);  // Cifrar la contraseña
+            Name = registerUsersDto.Name;
+            Lastname = registerUsersDto.Lastname;
+            Position = registerUsersDto.Position;
+            Role = registerUsersDto.Role;
+            Specialtie = registerUsersDto.Specialtie;   
+        }
+
+        public string User { get; }
+
+        public string Passwd { get; }
+
+        public string Name { get; }
+
+        public string Lastname { get; }
+
+        public string Position { get; }
+
+        public string Role { get; }
+
+        public string Specialtie { get; }
     }
-
-    //public sealed record RegisterUsersRequest(RegisterUsersDto registerUsersDto) : IResultRequest<RegisterUsersResponse>;
-    //public sealed class RegisterUsersRequest : IResultRequest<RegisterUsersResponse>
-    //{
-    //    public static bool CanCreate(RegisterUsersDto registerUsersDto, out ErrorList errors)
-    //    {
-    //        errors = new();
-
-    //        if (string.IsNullOrWhiteSpace(registerUsersDto.Usr))
-    //        {
-    //            errors.Add("El nombre de usuario es obligatorio pero se encuentra en blanco.");
-    //        }
-
-    //        if (string.IsNullOrWhiteSpace(registerUsersDto.Psswd))
-    //        {
-    //            errors.Add("La contraseña es obligatoria pero se encuentra en blanco.");
-    //        }
-    //        if (string.IsNullOrWhiteSpace(registerUsersDto.Name))
-    //        {
-    //            errors.Add("El nombre es obligatorio pero se encuentra en blanco.");
-    //        }
-    //        if (string.IsNullOrWhiteSpace(registerUsersDto.Lastname))
-    //        {
-    //            errors.Add("El apellido es obligatorio pero se encuentra en blanco.");
-    //        }
-    //        if (string.IsNullOrWhiteSpace(registerUsersDto.Position))
-    //        {
-    //            errors.Add("La posision es obligatorio pero se encuentra en blanco.");
-    //        }
-    //        if (string.IsNullOrWhiteSpace(registerUsersDto.Role))
-    //        {
-    //            errors.Add("El rol es obligatorio pero se encuentra en blanco.");
-    //        }
-    //        if (string.IsNullOrWhiteSpace(registerUsersDto.Specialtie))
-    //        {
-    //            errors.Add("La especialidad es obligatorio pero se encuentra en blanco.");
-    //        }
-
-    //        return errors.IsEmpty;
-    //    }
-
-    //    // Método para crear la instancia de RegisterUsersRequest
-    //    public static RegisterUsersRequest Create(RegisterUsersDto registerUsersDto)
-    //    {
-    //        // Llama al método CanCreate para validar el DTO antes de crear la instancia
-    //        if (!CanCreate(registerUsersDto, out var errors))
-    //        {
-    //            // Si hay errores, lanza una excepción con los mensajes de error
-    //            throw new InvalidOperationException(errors.Select(e => $"- {e}").Aggregate((a, b) => $"{a}\n{b}"));
-    //        }
-
-    //        // Si las validaciones pasaron, crea una nueva instancia de RegisterUsersRequest
-    //        return new(registerUsersDto);
-    //    }
-
-    //    // Constructor privado para forzar el uso de Create
-    //    private RegisterUsersRequest(RegisterUsersDto registerUsersDto)
-    //    {
-    //        RegisterUsersDto = registerUsersDto;
-    //    }
-
-    //    // Propiedad para acceder al DTO
-    //    public RegisterUsersDto RegisterUsersDto { get; }
-
-    //}
-
 }

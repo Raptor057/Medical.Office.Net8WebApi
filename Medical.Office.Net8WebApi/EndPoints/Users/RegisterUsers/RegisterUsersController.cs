@@ -1,32 +1,30 @@
-﻿using MediatR;
-using Common.Common.CleanArch;
-using Microsoft.AspNetCore.Mvc;
-using Medical.Office.App.UseCases.Users.RegisterUsers;
+﻿using Common.Common.CleanArch;
+using MediatR;
 using Medical.Office.App.Dtos.Users;
+using Medical.Office.App.UseCases.Users.RegisterUsers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Users.RegisterUsers
 {
-    //[Route("api/[controller]")]
     [ApiController]
+    [Route("[controller]")]
     public class RegisterUsersController : ControllerBase
     {
         private readonly ILogger<RegisterUsersController> _logger;
-        private readonly ResultViewModel<RegisterUsersController> _viewModel;
         private readonly IMediator _mediator;
+        private readonly GenericViewModel<RegisterUsersController> _viewModel;
 
-        public RegisterUsersController(ILogger<RegisterUsersController> logger, ResultViewModel<RegisterUsersController> viewModel, IMediator mediator)
+        public RegisterUsersController(ILogger<RegisterUsersController> logger, IMediator mediator, GenericViewModel<RegisterUsersController> viewModel)
         {
             _logger=logger;
-            _viewModel=viewModel;
             _mediator=mediator;
+            _viewModel=viewModel;
         }
-
         [HttpPost]
-        [Route("/api/RegisterUsers")]
-        public async Task<IActionResult> RegisterUsers([FromBody] RegisterUsersRequestBody requestBody)
+        [Route("/api/registerusers")]
+        public async Task<IActionResult> ExecuteRegisterUsers([FromBody] RegisterUsersRequestBody requestBody)
         {
-            //// Crear un DTO a partir del requestBody
-            var registerUsersDto = new RegisterUsersDto
+            var RegisterUsers = new RegisterUsersDto
             {
                 Usr = requestBody.Usr,
                 Psswd = requestBody.Psswd,
@@ -37,17 +35,13 @@ namespace Medical.Office.Net8WebApi.EndPoints.Users.RegisterUsers
                 Specialtie = requestBody.Specialtie
             };
 
-            //// Validar el DTO usando CanCreate
-            //if (!RegisterUsersRequest.CanCreate(registerUsersDto, out var errors))
-            //{
-            //    //return StatusCode(400, _viewModel.Fail(errors.ToString()));
-            //    return StatusCode(400, _viewModel.Fail(string.Join(", ", errors)));
-            //}
+            if (!RegisterUsersRequest.CanCreate(RegisterUsers, out var errors))
+            {
+                // En lugar de lanzar una excepción, devolver los errores
+                return BadRequest(_viewModel.Fail(string.Join("\n", errors)));
+            }
 
-            //// Crear la solicitud usando el DTO
-            //var request = RegisterUsersRequest.Create(registerUsersDto);
-
-            var request = new RegisterUsersRequest(registerUsersDto);
+            var request = RegisterUsersRequest.Create(RegisterUsers);
             try
             {
                 _ = await _mediator.Send(request).ConfigureAwait(false);
