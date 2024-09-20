@@ -1,7 +1,5 @@
 ﻿using MediatR;
 using Common.Common.CleanArch;
-//using Medical.Office.App.Mapper;
-//using Medical.Office.App.IMapper;
 using Microsoft.Extensions.DependencyInjection;
 
 
@@ -13,7 +11,6 @@ namespace Medical.Office.App
         {
             return services
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(InteractorPipeline<,>))
-                //.AddSingleton<IConfigurationsRepositoryMapper,ConfigurationsRepositoryMapper>()
                 .AddMediatR(cfg => { cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionEx).Assembly); });
         }
     }
