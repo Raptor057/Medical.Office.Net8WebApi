@@ -173,8 +173,8 @@ namespace Medical.Office.App.UseCases.Users.RegisterUsers
         private RegisterUsersRequest(RegisterUsersDto registerUsersDto)
         {
             User = registerUsersDto.Usr;
-            Passwd = registerUsersDto.Psswd;
-            //Passwd = HashPassword(registerUsersDto.Psswd);  // Cifrar la contraseña
+            //Passwd = registerUsersDto.Psswd;
+            Passwd = HashPassword(registerUsersDto.Psswd);  // Cifrar la contraseña
             Name = registerUsersDto.Name;
             Lastname = registerUsersDto.Lastname;
             Position = registerUsersDto.Position;
