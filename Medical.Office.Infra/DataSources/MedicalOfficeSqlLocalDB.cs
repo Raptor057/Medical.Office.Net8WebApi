@@ -1,4 +1,5 @@
 ﻿using Medical.Office.Domain.DataSources.Entities.MedicalOffice;
+using Medical.Office.Domain.Entities.MedicalOffice;
 
 namespace Medical.Office.Infra.DataSources
 {
@@ -90,7 +91,7 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="Id"></param>
         /// <returns></returns>
         public async Task<Users> GetGetDataUserById(int Id)=>
-            await _con.QuerySingleAsync<Users>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Id = @Id", new {Id}).ConfigureAwait(false);
+            await _con.QuerySingleAsync<Users>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Id = @Id;", new {Id}).ConfigureAwait(false);
 
         /// <summary>
         /// 
@@ -98,14 +99,14 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="Usr"></param>
         /// <returns></returns>
         public async Task<Users> GetDataUserByUsr(string Usr) =>
-            await _con.QuerySingleAsync<Users>("SELECT top 1 * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr", new { Usr }).ConfigureAwait(false);
+            await _con.QuerySingleAsync<Users>("SELECT top 1 * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr;", new { Usr }).ConfigureAwait(false);
 
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<Users>> GetUsers() =>
-            await _con.QueryAsync<Users>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Users]", new { }).ConfigureAwait(false);
+            await _con.QueryAsync<Users>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Users];", new { }).ConfigureAwait(false);
         
         /// <summary>
         /// 
@@ -114,7 +115,7 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="Psswd"></param>
         /// <returns></returns>
         public async Task<Users> LoginUser(string Usr, string Psswd) =>
-            await _con.QuerySingleAsync<Users>("SELECT TOP (1) * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr AND Psswd = @Psswd", new {Usr, Psswd }).ConfigureAwait(false);
+            await _con.QuerySingleAsync<Users>("SELECT TOP (1) * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr AND Psswd = @Psswd;", new {Usr, Psswd }).ConfigureAwait(false);
         
         /// <summary>
         /// 
@@ -129,7 +130,66 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="Specialtie"></param>
         /// <returns></returns>
         public async Task<Users> RegisterUsers(string Usr, string Psswd, string Name, string Lastname, string Role, string Position, string Specialtie) =>
-            await _con.QuerySingleAsync<Users>("INSERT INTO [dbo].[Users] ([Usr], [Psswd] ,[Name] ,[Lastname] ,[Role] ,[Position],[Specialtie]) VALUES(@Usr, @Psswd, @Name, @Lastname, @Role, @Position, @Specialtie);", new { Usr, Psswd, Name, Lastname, Role, Position, Specialtie }).ConfigureAwait(false);
+            await _con.QuerySingleAsync<Users>("INSERT INTO [dbo].[Users] " +
+                "([Usr], [Psswd] ,[Name] ,[Lastname] ,[Role] ,[Position],[Specialtie]) " +
+                "VALUES(@Usr, @Psswd, @Name, @Lastname, @Role, @Position, @Specialtie);", new { Usr, Psswd, Name, Lastname, Role, Position, Specialtie }).ConfigureAwait(false);
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<LoginHistory>> GetLoginHistory()
+            => await _con.QueryAsync<LoginHistory>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] ORDER BY DateTimeSnap DESC;").ConfigureAwait(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Param"></param>
+        /// <param name="StartDate"></param>
+        /// <param name="EndDate"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<LoginHistory>> GetLoginHistoryByParams(string Param, DateTime StartDate, DateTime EndDate)
+            => await _con.QueryAsync<LoginHistory>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] " +
+                "WHERE (Usr LIKE @Param OR UsrName LIKE @Param) " +
+                "AND (@StartDate IS NULL OR @EndDate IS NULL OR DateTimeSnap BETWEEN @StartDate AND @EndDate) " +
+                "ORDER BY DateTimeSnap ASC;", new { Param = $"%{Param}%", StartDate,EndDate }).ConfigureAwait(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Usr"></param>
+        /// <param name="UsrName"></param>
+        /// <param name="Token"></param>
+        /// <returns></returns>
+        public async Task InsertLoginHistory(string Usr, string UsrName, string Token)
+            => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] " +
+                "(Usr,UsrName,UsrToken) " +
+                "VALUES(@Usr,@UsrName,@Token);", new {Usr,UsrName,Token}).ConfigureAwait(false);
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<UsersMovements>> GetUsersMovements()
+            => await _con.QueryAsync<UsersMovements>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[UsersMovements];").ConfigureAwait(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Param"></param>
+        /// <param name="StartDate"></param>
+        /// <param name="EndDate"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<UsersMovements>> GetUsersMovementsByParams(string Param, DateTime StartDate, DateTime EndDate)
+            => await _con.QueryAsync<UsersMovements>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] " +
+                "WHERE (Usr LIKE @Param OR UsrName LIKE @Param) " +
+                "AND (@StartDate IS NULL OR @EndDate IS NULL OR DateTimeSnap BETWEEN @StartDate AND @EndDate) " +
+                "ORDER BY DateTimeSnap ASC", new { Param = $"%{Param}%", StartDate,EndDate}).ConfigureAwait (false);
+
+        public async Task InsertUsersMovements(string Usr, string UsrName,string UsrRole,string UsrMovement, string? Token)
+            => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[UsersMovements] " +
+                "(Usr,UsrName,UsrRole,UsrMovement,UsrToken) " +
+                "VALUES (@Usr,@UsrName,@UsrRole,@UsrMovement,@Token);", new {Usr,UsrName,UsrRole,UsrMovement,Token }).ConfigureAwait(false);
         #endregion
 
 

@@ -1,6 +1,6 @@
-﻿namespace Medical.Office.App.UseCases.Users.LoginUsers.Responses
+﻿using Common.Common.CleanArch;
+
+namespace Medical.Office.App.UseCases.Users.LoginUsers.Responses
 {
-    internal class LoginUsersResponse
-    {
-    }
+    public abstract record LoginUsersResponse : IResponse;
 }

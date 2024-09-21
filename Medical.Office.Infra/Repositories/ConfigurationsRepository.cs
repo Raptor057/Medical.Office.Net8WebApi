@@ -1,4 +1,5 @@
 ﻿using Medical.Office.Domain.DataSources.Entities.MedicalOffice;
+using Medical.Office.Domain.Entities.MedicalOffice;
 using Medical.Office.Domain.Repository;
 using Medical.Office.Infra.DataSources;
 
@@ -68,5 +69,29 @@ namespace Medical.Office.Infra.Repositories
             }
             return await _db.GetUserStatuses().ConfigureAwait(false);
         }
+
+
+        public async Task<IEnumerable<LoginHistory>> GetLoginHistoryAsync()
+            => await _db.GetLoginHistory().ConfigureAwait(false);
+
+
+        public async Task<IEnumerable<LoginHistory>> GetLoginHistoryByParamsAsync(string Param, DateTime StartDate, DateTime EndDate)
+            => await _db.GetLoginHistoryByParams(Param, StartDate, EndDate).ConfigureAwait(false);
+
+
+        public async Task<IEnumerable<UsersMovements>> GetUsersMovementsAsync()
+            => await _db.GetUsersMovements().ConfigureAwait(false);
+
+
+        public async Task<IEnumerable<UsersMovements>> GetUsersMovementsByParamsAsync(string Param, DateTime StartDate, DateTime EndDate)
+            => await _db.GetUsersMovementsByParams(Param,StartDate,EndDate).ConfigureAwait(false);
+
+
+        public async Task InsertLoginHistoryAsync(string Usr, string UsrName, string? Token)
+            => await _db.InsertLoginHistory(Usr, UsrName, Token).ConfigureAwait(false);
+
+
+        public async Task InsertUsersMovementsAsync(string Usr, string UsrName, string UsrRole, string UsrMovement, string? Token)
+            => await _db.InsertUsersMovements(Usr,UsrName, UsrRole, UsrMovement, Token).ConfigureAwait(false);
     }
 }

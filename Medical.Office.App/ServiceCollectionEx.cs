@@ -1,6 +1,9 @@
 ﻿using MediatR;
 using Common.Common.CleanArch;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 
 namespace Medical.Office.App
@@ -9,6 +12,7 @@ namespace Medical.Office.App
     {
         public static IServiceCollection AddAppServices(this IServiceCollection services)
         {
+
             return services
                 .AddTransient(typeof(IPipelineBehavior<,>), typeof(InteractorPipeline<,>))
                 .AddMediatR(cfg => { cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionEx).Assembly); });

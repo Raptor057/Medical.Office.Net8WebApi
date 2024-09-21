@@ -42,7 +42,7 @@ namespace Medical.Office.Infra.Repositories
         /// <param name="Usr"></param>
         /// <param name="Psswd"></param>
         /// <returns></returns>
-        public async Task LoginUserAsync(string Usr, string Psswd)
+        public async Task<Users> LoginUserAsync(string Usr, string Psswd)
             => await _db.LoginUser(Usr, Psswd).ConfigureAwait(false);
 
         /// <summary>

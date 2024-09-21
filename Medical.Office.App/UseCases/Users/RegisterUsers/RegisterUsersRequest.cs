@@ -37,6 +37,10 @@ namespace Medical.Office.App.UseCases.Users.RegisterUsers
             {
                 errors.Add("El usuario es obligatorio");
             }
+            if(usr.Length > 20)
+            {
+                errors.Add("El usuario no puede tener mas de 20 caracteres");
+            }
         }
 
         /// <summary>

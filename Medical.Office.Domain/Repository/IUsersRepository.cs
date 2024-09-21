@@ -25,7 +25,7 @@ namespace Medical.Office.Domain.Repository
         /// <param name="Usr"></param>
         /// <param name="Psswd"></param>
         /// <returns></returns>
-        Task LoginUserAsync(string Usr, string Psswd);
+        Task<Users> LoginUserAsync(string Usr, string Psswd);
 
         /// <summary>
         /// Get All's Users

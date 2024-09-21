@@ -17,10 +17,12 @@ namespace Medical.Office.Net8WebApi.EndPoints.Users.RegisterUsers
             if (notification is IFailure failure)
             {
                 _viewModel.Fail(failure.Message);
+                await Task.CompletedTask;
             }
             else if (notification is SuccessRegisterUsersResponse successRegisterUsersResponse)
             {
                 _viewModel.OK(successRegisterUsersResponse);
+                await Task.CompletedTask;
             }
         }
     }

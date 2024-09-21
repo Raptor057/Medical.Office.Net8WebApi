@@ -1,4 +1,5 @@
 ﻿using Medical.Office.Domain.DataSources.Entities.MedicalOffice;
+using Medical.Office.Domain.Entities.MedicalOffice;
 
 namespace Medical.Office.Domain.Repository
 {
@@ -27,5 +28,56 @@ namespace Medical.Office.Domain.Repository
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<UserStatuses>> GetUserStatusesAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<LoginHistory>> GetLoginHistoryAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Param"></param>
+        /// <param name="StartDate"></param>
+        /// <param name="EndDate"></param>
+        /// <returns></returns>
+        Task<IEnumerable<LoginHistory>> GetLoginHistoryByParamsAsync(string? Param, DateTime StartDate, DateTime EndDate);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Usr"></param>
+        /// <param name="UsrName"></param>
+        /// <param name="Token"></param>
+        /// <returns></returns>
+        Task InsertLoginHistoryAsync(string Usr, string UsrName, string? Token);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<UsersMovements>> GetUsersMovementsAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Param"></param>
+        /// <param name="StartDate"></param>
+        /// <param name="EndDate"></param>
+        /// <returns></returns>
+        Task<IEnumerable<UsersMovements>> GetUsersMovementsByParamsAsync(string? Param, DateTime StartDate, DateTime EndDate);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Usr"></param>
+        /// <param name="UsrName"></param>
+        /// <param name="UsrRole"></param>
+        /// <param name="UsrMovement"></param>
+        /// <param name="Token"></param>
+        /// <returns></returns>
+        Task InsertUsersMovementsAsync(string Usr, string UsrName, string UsrRole, string UsrMovement, string? Token);
+
     }
 }
