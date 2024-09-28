@@ -9,9 +9,28 @@ namespace Medical.Office.Infra.Repositories
     {
         private readonly MedicalOfficeSqlLocalDB _db;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="db"></param>
         public ConfigurationsRepository(MedicalOfficeSqlLocalDB db)
         {
             _db = db;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<Genders>> GetGendersAsync()
+        {
+            var GetGenders = await _db.GetGenders().ConfigureAwait(false);
+            if (GetGenders == null) 
+            {
+                await _db.StartInsertGenders().ConfigureAwait(false);
+                return await _db.GetGenders().ConfigureAwait(false);
+            }
+            return await _db.GetGenders().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -24,6 +43,7 @@ namespace Medical.Office.Infra.Repositories
             if (GetStartPositions == null) 
             {
                 await _db.StartInsertPositions().ConfigureAwait(false);
+                return await _db.GetPositions().ConfigureAwait(false);
             }
             return await _db.GetPositions().ConfigureAwait(false);
         }
@@ -38,6 +58,7 @@ namespace Medical.Office.Infra.Repositories
             if (GetStartRoles == null)
             {
                 await _db.StartInsertRoles().ConfigureAwait(false);
+                return await _db.GetRoles().ConfigureAwait(false);
             }
             return await _db.GetRoles().ConfigureAwait(false);
         }
@@ -52,6 +73,7 @@ namespace Medical.Office.Infra.Repositories
             if (GetStartSpecialities == null)
             {
                 await _db.StartInsertSpecialties().ConfigureAwait(false);
+                return await _db.GetSpecialties().ConfigureAwait(false);
             }
             return await _db.GetSpecialties().ConfigureAwait(false);
         }
@@ -66,6 +88,7 @@ namespace Medical.Office.Infra.Repositories
             if(GetStartUserStatuses == null)
             {
                 await _db.StartInsertUserStatuses().ConfigureAwait(false);
+                return await _db.GetUserStatuses().ConfigureAwait(false);
             }
             return await _db.GetUserStatuses().ConfigureAwait(false);
         }
@@ -93,5 +116,8 @@ namespace Medical.Office.Infra.Repositories
 
         public async Task InsertUsersMovementsAsync(string Usr, string UsrName, string UsrRole, string UsrMovement, string? Token)
             => await _db.InsertUsersMovements(Usr,UsrName, UsrRole, UsrMovement, Token).ConfigureAwait(false);
+
+        public async Task<OfficeSetup> GetOfficeSetupAsync()
+            => await _db.GetOfficeSetup().ConfigureAwait(false);
     }
 }

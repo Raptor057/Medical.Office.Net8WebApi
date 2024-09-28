@@ -9,6 +9,12 @@ namespace Medical.Office.Domain.Repository
         /// 
         /// </summary>
         /// <returns></returns>
+        Task<OfficeSetup> GetOfficeSetupAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         Task<IEnumerable<Positions>>GetPositionsAsync();
         
         /// <summary>
@@ -16,7 +22,13 @@ namespace Medical.Office.Domain.Repository
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<Roles>> GetRolesAsync();
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<Genders>> GetGendersAsync();
+
         /// <summary>
         /// 
         /// </summary>

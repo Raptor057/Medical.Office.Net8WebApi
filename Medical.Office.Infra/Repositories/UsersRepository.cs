@@ -19,7 +19,7 @@ namespace Medical.Office.Infra.Repositories
         /// <param name="Id"></param>
         /// <returns></returns>
         public async Task<Users> GetDataUserByIdAsync(int Id)
-            => await _db.GetGetDataUserById(Id).ConfigureAwait(false);
+            => await _db.GetDataUserById(Id).ConfigureAwait(false);
 
         /// <summary>
         /// 

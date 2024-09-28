@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Medical.Office.App\Medical.Office.App.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EndPoints\DeveloperEndPoints\" />
+  </ItemGroup>
+
 </Project>
