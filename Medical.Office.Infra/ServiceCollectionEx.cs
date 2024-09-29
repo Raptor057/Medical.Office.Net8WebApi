@@ -18,7 +18,8 @@ namespace Medical.Office.Infra
                 .AddSingleton(typeof(ConfigurationSqlDbConnection<>))
                 .AddSingleton<MedicalOfficeSqlLocalDB>()
                 .AddSingleton<IUsersRepository, UsersRepository>()
-                .AddSingleton<IConfigurationsRepository, ConfigurationsRepository>();
+                .AddSingleton<IConfigurationsRepository, ConfigurationsRepository>()
+                .AddSingleton<IPatientsData, PatientsData>();
         }
     }
 }

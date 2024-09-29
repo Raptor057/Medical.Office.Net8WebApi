@@ -203,6 +203,15 @@ namespace Medical.Office.Infra.DataSources
                             "AND (@StartDate IS NULL OR @EndDate IS NULL OR DateTimeSnap BETWEEN @StartDate AND @EndDate) " +
                             "ORDER BY DateTimeSnap ASC", new { Param = $"%{Param}%", StartDate, EndDate }).ConfigureAwait(false);
 
+                    /// <summary>
+                    /// 
+                    /// </summary>
+                    /// <param name="Usr"></param>
+                    /// <param name="UsrName"></param>
+                    /// <param name="UsrRole"></param>
+                    /// <param name="UsrMovement"></param>
+                    /// <param name="Token"></param>
+                    /// <returns></returns>
                     public async Task InsertUsersMovements(string Usr, string UsrName, string UsrRole, string UsrMovement, string? Token)
                         => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[UsersMovements] " +
                             "(Usr,UsrName,UsrRole,UsrMovement,UsrToken) " +
@@ -210,6 +219,14 @@ namespace Medical.Office.Infra.DataSources
 
                     #endregion
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="NameOfOffice"></param>
+        /// <param name="Address"></param>
+        /// <param name="OpeningTime"></param>
+        /// <param name="ClosingTime"></param>
+        /// <returns></returns>
         public async Task InsertOfficeSetup(string NameOfOffice, string Address, TimeSpan OpeningTime, TimeSpan ClosingTime)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[OfficeSetup]" +
                 "([NameOfOffice],[Address],[OpeningTime],[ClosingTime])" +
@@ -220,109 +237,298 @@ namespace Medical.Office.Infra.DataSources
 
         #region MedicalOffice
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="FirstName"></param>
+        /// <param name="LastName"></param>
+        /// <param name="Specialty"></param>
+        /// <param name="PhoneNumber"></param>
+        /// <param name="Email"></param>
+        /// <returns></returns>
         public async Task InsertDoctors(string FirstName, string LastName, string Specialty, string PhoneNumber, string Email)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Doctors]" +
                 "([FirstName],[LastName],[Specialty],[PhoneNumber],[Email])" +
                 "VALUES(@FirstName,@LastName,@Specialty,@PhoneNumber,@Email);",
             new { FirstName, LastName, Specialty, PhoneNumber, Email }).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Doctors>> GetDoctors()
             => await _con.QueryAsync<Doctors>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Doctors]").ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="IDDoctor"></param>
+        /// <param name="AppointmentDateTime"></param>
+        /// <param name="ReasonForVisit"></param>
+        /// <param name="AppointmentStatus"></param>
+        /// <param name="Notes"></param>
+        /// <param name="TypeOfAppointment"></param>
+        /// <returns></returns>
         public async Task InsertMedicalAppointmentCalendar(long IDPatient, long IDDoctor, DateTime AppointmentDateTime, string ReasonForVisit, string AppointmentStatus, string Notes, string TypeOfAppointment)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar]" +
                 "([IDPatient],[IDDoctor],[AppointmentDateTime],[ReasonForVisit],[AppointmentStatus],[Notes],[TypeOfAppointment])" +
                 "VALUES(@IDPatient, @IDDoctor, @AppointmentDateTime, @ReasonForVisit, @AppointmentStatus, @Notes, @TypeOfAppointment)", 
                 new { IDPatient, IDDoctor, AppointmentDateTime, ReasonForVisit, AppointmentStatus, Notes, TypeOfAppointment }).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendar()
             => await _con.QueryAsync<MedicalAppointmentCalendar>("SELECT * FROM MedicalAppointmentCalendar ").ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <returns></returns>
         public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarByIDPatient(long IDPatient)
             => await _con.QueryAsync<MedicalAppointmentCalendar>("SELECT * FROM MedicalAppointmentCalendar WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
-
-        public async Task InsertPatientData(string Name, string FathersSurname, string MothersSurname, DateTime DateOfBirth, string Gender, string Address, string Country, string City, string State, string ZipCode, string OutsideNumber, string InsideNumber, string PhoneNumber, string Email, string EmergencyContactName, string EmergencyContactPhone, string InsuranceProvider, string PolicyNumber, string BloodType, DateTime? DateCreated, DateTime? LastUpdated, byte[] Photo, string InternalNotes)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Name"></param>
+        /// <param name="FathersSurname"></param>
+        /// <param name="MothersSurname"></param>
+        /// <param name="DateOfBirth"></param>
+        /// <param name="Gender"></param>
+        /// <param name="Address"></param>
+        /// <param name="Country"></param>
+        /// <param name="City"></param>
+        /// <param name="State"></param>
+        /// <param name="ZipCode"></param>
+        /// <param name="OutsideNumber"></param>
+        /// <param name="InsideNumber"></param>
+        /// <param name="PhoneNumber"></param>
+        /// <param name="Email"></param>
+        /// <param name="EmergencyContactName"></param>
+        /// <param name="EmergencyContactPhone"></param>
+        /// <param name="InsuranceProvider"></param>
+        /// <param name="PolicyNumber"></param>
+        /// <param name="BloodType"></param>
+        /// <param name="DateCreated"></param>
+        /// <param name="LastUpdated"></param>
+        /// <param name="Photo"></param>
+        /// <param name="InternalNotes"></param>
+        /// <returns></returns>
+        public async Task InsertPatientData(string Name, string FathersSurname, string MothersSurname, DateTime? DateOfBirth, string Gender, string Address, string Country, string City, string State, string ZipCode, string OutsideNumber, string InsideNumber, string PhoneNumber, string Email, string EmergencyContactName, string EmergencyContactPhone, string InsuranceProvider, string PolicyNumber, string BloodType, byte[] Photo, string InternalNotes)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[PatientData] " +
-                "([Name], [FathersSurname], [MothersSurname], [DateOfBirth], [Gender], [Address], [Country], [City], [State], [ZipCode], [OutsideNumber], [InsideNumber], [PhoneNumber], [Email], [EmergencyContactName], [EmergencyContactPhone], [InsuranceProvider], [PolicyNumber], [BloodType], [DateCreated], [LastUpdated], [Photo], [InternalNotes]) " +
-                "VALUES(@Name, @FathersSurname, @MothersSurname, @DateOfBirth, @Gender, @Address, @Country, @City, @State, @ZipCode, @OutsideNumber, @InsideNumber, @PhoneNumber, @Email, @EmergencyContactName, @EmergencyContactPhone, @InsuranceProvider, @PolicyNumber, @BloodType, @DateCreated, @LastUpdated, @Photo, @InternalNotes)",
+                "([Name], [FathersSurname], [MothersSurname], [DateOfBirth], [Gender], [Address], [Country], [City], [State], [ZipCode], [OutsideNumber], [InsideNumber], [PhoneNumber], [Email], [EmergencyContactName], [EmergencyContactPhone], [InsuranceProvider], [PolicyNumber], [BloodType], [Photo], [InternalNotes]) " +
+                "VALUES(@Name, @FathersSurname, @MothersSurname, @DateOfBirth, @Gender, @Address, @Country, @City, @State, @ZipCode, @OutsideNumber, @InsideNumber, @PhoneNumber, @Email, @EmergencyContactName, @EmergencyContactPhone, @InsuranceProvider, @PolicyNumber, @BloodType, @Photo, @InternalNotes)",
                 new{Name,FathersSurname,MothersSurname,DateOfBirth,Gender,Address,Country,City,State,ZipCode,OutsideNumber,InsideNumber,PhoneNumber,Email,
-                    EmergencyContactName,EmergencyContactPhone,InsuranceProvider,PolicyNumber,BloodType,DateCreated,LastUpdated,Photo,InternalNotes}).ConfigureAwait(false);
+                    EmergencyContactName,EmergencyContactPhone,InsuranceProvider,PolicyNumber,BloodType,Photo,InternalNotes}).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<PatientData> GetLastPatientsData()
              => await _con.QuerySingleAsync<PatientData>("SELECT TOP 1 * FROM [Medical.Office.SqlLocalDB].[dbo].[PatientData] ORDER BY ID DESC").ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<PatientData>> GetPatientsDataList()
             => await _con.QueryAsync<PatientData>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[PatientData]").ConfigureAwait(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public async Task<PatientData> GetPatientDataByIDPatient(long ID)
+            => await _con.QuerySingleAsync<PatientData>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[PatientData] WHERE ID = @ID", new {ID}).ConfigureAwait(false);
 
         #endregion
 
         #region AntecedentPatient
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="AactiveMedicationsData"></param>
+        /// <returns></returns>
         public async Task InsertActiveMedications(long IDPatient, string AactiveMedicationsData)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[ActiveMedications] " +
                 "([IDPatient],[AactiveMedicationsData]) " +
                 "VALUES (@IDPatient,@AactiveMedicationsData)", 
                 new {IDPatient, AactiveMedicationsData }).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <returns></returns>
         public async Task<ActiveMedications> GetActiveMedicationsByIDPatient(long IDPatient)
             => await _con.QuerySingleAsync<ActiveMedications>("SELECT * FROM ActiveMedications WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="Diabetes"></param>
+        /// <param name="Cardiopathies"></param>
+        /// <param name="Hypertension"></param>
+        /// <param name="ThyroidDiseases"></param>
+        /// <param name="ChronicKidneyDisease"></param>
+        /// <param name="Others"></param>
+        /// <param name="OthersData"></param>
+        /// <returns></returns>
         public async Task InsertFamilyHistory(long IDPatient, int Diabetes, int Cardiopathies, int Hypertension, int ThyroidDiseases, int ChronicKidneyDisease, int Others, string OthersData)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[FamilyHistory]" +
                 "([IDPatient],[Diabetes],[Cardiopathies],[Hypertension],[ThyroidDiseases],[ChronicKidneyDisease],[Others],[OthersData])" +
                 "VALUES(@IDPatient, @Diabetes, @Cardiopathies, @Hypertension, @ThyroidDiseases, @ChronicKidneyDisease, @Others, @OthersData)", 
                 new { IDPatient, Diabetes, Cardiopathies, Hypertension, ThyroidDiseases, ChronicKidneyDisease, Others, OthersData }).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <returns></returns>
         public async Task<FamilyHistory> GetFamilyHistoryByIDPatient(long IDPatient)
             => await _con.QuerySingleAsync<FamilyHistory>("SELECT * FROM FamilyHistory WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="MedicalHistoryNotesData"></param>
+        /// <returns></returns>
         public async Task InsertMedicalHistoryNotes(long IDPatient, string MedicalHistoryNotesData)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[MedicalHistoryNotes]" +
                 "([IDPatient],[MedicalHistoryNotesData])" +
                 "VALUES(@IDPatient,@MedicalHistoryNotesData);", 
                 new {IDPatient,MedicalHistoryNotesData}).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <returns></returns>
         public async Task<MedicalHistoryNotes> GetMedicalHistoryNotes(long IDPatient)
             => await _con.QuerySingleAsync<MedicalHistoryNotes>("SELECT * FROM MedicalHistoryNotes WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="PhysicalActivity"></param>
+        /// <param name="Smoking"></param>
+        /// <param name="Alcoholism"></param>
+        /// <param name="SubstanceAbuse"></param>
+        /// <param name="SubstanceAbuseData"></param>
+        /// <param name="RecentVaccination"></param>
+        /// <param name="RecentVaccinationData"></param>
+        /// <param name="Others"></param>
+        /// <param name="OthersData"></param>
+        /// <returns></returns>
         public async Task InsertNonPathologicalHistory(long IDPatient, int PhysicalActivity, int Smoking, int Alcoholism, int SubstanceAbuse, string SubstanceAbuseData, int RecentVaccination, string RecentVaccinationData, int Others, string OthersData)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[NonPathologicalHistory]" +
                 "([IDPatient],[PhysicalActivity],[Smoking],[Alcoholism],[SubstanceAbuse],[SubstanceAbuseData],[RecentVaccination],[RecentVaccinationData],[Others],[OthersData])" +
                 "VALUES(@IDPatient, @PhysicalActivity, @Smoking, @Alcoholism, @SubstanceAbuse, @SubstanceAbuseData, @RecentVaccination, @RecentVaccinationData, @Others, @OthersData )", 
                 new { IDPatient, PhysicalActivity, Smoking, Alcoholism, SubstanceAbuse, SubstanceAbuseData, RecentVaccination, RecentVaccinationData, Others, OthersData }).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <returns></returns>
         public async Task<NonPathologicalHistory> GetNonPathologicalHistoryByIDPatient(long IDPatient)
             => await _con.QuerySingleAsync<NonPathologicalHistory>("SELECT * FROM NonPathologicalHistory WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="PreviousHospitalization"></param>
+        /// <param name="PreviousSurgeries"></param>
+        /// <param name="Diabetes"></param>
+        /// <param name="ThyroidDiseases"></param>
+        /// <param name="Hypertension"></param>
+        /// <param name="Cardiopathies"></param>
+        /// <param name="Trauma"></param>
+        /// <param name="Cancer"></param>
+        /// <param name="Tuberculosis"></param>
+        /// <param name="Transfusions"></param>
+        /// <param name="RespiratoryDiseases"></param>
+        /// <param name="GastrointestinalDiseases"></param>
+        /// <param name="STDs"></param>
+        /// <param name="STDsData"></param>
+        /// <param name="ChronicKidneyDisease"></param>
+        /// <param name="Others"></param>
+        /// <returns></returns>
         public async Task InsertPathologicalBackground(long IDPatient, int PreviousHospitalization, int PreviousSurgeries, int Diabetes, int ThyroidDiseases, int Hypertension, int Cardiopathies, int Trauma, int Cancer, int Tuberculosis, int Transfusions, int RespiratoryDiseases, int GastrointestinalDiseases, int STDs, string STDsData, int ChronicKidneyDisease, string Others)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[PathologicalBackground]" +
                 "([IDPatient],[PreviousHospitalization],[PreviousSurgeries],[Diabetes],[ThyroidDiseases],[Hypertension],[Cardiopathies],[Trauma],[Cancer],[Tuberculosis],[Transfusions],[RespiratoryDiseases],[GastrointestinalDiseases],[STDs],[STDsData],[ChronicKidneyDisease],[Others])" +
                 "VALUES(@IDPatient, @PreviousHospitalization, @PreviousSurgeries, @Diabetes, @ThyroidDiseases, @Hypertension, @Cardiopathies, @Trauma, @Cancer, @Tuberculosis, @Transfusions, @RespiratoryDiseases, @GastrointestinalDiseases, @STDs, @STDsData, @ChronicKidneyDisease, @Others )", 
                 new { IDPatient, PreviousHospitalization, PreviousSurgeries, Diabetes, ThyroidDiseases,  Hypertension, Cardiopathies, Trauma, Cancer, Tuberculosis, Transfusions, RespiratoryDiseases, GastrointestinalDiseases, STDs, STDsData, ChronicKidneyDisease, Others }).ConfigureAwait(false);
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <returns></returns>
         public async Task<PathologicalBackground> GetPathologicalBackgroundByIDPatient(long IDPatient)
             => await _con.QuerySingleAsync<PathologicalBackground>("SELECT * FROM PathologicalBackground WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="Allergies"></param>
+        /// <returns></returns>
         public async Task InsertPatientAllergies(long IDPatient, string Allergies)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[PatientAllergies]" +
                 "([IDPatient],[Allergies])" +
                 "VALUES(@IDPatient , @Allergies )", 
                 new { IDPatient , Allergies }).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <returns></returns>
         public async Task<PatientAllergies> GetPatientAllergiesByIDPatient(long IDPatient)
             => await _con.QuerySingleAsync<PatientAllergies>("SELECT * FROM PatientAllergies WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="FamilyHistory"></param>
+        /// <param name="FamilyHistoryData"></param>
+        /// <param name="AffectedAreas"></param>
+        /// <param name="PastAndCurrentTreatments"></param>
+        /// <param name="FamilySocialSupport"></param>
+        /// <param name="FamilySocialSupportData"></param>
+        /// <param name="WorkLifeAspects"></param>
+        /// <param name="SocialLifeAspects"></param>
+        /// <param name="AuthorityRelationship"></param>
+        /// <param name="ImpulseControl"></param>
+        /// <param name="FrustrationManagement"></param>
+        /// <returns></returns>
         public async Task InsertPsychiatricHistory(long IDPatient, int FamilyHistory, string FamilyHistoryData, string AffectedAreas, string PastAndCurrentTreatments, int FamilySocialSupport, string FamilySocialSupportData, string WorkLifeAspects, string SocialLifeAspects, string AuthorityRelationship, string ImpulseControl, string FrustrationManagement)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[PsychiatricHistory]" +
                 "([IDPatient],[FamilyHistory],[FamilyHistoryData],[AffectedAreas],[PastAndCurrentTreatments],[FamilySocialSupport],[FamilySocialSupportData],[WorkLifeAspects],[SocialLifeAspects],[AuthorityRelationship],[ImpulseControl],[FrustrationManagement])" +
                 "VALUES(@IDPatient, @FamilyHistory, @FamilyHistoryData, @AffectedAreas, @PastAndCurrentTreatments, @FamilySocialSupport, @FamilySocialSupportData, @WorkLifeAspects, @SocialLifeAspects, @AuthorityRelationship, @ImpulseControl, @FrustrationManagement )", 
                 new { IDPatient, FamilyHistory, FamilyHistoryData, AffectedAreas, PastAndCurrentTreatments, FamilySocialSupport, FamilySocialSupportData, WorkLifeAspects, SocialLifeAspects, AuthorityRelationship, ImpulseControl, FrustrationManagement }).ConfigureAwait(false);
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <returns></returns>
         public async Task<PsychiatricHistory> GetPsychiatricHistoryByIDPatient(long IDPatient)
             => await _con.QuerySingleAsync<PsychiatricHistory>("SELECT * FROM PsychiatricHistory WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
         #endregion
-
-
     }
 }
