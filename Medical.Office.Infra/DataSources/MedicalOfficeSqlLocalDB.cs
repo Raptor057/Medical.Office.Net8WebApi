@@ -107,7 +107,7 @@ namespace Medical.Office.Infra.DataSources
                     /// </summary>
                     /// <param name="Id"></param>
                     /// <returns></returns>
-                    public async Task<Users> GetDataUserById(int Id) =>
+                    public async Task<Users> GetDataUserById(long Id) =>
                         await _con.QuerySingleAsync<Users>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Id = @Id;", new { Id }).ConfigureAwait(false);
 
                     /// <summary>
@@ -116,14 +116,22 @@ namespace Medical.Office.Infra.DataSources
                     /// <param name="Usr"></param>
                     /// <returns></returns>
                     public async Task<Users> GetDataUserByUsr(string Usr) =>
-                        await _con.QuerySingleAsync<Users>("SELECT top 1 * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr;", new { Usr }).ConfigureAwait(false);
+                    await _con.QuerySingleAsync<Users>("SELECT top 1 * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr;", new { Usr }).ConfigureAwait(false);
+
+                    /// <summary>
+                    /// 
+                    /// </summary>
+                    /// <param name="Usr"></param>
+                    /// <returns></returns>
+                    public async Task<IEnumerable<Users>> GetDataUserByUsrList(string Usr) =>
+                    await _con.QueryAsync<Users>("SELECT top 1 * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr Like @Usr;", new { Usr = $"%{Usr}%" }).ConfigureAwait(false);
 
                     /// <summary>
                     /// 
                     /// </summary>
                     /// <returns></returns>
                     public async Task<IEnumerable<Users>> GetUsers() =>
-                        await _con.QueryAsync<Users>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Users];", new { }).ConfigureAwait(false);
+                                await _con.QueryAsync<Users>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Users];", new { }).ConfigureAwait(false);
 
                     /// <summary>
                     /// 

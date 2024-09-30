@@ -41,10 +41,17 @@ namespace Medical.Office.Domain.Repository
         Task<Users> GetDataUserByUsrAsync(string Usr);
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Usr"></param>
+        /// <returns></returns>
+        Task<IEnumerable<Users>> GetDataUserByUsrListAsync(string Usr);
+
+        /// <summary>
         /// Get data users by id
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        Task<Users> GetDataUserByIdAsync(int Id);
+        Task<Users> GetDataUserByIdAsync(long Id);
     }
 }

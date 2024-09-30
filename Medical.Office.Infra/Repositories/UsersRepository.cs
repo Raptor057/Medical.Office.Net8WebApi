@@ -18,7 +18,7 @@ namespace Medical.Office.Infra.Repositories
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public async Task<Users> GetDataUserByIdAsync(int Id)
+        public async Task<Users> GetDataUserByIdAsync(long Id)
             => await _db.GetDataUserById(Id).ConfigureAwait(false);
 
         /// <summary>
@@ -28,6 +28,14 @@ namespace Medical.Office.Infra.Repositories
         /// <returns></returns>
         public async Task<Users> GetDataUserByUsrAsync(string Usr)
             => await _db.GetDataUserByUsr(Usr).ConfigureAwait(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Usr"></param>
+        /// <returns></returns>
+        public async Task <IEnumerable<Users>> GetDataUserByUsrListAsync(string Usr)
+        => await _db.GetDataUserByUsrList(Usr).ConfigureAwait(false);
 
         /// <summary>
         /// 
