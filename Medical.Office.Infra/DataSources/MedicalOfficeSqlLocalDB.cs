@@ -1,6 +1,4 @@
-﻿using Medical.Office.Domain.DataSources.Entities.MedicalOffice;
-using Medical.Office.Domain.DataSources.Entities.MedicalOffice.AntecedentPatient;
-using Medical.Office.Domain.Entities.MedicalOffice;
+﻿using Medical.Office.Domain.Entities.MedicalOffice;
 using Medical.Office.Domain.Entities.MedicalOffice.AntecedentPatient;
 
 namespace Medical.Office.Infra.DataSources
@@ -422,7 +420,7 @@ namespace Medical.Office.Infra.DataSources
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <returns></returns>
-        public async Task<MedicalHistoryNotes> GetMedicalHistoryNotes(long IDPatient)
+        public async Task<MedicalHistoryNotes> GetMedicalHistoryNotesByIDPatient(long IDPatient)
             => await _con.QuerySingleAsync<MedicalHistoryNotes>("SELECT * FROM MedicalHistoryNotes WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
@@ -537,6 +535,211 @@ namespace Medical.Office.Infra.DataSources
         /// <returns></returns>
         public async Task<PsychiatricHistory> GetPsychiatricHistoryByIDPatient(long IDPatient)
             => await _con.QuerySingleAsync<PsychiatricHistory>("SELECT * FROM PsychiatricHistory WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
+
+        #region Update Methods
+
+        /// <summary>
+        /// Actualiza la información de los medicamentos activos de un paciente.
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="AactiveMedicationsData"></param>
+        /// <param name="DateTimeSnap"></param>
+        /// <returns></returns>
+        public async Task UpdateActiveMedications(long IDPatient, string AactiveMedicationsData, DateTime? DateTimeSnap)
+        {
+            await _con.ExecuteAsync(@"UPDATE [dbo].[ActiveMedications]
+                              SET AactiveMedicationsData = @AactiveMedicationsData,
+                                  DateTimeSnap = @DateTimeSnap
+                              WHERE IDPatient = @IDPatient;",
+                                      new { IDPatient, AactiveMedicationsData, DateTimeSnap }).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Actualiza la historia familiar de un paciente.
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="Diabetes"></param>
+        /// <param name="Cardiopathies"></param>
+        /// <param name="Hypertension"></param>
+        /// <param name="ThyroidDiseases"></param>
+        /// <param name="ChronicKidneyDisease"></param>
+        /// <param name="Others"></param>
+        /// <param name="OthersData"></param>
+        /// <param name="DateTimeSnap"></param>
+        /// <returns></returns>
+        public async Task UpdateFamilyHistory(long IDPatient, int Diabetes, int Cardiopathies, int Hypertension,
+            int ThyroidDiseases, int ChronicKidneyDisease, int Others, string OthersData, DateTime? DateTimeSnap)
+        {
+            await _con.ExecuteAsync(@"UPDATE [dbo].[FamilyHistory]
+                              SET Diabetes = @Diabetes,
+                                  Cardiopathies = @Cardiopathies,
+                                  Hypertension = @Hypertension,
+                                  ThyroidDiseases = @ThyroidDiseases,
+                                  ChronicKidneyDisease = @ChronicKidneyDisease,
+                                  Others = @Others,
+                                  OthersData = @OthersData,
+                                  DateTimeSnap = @DateTimeSnap
+                              WHERE IDPatient = @IDPatient;",
+                                      new { IDPatient, Diabetes, Cardiopathies, Hypertension, ThyroidDiseases, ChronicKidneyDisease, Others, OthersData, DateTimeSnap }).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Actualiza las notas de la historia médica de un paciente.
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="MedicalHistoryNotesData"></param>
+        /// <param name="DateTimeSnap"></param>
+        /// <returns></returns>
+        public async Task UpdateMedicalHistoryNotes(long IDPatient, string MedicalHistoryNotesData, DateTime? DateTimeSnap)
+        {
+            await _con.ExecuteAsync(@"UPDATE [dbo].[MedicalHistoryNotes]
+                              SET MedicalHistoryNotesData = @MedicalHistoryNotesData,
+                                  DateTimeSnap = @DateTimeSnap
+                              WHERE IDPatient = @IDPatient;",
+                                      new { IDPatient, MedicalHistoryNotesData, DateTimeSnap }).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Actualiza la historia no patológica de un paciente.
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="PhysicalActivity"></param>
+        /// <param name="Smoking"></param>
+        /// <param name="Alcoholism"></param>
+        /// <param name="SubstanceAbuse"></param>
+        /// <param name="SubstanceAbuseData"></param>
+        /// <param name="RecentVaccination"></param>
+        /// <param name="RecentVaccinationData"></param>
+        /// <param name="Others"></param>
+        /// <param name="OthersData"></param>
+        /// <param name="DateTimeSnap"></param>
+        /// <returns></returns>
+        public async Task UpdateNonPathologicalHistory(long IDPatient, int PhysicalActivity, int Smoking, int Alcoholism,
+            int SubstanceAbuse, string SubstanceAbuseData, int RecentVaccination, string RecentVaccinationData,
+            int Others, string OthersData, DateTime? DateTimeSnap)
+        {
+            await _con.ExecuteAsync(@"UPDATE [dbo].[NonPathologicalHistory]
+                              SET PhysicalActivity = @PhysicalActivity,
+                                  Smoking = @Smoking,
+                                  Alcoholism = @Alcoholism,
+                                  SubstanceAbuse = @SubstanceAbuse,
+                                  SubstanceAbuseData = @SubstanceAbuseData,
+                                  RecentVaccination = @RecentVaccination,
+                                  RecentVaccinationData = @RecentVaccinationData,
+                                  Others = @Others,
+                                  OthersData = @OthersData,
+                                  DateTimeSnap = @DateTimeSnap
+                              WHERE IDPatient = @IDPatient;",
+                                      new { IDPatient, PhysicalActivity, Smoking, Alcoholism, SubstanceAbuse, SubstanceAbuseData, RecentVaccination, RecentVaccinationData, Others, OthersData, DateTimeSnap }).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Actualiza el historial patológico de un paciente.
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="PreviousHospitalization"></param>
+        /// <param name="PreviousSurgeries"></param>
+        /// <param name="Diabetes"></param>
+        /// <param name="ThyroidDiseases"></param>
+        /// <param name="Hypertension"></param>
+        /// <param name="Cardiopathies"></param>
+        /// <param name="Trauma"></param>
+        /// <param name="Cancer"></param>
+        /// <param name="Tuberculosis"></param>
+        /// <param name="Transfusions"></param>
+        /// <param name="RespiratoryDiseases"></param>
+        /// <param name="GastrointestinalDiseases"></param>
+        /// <param name="STDs"></param>
+        /// <param name="STDsData"></param>
+        /// <param name="ChronicKidneyDisease"></param>
+        /// <param name="Others"></param>
+        /// <param name="DateTimeSnap"></param>
+        /// <returns></returns>
+        public async Task UpdatePathologicalBackground(long IDPatient, int PreviousHospitalization, int PreviousSurgeries,
+            int Diabetes, int ThyroidDiseases, int Hypertension, int Cardiopathies, int Trauma,
+            int Cancer, int Tuberculosis, int Transfusions, int RespiratoryDiseases,
+            int GastrointestinalDiseases, int STDs, string STDsData, int ChronicKidneyDisease,
+            string Others, DateTime? DateTimeSnap)
+        {
+            await _con.ExecuteAsync(@"UPDATE [dbo].[PathologicalBackground]
+                              SET PreviousHospitalization = @PreviousHospitalization,
+                                  PreviousSurgeries = @PreviousSurgeries,
+                                  Diabetes = @Diabetes,
+                                  ThyroidDiseases = @ThyroidDiseases,
+                                  Hypertension = @Hypertension,
+                                  Cardiopathies = @Cardiopathies,
+                                  Trauma = @Trauma,
+                                  Cancer = @Cancer,
+                                  Tuberculosis = @Tuberculosis,
+                                  Transfusions = @Transfusions,
+                                  RespiratoryDiseases = @RespiratoryDiseases,
+                                  GastrointestinalDiseases = @GastrointestinalDiseases,
+                                  STDs = @STDs,
+                                  STDsData = @STDsData,
+                                  ChronicKidneyDisease = @ChronicKidneyDisease,
+                                  Others = @Others,
+                                  DateTimeSnap = @DateTimeSnap
+                              WHERE IDPatient = @IDPatient;",
+                                      new { IDPatient, PreviousHospitalization, PreviousSurgeries, Diabetes, ThyroidDiseases, Hypertension, Cardiopathies, Trauma, Cancer, Tuberculosis, Transfusions, RespiratoryDiseases, GastrointestinalDiseases, STDs, STDsData, ChronicKidneyDisease, Others, DateTimeSnap }).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Actualiza las alergias de un paciente.
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="Allergies"></param>
+        /// <param name="DateTimeSnap"></param>
+        /// <returns></returns>
+        public async Task UpdatePatientAllergies(long IDPatient, string Allergies, DateTime? DateTimeSnap)
+        {
+            await _con.ExecuteAsync(@"UPDATE [dbo].[PatientAllergies]
+                              SET Allergies = @Allergies,
+                                  DateTimeSnap = @DateTimeSnap
+                              WHERE IDPatient = @IDPatient;",
+                                      new { IDPatient, Allergies, DateTimeSnap }).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Actualiza la historia psiquiátrica de un paciente.
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="FamilyHistory"></param>
+        /// <param name="FamilyHistoryData"></param>
+        /// <param name="AffectedAreas"></param>
+        /// <param name="PastAndCurrentTreatments"></param>
+        /// <param name="FamilySocialSupport"></param>
+        /// <param name="FamilySocialSupportData"></param>
+        /// <param name="WorkLifeAspects"></param>
+        /// <param name="SocialLifeAspects"></param>
+        /// <param name="AuthorityRelationship"></param>
+        /// <param name="ImpulseControl"></param>
+        /// <param name="FrustrationManagement"></param>
+        /// <param name="DateTimeSnap"></param>
+        /// <returns></returns>
+        public async Task UpdatePsychiatricHistory(long IDPatient, int FamilyHistory, string FamilyHistoryData,
+            string AffectedAreas, string PastAndCurrentTreatments, int FamilySocialSupport,
+            string FamilySocialSupportData, string WorkLifeAspects, string SocialLifeAspects,
+            string AuthorityRelationship, string ImpulseControl, string FrustrationManagement, DateTime? DateTimeSnap)
+        {
+            await _con.ExecuteAsync(@"UPDATE [dbo].[PsychiatricHistory]
+                              SET FamilyHistory = @FamilyHistory,
+                                  FamilyHistoryData = @FamilyHistoryData,
+                                  AffectedAreas = @AffectedAreas,
+                                  PastAndCurrentTreatments = @PastAndCurrentTreatments,
+                                  FamilySocialSupport = @FamilySocialSupport,
+                                  FamilySocialSupportData = @FamilySocialSupportData,
+                                  WorkLifeAspects = @WorkLifeAspects,
+                                  SocialLifeAspects = @SocialLifeAspects,
+                                  AuthorityRelationship = @AuthorityRelationship,
+                                  ImpulseControl = @ImpulseControl,
+                                  FrustrationManagement = @FrustrationManagement,
+                                  DateTimeSnap = @DateTimeSnap
+                              WHERE IDPatient = @IDPatient;",
+                                      new { IDPatient, FamilyHistory, FamilyHistoryData, AffectedAreas, PastAndCurrentTreatments, FamilySocialSupport, FamilySocialSupportData, WorkLifeAspects, SocialLifeAspects, AuthorityRelationship, ImpulseControl, FrustrationManagement, DateTimeSnap }).ConfigureAwait(false);
+        }
+
+        #endregion
+
         #endregion
     }
 }

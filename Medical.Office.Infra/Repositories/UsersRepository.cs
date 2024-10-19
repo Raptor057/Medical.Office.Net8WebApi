@@ -1,6 +1,6 @@
 ﻿using Medical.Office.Domain.Repository;
 using Medical.Office.Infra.DataSources;
-using Medical.Office.Domain.DataSources.Entities.MedicalOffice;
+using Medical.Office.Domain.Entities.MedicalOffice;
 
 namespace Medical.Office.Infra.Repositories
 {

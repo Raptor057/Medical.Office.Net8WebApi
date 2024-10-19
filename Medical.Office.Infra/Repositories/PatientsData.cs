@@ -1,4 +1,4 @@
-﻿using Medical.Office.Domain.DataSources.Entities.MedicalOffice;
+﻿using Medical.Office.Domain.Entities.MedicalOffice;
 using Medical.Office.Domain.Repository;
 using Medical.Office.Infra.DataSources;
 

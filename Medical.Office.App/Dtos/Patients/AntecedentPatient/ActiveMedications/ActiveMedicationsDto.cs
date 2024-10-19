@@ -2,6 +2,6 @@
 
 namespace Medical.Office.App.Dtos.Patients.AntecedentPatient.ActiveMedications
 {
-    [DebuggerDisplay("{Name}")]
+    //[DebuggerDisplay("{Name}")]
     public record ActiveMedicationsDto(long Id,long IDPatient,string AactiveMedicationsData,DateTime? DateTimeSnap);
 }

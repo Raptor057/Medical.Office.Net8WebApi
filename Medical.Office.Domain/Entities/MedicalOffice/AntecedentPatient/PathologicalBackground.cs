@@ -1,4 +1,4 @@
-﻿namespace Medical.Office.Domain.DataSources.Entities.MedicalOffice.AntecedentPatient
+﻿namespace Medical.Office.Domain.Entities.MedicalOffice.AntecedentPatient
 {
     public class PathologicalBackground
     {

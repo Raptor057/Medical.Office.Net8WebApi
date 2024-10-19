@@ -1,4 +1,4 @@
-﻿using Medical.Office.Domain.DataSources.Entities.MedicalOffice;
+﻿using Medical.Office.Domain.Entities.MedicalOffice;
 
 namespace Medical.Office.Domain.Repository
 {

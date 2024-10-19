@@ -1,4 +1,4 @@
-﻿namespace Medical.Office.Domain.DataSources.Entities.MedicalOffice
+﻿namespace Medical.Office.Domain.Entities.MedicalOffice
 {
     public class OfficeSetup
     {

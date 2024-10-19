@@ -25,7 +25,7 @@ namespace Medical.Office.App.UseCases.Users.RegisterUsers
             {
                 return new FailureRegisterUsersResponse("El usuario ya existe");
             }
-            
+
             var roles = await _configurations.GetRolesAsync().ConfigureAwait(false);
             var positions = await _configurations.GetPositionsAsync().ConfigureAwait(false);
             var specialties = await _configurations.GetSpecialtiesAsync().ConfigureAwait(false);
