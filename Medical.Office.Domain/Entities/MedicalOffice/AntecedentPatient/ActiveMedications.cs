@@ -10,7 +10,7 @@ namespace Medical.Office.Domain.Entities.MedicalOffice.AntecedentPatient
         //[Required]
         public long IDPatient { get; set; }
 
-        public string AactiveMedicationsData { get; set; }
+        public string ActiveMedicationsData { get; set; }
 
         public DateTime? DateTimeSnap { get; set; }
     }

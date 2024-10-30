@@ -8,28 +8,44 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedicatio
     internal sealed class InsertActiveMedicationsHandler : IInteractor<InsertActiveMedicationsRequest, InsertActiveMedicationsResponse>
     {
         private readonly IAntecedentPatient _patient;
+        private readonly IPatientsData _patientsData;
 
-        public InsertActiveMedicationsHandler(IAntecedentPatient patient)
+        public InsertActiveMedicationsHandler(IAntecedentPatient patient, IPatientsData patientsData)
         {
             _patient=patient;
+            _patientsData=patientsData;
         }
 
         public async Task<InsertActiveMedicationsResponse> Handle(InsertActiveMedicationsRequest request, CancellationToken cancellationToken)
         {
-           await _patient.InsertActiveMedicationsAsync(request.IDPatient,request.ActiveMedicationsData);
-           var GetLastActiveMedications = await _patient.GetActiveMedicationsByPatientIdAsync(request.IDPatient);
-            if (GetLastActiveMedications == null) 
-            { 
-                return new FailureInsertActiveMedicationsResponse("Falla al agregar informacion del paciente");
-            }
-            if (!GetLastActiveMedications.IDPatient.Equals(request.IDPatient))
+           var GetPatient = await _patientsData.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
+            if (GetPatient == null)
             {
-                return new FailureInsertActiveMedicationsResponse("Error en obtener datos");
+                return new FailureInsertActiveMedicationsResponse("No se puede agregar informacion a este paciente debido a que no esta dado de alta");
             }
+
+           var GetLastActiveMedications = await _patient.GetActiveMedicationsByPatientIdAsync(request.IDPatient).ConfigureAwait(false);
+
+            if (GetLastActiveMedications == null)
+            {
+                await _patient.InsertActiveMedicationsAsync(request.IDPatient, request.ActiveMedicationsData).ConfigureAwait(false);
+            }
+            else if (GetLastActiveMedications.IDPatient.Equals(request.IDPatient))
+            {
+                return new FailureInsertActiveMedicationsResponse($"El paciente {GetPatient.Name} {GetPatient.FathersSurname} con numero {GetPatient.ID} ya cuenta con este registro del dia {GetLastActiveMedications.DateTimeSnap}");
+            }
+            else
+            {
+                await _patient.InsertActiveMedicationsAsync(request.IDPatient, request.ActiveMedicationsData).ConfigureAwait(false);
+
+            }
+
+            GetLastActiveMedications = await _patient.GetActiveMedicationsByPatientIdAsync(request.IDPatient).ConfigureAwait(false);
+
             return new SuccessInsertActiveMedicationsResponse(new ActiveMedicationsDto(
                 GetLastActiveMedications.Id,
                 GetLastActiveMedications.IDPatient,
-                GetLastActiveMedications.AactiveMedicationsData,
+                GetLastActiveMedications.ActiveMedicationsData,
                 GetLastActiveMedications.DateTimeSnap));
         }
     }

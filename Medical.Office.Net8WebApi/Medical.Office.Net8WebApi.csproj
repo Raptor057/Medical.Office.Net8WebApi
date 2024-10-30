@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="EndPoints\DeveloperEndPoints\" />
+    <Folder Include="EndPoints\Patients\AntecedentPatient\ActiveMedications\GetActiveMedications\" />
   </ItemGroup>
 
 </Project>
