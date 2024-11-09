@@ -1,9 +1,10 @@
-using Medical.Office.Net8WebApi;
+﻿using Medical.Office.Net8WebApi;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 using System.Text;
 
 Action<CorsPolicyBuilder> cors = builder => builder
@@ -26,6 +27,26 @@ builder.Services.AddCors(options => options.AddDefaultPolicy(cors));
 
 builder.Services.AddCors(options => options.AddDefaultPolicy(cors));
 builder.Services.AddControllers();
+
+//Agregado para hacer politicas personalizadas
+builder.Services.AddAuthorization(options =>
+{
+
+    options.AddPolicy("AdminIT", policy =>
+               policy.RequireAssertion(context =>
+                   context.User.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == "Admin") &&
+                   context.User.HasClaim(c => c.Type == "Department" && c.Value == "IT"))); // Requiere que el usuario sea Admin y pertenezca al departamento de IT
+
+    options.AddPolicy("IT", policy =>
+           policy.RequireAssertion(context =>
+               context.User.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == "Admin") &&
+               context.User.HasClaim(c => c.Type == "Department" && c.Value == "IT"))); // Requiere que el usuario sea Admin y pertenezca al departamento de IT
+
+    options.AddPolicy("ITDepartmentPolicy", policy =>
+    policy.RequireClaim("Department", "IT")); // Ejemplo de pol�tica que requiere que el usuario pertenezca a los departamentos IT o HR
+
+});
+
 builder.Services.AddServices();
 builder.Services.AddSignalR();
 //Esto agrega los servicios de autenficicacion
@@ -71,7 +92,7 @@ app.UseAuthorization();
 app.UseCors();
 app.MapControllers();
 
-// Obt�n el logger
+// Obtén el logger
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
 
 try
