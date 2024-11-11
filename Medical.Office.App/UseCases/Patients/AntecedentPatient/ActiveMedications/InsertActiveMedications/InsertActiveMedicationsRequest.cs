@@ -34,7 +34,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedicatio
             return new InsertActiveMedicationsRequest(
                 activeMedicationsDto.Id,
                 activeMedicationsDto.IDPatient,
-                activeMedicationsDto.AactiveMedicationsData,
+                activeMedicationsDto.ActiveMedicationsData,
                 activeMedicationsDto.DateTimeSnap
             );
         }

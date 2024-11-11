@@ -24,7 +24,7 @@ namespace Medical.Office.App.UseCases.Users.GetUsers
             else if (request.Id == 0 && string.IsNullOrWhiteSpace(request.Usr))
             {
                 var userslist = await _users.GetUsersAsync().ConfigureAwait(false);
-                if (userslist == null) 
+                if (userslist == null)
                 {
                     return new FailureGetUsersResponse("No se encontraron usuarios");
                 }
@@ -85,7 +85,7 @@ namespace Medical.Office.App.UseCases.Users.GetUsers
             {
                 return new FailureGetUsersResponse("ocurrio un error busca solo por ID o por Usr, no puedes poner un numero de usuario y a la vez un usuario, no seas animal.");
             }
-            else 
+            else
             {
                 return new FailureGetUsersResponse("ocurrio un error inesperado");
             }
