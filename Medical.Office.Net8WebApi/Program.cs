@@ -1,9 +1,9 @@
 ﻿using Medical.Office.Net8WebApi;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using Swashbuckle.AspNetCore.Filters;
 using System.Security.Claims;
 using System.Text;
 
@@ -31,20 +31,29 @@ builder.Services.AddControllers();
 //Agregado para hacer politicas personalizadas
 builder.Services.AddAuthorization(options =>
 {
+    #region Example
+    //options.AddPolicy("AdminIT", policy =>
+    //           policy.RequireAssertion(context =>
+    //               context.User.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == "Admin") &&
+    //               context.User.HasClaim(c => c.Type == "Department" && c.Value == "IT"))); // Requiere que el usuario sea Admin y pertenezca al departamento de IT
 
-    options.AddPolicy("AdminIT", policy =>
-               policy.RequireAssertion(context =>
-                   context.User.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == "Admin") &&
-                   context.User.HasClaim(c => c.Type == "Department" && c.Value == "IT"))); // Requiere que el usuario sea Admin y pertenezca al departamento de IT
+    //options.AddPolicy("IT", policy =>
+    //       policy.RequireAssertion(context =>
+    //           context.User.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == "Admin") &&
+    //           context.User.HasClaim(c => c.Type == "Department" && c.Value == "IT"))); // Requiere que el usuario sea Admin y pertenezca al departamento de IT
 
-    options.AddPolicy("IT", policy =>
-           policy.RequireAssertion(context =>
-               context.User.HasClaim(c => c.Type == ClaimTypes.Role && c.Value == "Admin") &&
-               context.User.HasClaim(c => c.Type == "Department" && c.Value == "IT"))); // Requiere que el usuario sea Admin y pertenezca al departamento de IT
+    //options.AddPolicy("ITDepartmentPolicy", policy =>
+    //policy.RequireClaim("Department", "IT")); // Ejemplo de pol�tica que requiere que el usuario pertenezca a los departamentos IT o HR
+    #endregion
 
-    options.AddPolicy("ITDepartmentPolicy", policy =>
-    policy.RequireClaim("Department", "IT")); // Ejemplo de pol�tica que requiere que el usuario pertenezca a los departamentos IT o HR
-
+    options.AddPolicy("All", policy =>
+    policy.RequireAssertion(context =>
+        context.User.HasClaim(c => c.Type == ClaimTypes.Role &&
+            (c.Value == "Programador" ||
+             c.Value == "Doctor" ||
+             c.Value == "Enfermera" ||
+             c.Value == "Secretaria" ||
+             c.Value == "Asistente"))));
 });
 
 builder.Services.AddServices();
@@ -74,7 +83,21 @@ builder.Services.AddAuthentication(
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
+    {
+        Description = "Standard Authorization header using the Bearer scheme",
+        In = ParameterLocation.Header,
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer"
+    });
+
+    options.OperationFilter<SecurityRequirementsOperationFilter>();
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "ERP Medical Office", Version = "v1" });
+    options.EnableAnnotations(); // Habilitar anotaciones
+});
 
 var app = builder.Build();
 

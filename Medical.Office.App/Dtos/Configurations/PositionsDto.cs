@@ -1,8 +1,8 @@
 ﻿namespace Medical.Office.App.Dtos.Configurations
 {
-    public class GetSpecialtiesDto
+    public class PositionsDto
     {
         //public int Id { get; set; }
-        public string Specialty { get; set; }
+        public string PositionName { get; set; }
     }
 }

@@ -13,9 +13,26 @@ namespace Medical.Office.Domain.Repository
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="NameOfOffice"></param>
+        /// <param name="Address"></param>
+        /// <param name="OpeningTime"></param>
+        /// <param name="ClosingTime"></param>
+        /// <returns></returns>
+        Task InsertOfficeSetupAsync(string NameOfOffice, string Address, TimeSpan OpeningTime, TimeSpan ClosingTime);
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <returns></returns>
         Task<IEnumerable<Positions>>GetPositionsAsync();
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="PositionName"></param>
+        /// <returns></returns>
+        Task InsertPositionsAsync(string PositionName);
+
         /// <summary>
         /// 
         /// </summary>
@@ -34,6 +51,13 @@ namespace Medical.Office.Domain.Repository
         /// <returns></returns>
         Task<IEnumerable<Specialties>> GetSpecialtiesAsync();
         
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Specialty"></param>
+        /// <returns></returns>
+        Task InsertSpecialtiesAsync(string Specialty);
+
         /// <summary>
         /// 
         /// </summary>

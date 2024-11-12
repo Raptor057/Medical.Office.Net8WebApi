@@ -1,6 +1,6 @@
 ﻿namespace Medical.Office.App.Dtos.Configurations
 {
-    public class GetOfficeSetupDto
+    public class OfficeSetupDto
     {
         public string NameOfOffice { get; set; }
 

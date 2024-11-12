@@ -5,9 +5,9 @@ using Medical.Office.App.UseCases.Configurations.GetAllConfigurations;
 using Medical.Office.Net8WebApi.EndPoints.Users.UsersLogin;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Medical.Office.Net8WebApi.EndPoints.GetAllConfigurations
+namespace Medical.Office.Net8WebApi.EndPoints.Configuration.GetAllConfigurations
 {
-    
+
     [ApiController]
     [Route("[controller]")]
     public sealed class GetAllConfigurationsController : ControllerBase
@@ -18,9 +18,9 @@ namespace Medical.Office.Net8WebApi.EndPoints.GetAllConfigurations
 
         public GetAllConfigurationsController(ILogger<LoginUsersController> logger, IMediator mediator, GenericViewModel<GetAllConfigurationsController> viewModel)
         {
-            _logger=logger;
-            _mediator=mediator;
-            _viewModel=viewModel;
+            _logger = logger;
+            _mediator = mediator;
+            _viewModel = viewModel;
         }
 
         [HttpGet]

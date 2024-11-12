@@ -1,10 +1,11 @@
 ﻿using Common.Common.CleanArch;
 using MediatR;
-using Medical.Office.App.UseCases.Patients.GetPatientDataList;
 using Medical.Office.App.UseCases.Users.GetUsers;
-using Medical.Office.Net8WebApi.EndPoints.Users.UsersLogin;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
+
+
 
 namespace Medical.Office.Net8WebApi.EndPoints.Users.GetUsers
 {
@@ -24,7 +25,12 @@ namespace Medical.Office.Net8WebApi.EndPoints.Users.GetUsers
             _viewModel = viewModel;
         }
 
-        [HttpGet]
+        [SwaggerOperation(
+        Summary = "Obtiene los datos de los usuarios",
+        Description = "Este endpoint obtiene los datos de los usuarios basados en el ID o el nombre de usuario, si se quieren obtener toda la lista en general, se deja id = 0.")]
+        [SwaggerResponse(StatusCodes.Status200OK, "Datos del usuario obtenidos exitosamente.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "Error interno del servidor.")]
+        [HttpGet, Authorize(Roles = "Programador,Doctor")]
         [Route("/api/UsersData")]
         public async Task<IActionResult> Execute([FromQuery] int id, [FromQuery] string usr)
         {

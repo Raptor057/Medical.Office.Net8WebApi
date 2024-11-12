@@ -27,7 +27,7 @@ namespace Medical.Office.App.UseCases.Configurations.GetAllConfigurations
             var GetUserStatuses = await _repository.GetUserStatusesAsync().ConfigureAwait(false);
             var GetCountUsers = await _users.GetUsersAsync().ConfigureAwait(false);
 
-            var OfficeSetup = new GetOfficeSetupDto
+            var OfficeSetup = new OfficeSetupDto
             {
                 NameOfOffice = GetOfficeSetup?.NameOfOffice ?? string.Empty, // Asegura que nunca sea null
                 Address = GetOfficeSetup?.Address ?? string.Empty,
@@ -36,9 +36,9 @@ namespace Medical.Office.App.UseCases.Configurations.GetAllConfigurations
             };
 
             var Genders = GetGender.Select(g => new GetGendersDto{ Gender = g.Gender }).ToList();
-            var Positions = GetPositions.Select(p => new GetPositionsDto { PositionName = p.PositionName }).ToList();
+            var Positions = GetPositions.Select(p => new PositionsDto { PositionName = p.PositionName }).ToList();
             var Roles = GetRoles.Select(r => new GetRolesDto { RolesName = r.RolesName }).ToList();
-            var Specialities = GetSpecialities.Select(s => new GetSpecialtiesDto { Specialty = s.Specialty }).ToList();
+            var Specialities = GetSpecialities.Select(s => new SpecialtiesDto { Specialty = s.Specialty }).ToList();
             var UserStatuses = GetUserStatuses.Select(u => new GetUserStatuesDto { TypeUserStatuses = u.TypeUserStatuses }).ToList();
             
 

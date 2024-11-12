@@ -3,7 +3,7 @@ using Common.Common.CleanArch;
 using Medical.Office.App.UseCases.Configurations.GetAllConfigurations.Responses;
 
 
-namespace Medical.Office.Net8WebApi.EndPoints.GetAllConfigurations
+namespace Medical.Office.Net8WebApi.EndPoints.Configuration.GetAllConfigurations
 {
     public sealed class GetAllConfigurationsPresenter<T> : IPresenter<GetAllConfigurationsResponse>
         where T : GetAllConfigurationsResponse
@@ -12,7 +12,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.GetAllConfigurations
 
         public GetAllConfigurationsPresenter(GenericViewModel<GetAllConfigurationsController> viewModel)
         {
-            _viewModel=viewModel;
+            _viewModel = viewModel;
         }
 
         public async Task Handle(GetAllConfigurationsResponse notification, CancellationToken cancellationToken)

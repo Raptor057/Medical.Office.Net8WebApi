@@ -1,0 +1,31 @@
+@baseUrl = http://localhost:5038
+@authToken = token
+
+### Solicitud POST para hacer login de un usuario
+POST {{baseUrl}}/api/login
+Content-Type: application/json
+
+{
+  "usr": "",
+  "psswd": ""
+}
+
+
+### Solicitud GET para obtener datos de los usuarios
+GET {{baseUrl}}/api/UsersData?id=0&usr=
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+### Crear Nuevo usuario
+POST {{baseUrl}}/api/registerusers
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+{
+  "usr": "Doctor",
+  "psswd": "Doctor123***",
+  "name": "Doctor",
+  "lastname": "N/A",
+  "role": "Doctor",
+  "position": "Doctor",
+  "specialtie": "Doctor"
+}

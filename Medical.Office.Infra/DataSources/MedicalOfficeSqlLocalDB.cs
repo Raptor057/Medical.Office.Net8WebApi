@@ -69,6 +69,9 @@ namespace Medical.Office.Infra.DataSources
         public async Task StartInsertPositions()
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Positions] (PositionName) VALUES ('Programador');").ConfigureAwait(false);
 
+        public async Task StartInsertPositions(string PositionName)
+    => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Positions] (PositionName) VALUES (@PositionName);", new { PositionName }).ConfigureAwait(false);
+
         /// <summary>
         /// 
         /// </summary>
@@ -89,7 +92,7 @@ namespace Medical.Office.Infra.DataSources
         /// 
         /// </summary>
         /// <returns></returns>
-        public async Task StartInsertSpecialties()
+        public async Task InsertSpecialties()
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Specialties] (Specialty) VALUES ('Desarollador');").ConfigureAwait(false);
 
         /// <summary>

@@ -43,12 +43,12 @@ namespace Medical.Office.Infra.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Users>> GetUsersAsync()
         {
-            var GetUsers = await _db.GetUsers();
-            if (GetUsers == null || GetUsers.Count() == 0)
-            {
-                await _db.RegisterUsers("rarriaga", "1A09DF34D876AC0562CDE4723F105436C2D02616ADD65EA50EF83707DFE59BB5", "Rogelio", "Arriaga", "Programador", "Programador", "Desarollador").ConfigureAwait(false);
-                return await _db.GetUsers().ConfigureAwait(false); ;
-            }
+            //var GetUsers = await _db.GetUsers();
+            //if (GetUsers == null || GetUsers.Count() == 0)
+            //{
+            //    await _db.RegisterUsers("rarriaga", "1A09DF34D876AC0562CDE4723F105436C2D02616ADD65EA50EF83707DFE59BB5", "Rogelio", "Arriaga", "Programador", "Programador", "Desarollador").ConfigureAwait(false);
+            //    return await _db.GetUsers().ConfigureAwait(false); ;
+            //}
             return await _db.GetUsers().ConfigureAwait(false); ;
         }
             //=> await _db.GetUsers().ConfigureAwait(false);

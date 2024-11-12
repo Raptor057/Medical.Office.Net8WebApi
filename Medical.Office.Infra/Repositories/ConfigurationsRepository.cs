@@ -23,12 +23,12 @@ namespace Medical.Office.Infra.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Genders>> GetGendersAsync()
         {
-            var GetGenders = await _db.GetGenders().ConfigureAwait(false);
-            if (GetGenders == null || GetGenders.Count() == 0) 
-            {
-                await _db.StartInsertGenders().ConfigureAwait(false);
-                return await _db.GetGenders().ConfigureAwait(false);
-            }
+            //var GetGenders = await _db.GetGenders().ConfigureAwait(false);
+            //if (GetGenders == null || GetGenders.Count() == 0) 
+            //{
+            //    await _db.StartInsertGenders().ConfigureAwait(false);
+            //    return await _db.GetGenders().ConfigureAwait(false);
+            //}
             return await _db.GetGenders().ConfigureAwait(false);
         }
 
@@ -38,12 +38,12 @@ namespace Medical.Office.Infra.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Positions>> GetPositionsAsync()
         {
-            var GetStartPositions = await _db.GetPositions().ConfigureAwait(false);
-            if (GetStartPositions == null || GetStartPositions.Count() == 0) 
-            {
-                await _db.StartInsertPositions().ConfigureAwait(false);
-                return await _db.GetPositions().ConfigureAwait(false);
-            }
+            //var GetStartPositions = await _db.GetPositions().ConfigureAwait(false);
+            //if (GetStartPositions == null || GetStartPositions.Count() == 0) 
+            //{
+            //    await _db.StartInsertPositions().ConfigureAwait(false);
+            //    return await _db.GetPositions().ConfigureAwait(false);
+            //}
             return await _db.GetPositions().ConfigureAwait(false);
         }
 
@@ -53,12 +53,12 @@ namespace Medical.Office.Infra.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Roles>> GetRolesAsync()
         {
-            var GetStartRoles = await _db.GetRoles().ConfigureAwait(false);
-            if (GetStartRoles == null || GetStartRoles.Count() == 0)
-            {
-                await _db.StartInsertRoles().ConfigureAwait(false);
-                return await _db.GetRoles().ConfigureAwait(false);
-            }
+            //var GetStartRoles = await _db.GetRoles().ConfigureAwait(false);
+            //if (GetStartRoles == null || GetStartRoles.Count() == 0)
+            //{
+            //    await _db.StartInsertRoles().ConfigureAwait(false);
+            //    return await _db.GetRoles().ConfigureAwait(false);
+            //}
             return await _db.GetRoles().ConfigureAwait(false);
         }
 
@@ -68,12 +68,12 @@ namespace Medical.Office.Infra.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<Specialties>> GetSpecialtiesAsync()
         {
-            var GetStartSpecialities = await _db.GetSpecialties().ConfigureAwait(false);
-            if (GetStartSpecialities == null || GetStartSpecialities.Count() == 0)
-            {
-                await _db.StartInsertSpecialties().ConfigureAwait(false);
-                return await _db.GetSpecialties().ConfigureAwait(false);
-            }
+            //var GetStartSpecialities = await _db.GetSpecialties().ConfigureAwait(false);
+            //if (GetStartSpecialities == null || GetStartSpecialities.Count() == 0)
+            //{
+            //    await _db.StartInsertSpecialties().ConfigureAwait(false);
+            //    return await _db.GetSpecialties().ConfigureAwait(false);
+            //}
             return await _db.GetSpecialties().ConfigureAwait(false);
         }
 
@@ -83,12 +83,12 @@ namespace Medical.Office.Infra.Repositories
         /// <returns></returns>
         public async Task<IEnumerable<UserStatuses>> GetUserStatusesAsync()
         {
-            var GetStartUserStatuses = await _db.GetUserStatuses().ConfigureAwait(false);
-            if(GetStartUserStatuses == null || GetStartUserStatuses.Count() == 0)
-            {
-                await _db.StartInsertUserStatuses().ConfigureAwait(false);
-                return await _db.GetUserStatuses().ConfigureAwait(false);
-            }
+            //var GetStartUserStatuses = await _db.GetUserStatuses().ConfigureAwait(false);
+            //if(GetStartUserStatuses == null || GetStartUserStatuses.Count() == 0)
+            //{
+            //    await _db.StartInsertUserStatuses().ConfigureAwait(false);
+            //    return await _db.GetUserStatuses().ConfigureAwait(false);
+            //}
             return await _db.GetUserStatuses().ConfigureAwait(false);
         }
 
@@ -117,5 +117,14 @@ namespace Medical.Office.Infra.Repositories
 
         public async Task<OfficeSetup> GetOfficeSetupAsync()
             => await _db.GetOfficeSetup().ConfigureAwait(false);
+
+        public async Task InsertOfficeSetupAsync(string NameOfOffice, string Address, TimeSpan OpeningTime, TimeSpan ClosingTime)
+            => await _db.InsertOfficeSetup(NameOfOffice, Address, OpeningTime, ClosingTime).ConfigureAwait(true);
+
+        public async Task InsertPositionsAsync(string PositionName)
+            => await _db.InsertPositions(PositionName).ConfigureAwait(false);
+
+        public async Task InsertSpecialtiesAsync(string Specialty)
+            => await _db.InsertSpecialties(Specialty).ConfigureAwait(false);
     }
 }
