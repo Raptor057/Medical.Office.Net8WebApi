@@ -40,7 +40,6 @@ namespace Medical.Office.App.UseCases.Configurations.GetAllConfigurations
             var Roles = GetRoles.Select(r => new GetRolesDto { RolesName = r.RolesName }).ToList();
             var Specialities = GetSpecialities.Select(s => new SpecialtiesDto { Specialty = s.Specialty }).ToList();
             var UserStatuses = GetUserStatuses.Select(u => new GetUserStatuesDto { TypeUserStatuses = u.TypeUserStatuses }).ToList();
-            
 
             var GetAllConfigurationsDto = new GetAllConfigurationsDto(
                 OfficeSetup,   // Primer parámetro es GetOfficeSetupDto

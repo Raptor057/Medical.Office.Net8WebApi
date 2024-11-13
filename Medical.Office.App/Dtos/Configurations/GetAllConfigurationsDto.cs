@@ -1,4 +1,4 @@
 ﻿namespace Medical.Office.App.Dtos.Configurations
 {
-    public record GetAllConfigurationsDto(OfficeSetupDto OfficeSetupDto, IEnumerable<PositionsDto> GetPositionsDto, IEnumerable<GetRolesDto> GetRolesDto, IEnumerable<SpecialtiesDto> GetSpecialtiesDto, IEnumerable<GetGendersDto> GetGendersDto, IEnumerable<GetUserStatuesDto> GetUserStatuesDto);
+    public record GetAllConfigurationsDto(OfficeSetupDto OfficeSetup, IEnumerable<PositionsDto> Positions, IEnumerable<GetRolesDto> Roles, IEnumerable<SpecialtiesDto> Specialties, IEnumerable<GetGendersDto> Genders, IEnumerable<GetUserStatuesDto> UserStatues);
 }

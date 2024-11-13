@@ -25,6 +25,11 @@ namespace Medical.Office.Net8WebApi.EndPoints.Users.UsersLogin
         [Route("/api/login")]
         public async Task<IActionResult> ExecuteLogin([FromBody] LoginUsersRequestBody requestBody)
         {
+
+            if (!LoginUsersRequest.CanLoggin((new LoginUserDto { Usr = requestBody.Usr,Psswd = requestBody.Psswd}), out var errors)) 
+            {
+                return StatusCode(400, _viewModel.Fail(errors.ToString()));
+            }
             var Login = new LoginUserDto
             {
                 Usr = requestBody.Usr,

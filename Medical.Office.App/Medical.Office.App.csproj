@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Configurations\Positions\InsertPositions\" />
     <Folder Include="UseCases\Configurations\Specialties\InsertSpecialties\" />
   </ItemGroup>
 

@@ -11,7 +11,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Users.UsersLogin
 
         public LoginUsersPresenter(GenericViewModel<LoginUsersController> viewModel)
         {
-            _viewModel=viewModel;            
+            _viewModel=viewModel;
         }
         public async Task Handle(LoginUsersResponse notification, CancellationToken cancellationToken)
         {

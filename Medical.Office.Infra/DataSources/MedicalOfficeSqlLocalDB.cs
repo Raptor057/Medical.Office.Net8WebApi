@@ -22,7 +22,7 @@ namespace Medical.Office.Infra.DataSources
         /// </summary>
         /// <returns></returns>
         public async Task<OfficeSetup> GetOfficeSetup()
-            => await _con.QuerySingleAsync<OfficeSetup>("SELECT *  FROM [Medical.Office.SqlLocalDB].[dbo].[OfficeSetup]").ConfigureAwait(false);
+            => await _con.QueryFirstAsync<OfficeSetup>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[OfficeSetup]").ConfigureAwait(false);
 
         /// <summary>
         /// 

@@ -1,7 +1,9 @@
 ﻿using Common.Common.CleanArch;
 using MediatR;
+using Medical.Office.App.Dtos.Patients.AntecedentPatient.ActiveMedications;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedications.InsertActiveMedications;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.ActiveMedications.InsertActiveMedications
 {
@@ -24,6 +26,16 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.ActiveM
         [Route("/api/insertactivemedications")]
         public async Task<IActionResult> Execute([FromBody] InsertActiveMedicationsRequestBody requestBody)
         {
+                var activeMedicationsDto = new ActiveMedicationsDto(
+                Id: 1, // Proporciona el valor adecuado para Id
+                IDPatient: requestBody.IDPatient,
+                ActiveMedicationsData: requestBody.ActiveMedicationsData,
+                DateTimeSnap: DateTime.Now
+);
+            if (!InsertActiveMedicationsRequest.CanInsert(activeMedicationsDto, out var errors)) 
+            {
+                return StatusCode(400, _viewModel.Fail(errors.ToString()));
+            }
             var request = new InsertActiveMedicationsRequest(1, requestBody.IDPatient, requestBody.ActiveMedicationsData, DateTime.Now);
             try
             {
