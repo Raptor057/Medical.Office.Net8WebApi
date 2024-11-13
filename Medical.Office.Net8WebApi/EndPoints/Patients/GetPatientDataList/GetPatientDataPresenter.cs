@@ -5,7 +5,7 @@ using Medical.Office.App.UseCases.Patients.GetPatientDataList.Responses;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.GetPatientDataList
 {
-    public sealed class GetPatientDataPresenter<T> : IPresenter<GetPatientDataListResponse> 
+    public sealed class GetPatientDataPresenter<T> : IPresenter<GetPatientDataListResponse>
         where T : GetPatientDataListResponse
     {
         private readonly GenericViewModel<GetPatientDataController> _viewModel;

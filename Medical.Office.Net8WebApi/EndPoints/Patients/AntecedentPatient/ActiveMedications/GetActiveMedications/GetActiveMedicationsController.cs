@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.ActiveMedications.GetActiveMedications
-{    
+{
     [ApiController]
     [Route("[controller]")]
     public class GetActiveMedicationsController : ControllerBase

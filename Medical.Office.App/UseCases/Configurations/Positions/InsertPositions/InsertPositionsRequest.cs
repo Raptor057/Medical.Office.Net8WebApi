@@ -18,7 +18,7 @@ namespace Medical.Office.App.UseCases.Configurations.Positions.InsertPositions
         {
             string pattern = "^[A-Z][a-z]*$";
 
-            if (positions == null) 
+            if (positions == null)
             {
                 errors.Add("No se agrego ninguna posicion");
                 return;
@@ -33,14 +33,14 @@ namespace Medical.Office.App.UseCases.Configurations.Positions.InsertPositions
             }
         }
 
-        public static bool CanInsert(PositionsDto positions, out ErrorList errors) 
+        public static bool CanInsert(PositionsDto positions, out ErrorList errors)
         {
             errors = new ErrorList();
             Validations(positions, errors);
             return errors.IsEmpty;
         }
 
-        public static InsertPositionsRequest Create(PositionsDto positions) 
+        public static InsertPositionsRequest Create(PositionsDto positions)
         {
             if (!CanInsert(positions, out ErrorList errors)) throw errors.AsException();
             return new InsertPositionsRequest(positions.PositionName);

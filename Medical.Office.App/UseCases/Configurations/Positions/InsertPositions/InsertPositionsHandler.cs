@@ -20,7 +20,7 @@ namespace Medical.Office.App.UseCases.Configurations.Positions.InsertPositions
         }
         public async Task<InsertPositionsResponse> Handle(InsertPositionsRequest request, CancellationToken cancellationToken)
         {
-           
+
             var GetPositions = await _configurations.GetPositionsAsync().ConfigureAwait(false);
 
             var Positions = GetPositions.Select(p => new PositionsDto { PositionName = p.PositionName }).ToList();
@@ -30,6 +30,7 @@ namespace Medical.Office.App.UseCases.Configurations.Positions.InsertPositions
                 // Si existe, da un error
                 return new FailureInsertPositionsResponse("El nombre de la posición ya existe.");
             }
+            _logger.LogInformation("Se agrego la posicion correctamente");
             await _configurations.InsertPositionsAsync(request.PositionName).ConfigureAwait(false);
             return new SuccessInsertPositionsResponse(request.PositionName);
         }

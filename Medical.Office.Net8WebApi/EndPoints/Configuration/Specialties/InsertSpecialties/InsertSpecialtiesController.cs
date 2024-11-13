@@ -2,22 +2,21 @@
 using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.Dtos.Configurations;
-using Medical.Office.App.UseCases.Configurations.Positions.InsertPositions;
+using Medical.Office.App.UseCases.Configurations.Specialties.InsertSpecialties;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Positions.InsertPositions
+namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Specialties.InsertSpecialties
 {
-
-    [ApiController]
     [Route("[controller]")]
-    public class InsertPositionsController : ControllerBase
+    [ApiController]
+    public class InsertSpecialtiesController : ControllerBase
     {
-        private readonly ILogger<InsertPositionsController> _logger;
+        private readonly ILogger<InsertSpecialtiesController> _logger;
         private readonly IMediator _mediator;
-        private readonly GenericViewModel<InsertPositionsController> _viewModel;
+        private readonly GenericViewModel<InsertSpecialtiesController> _viewModel;
 
-        public InsertPositionsController(ILogger<InsertPositionsController> logger, IMediator mediator, GenericViewModel<InsertPositionsController> viewModel)
+        public InsertSpecialtiesController(ILogger<InsertSpecialtiesController> logger, IMediator mediator, GenericViewModel<InsertSpecialtiesController> viewModel)
         {
             _logger=logger;
             _mediator=mediator;
@@ -25,15 +24,16 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Positions.InsertPosi
         }
 
         [HttpPost]
-        [Route("/api/insertposition/{Position}")]
-        public async Task<IActionResult> Execute([FromRoute] string Position)
+        [Route("/api/insertspecialties/{Specialtie}")]
+        public async Task<IActionResult> Execute([FromRoute] string Specialtie)
         {
-            if (!InsertPositionsRequest.CanInsert((new PositionsDto { PositionName = Position ?? ""}), out var errors))
+
+            if (!InsertSpecialtiesRequest.CanInsert((new SpecialtiesDto { Specialty = Specialtie ?? ""}),out var errors))
             {
                 return StatusCode(400, _viewModel.Fail(errors.ToString()));
             }
 
-            var request = InsertPositionsRequest.Create(new App.Dtos.Configurations.PositionsDto { PositionName = Position});
+            var request = InsertSpecialtiesRequest.Create(new SpecialtiesDto { Specialty = Specialtie });
 
             try
             {

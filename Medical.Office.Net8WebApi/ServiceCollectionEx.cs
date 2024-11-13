@@ -18,7 +18,6 @@ namespace Medical.Office.Net8WebApi
                 .AddSingleton(typeof(GenericViewModel<>))
                 .AddAppServices()
                 .AddMediatR(cfg => { cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionEx).Assembly); });
-
         }
     }
 }

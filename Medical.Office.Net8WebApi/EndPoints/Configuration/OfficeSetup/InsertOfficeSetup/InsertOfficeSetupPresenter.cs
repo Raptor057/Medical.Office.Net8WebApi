@@ -4,7 +4,7 @@ using Medical.Office.App.UseCases.Configurations.OfficeSetup.InsertOfficeSetup.R
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.OfficeSetup.InsertOfficeSetup
 {
-    public sealed class InsertOfficeSetupPresenter<T> : IPresenter<InsertOfficeSetupResponse> 
+    public sealed class InsertOfficeSetupPresenter<T> : IPresenter<InsertOfficeSetupResponse>
         where T : InsertOfficeSetupResponse
     {
         private readonly GenericViewModel<InsertOfficeSetupController> _viewModel;

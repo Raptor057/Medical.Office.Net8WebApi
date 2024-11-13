@@ -4,7 +4,7 @@ using Medical.Office.Domain.Entities.MedicalOffice.AntecedentPatient;
 namespace Medical.Office.Infra.DataSources
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public class MedicalOfficeSqlLocalDB
     {
@@ -14,18 +14,18 @@ namespace Medical.Office.Infra.DataSources
         {
             _con = con;
         }
-        
+
         #region Configuracion
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task<OfficeSetup> GetOfficeSetup()
             => await _con.QueryFirstAsync<OfficeSetup>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[OfficeSetup]").ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<Genders>> GetGenders()
@@ -35,7 +35,7 @@ namespace Medical.Office.Infra.DataSources
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Genders] (Gender) VALUES ('Masculino'),('Femenino');").ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<UserStatuses>> GetUserStatuses()
@@ -45,7 +45,7 @@ namespace Medical.Office.Infra.DataSources
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[UserStatuses] (TypeUserStatuses) VALUES ('Activo'),('Inactivo');").ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<Roles>> GetRoles()
@@ -55,14 +55,14 @@ namespace Medical.Office.Infra.DataSources
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Roles] (RolesName) VALUES ('Programador'),('Doctor'),('Enfermera'),('Secretaria'),('Asistente');").ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<Positions>> GetPositions()
             => await _con.QueryAsync<Positions>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Positions]").ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
@@ -73,7 +73,7 @@ namespace Medical.Office.Infra.DataSources
     => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Positions] (PositionName) VALUES (@PositionName);", new { PositionName }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
@@ -82,21 +82,21 @@ namespace Medical.Office.Infra.DataSources
 
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<Specialties>> GetSpecialties()
             => await _con.QueryAsync<Specialties>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Specialties]").ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task InsertSpecialties()
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Specialties] (Specialty) VALUES ('Desarollador');").ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="specialtie"></param>
         /// <returns></returns>
@@ -104,7 +104,7 @@ namespace Medical.Office.Infra.DataSources
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Specialties] (Specialty) VALUES (@specialtie);", new { specialtie }).ConfigureAwait(false);
                     #region Users
                     /// <summary>
-                    /// 
+                    ///
                     /// </summary>
                     /// <param name="Id"></param>
                     /// <returns></returns>
@@ -112,7 +112,7 @@ namespace Medical.Office.Infra.DataSources
                         await _con.QuerySingleAsync<Users>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Id = @Id;", new { Id }).ConfigureAwait(false);
 
                     /// <summary>
-                    /// 
+                    ///
                     /// </summary>
                     /// <param name="Usr"></param>
                     /// <returns></returns>
@@ -120,7 +120,7 @@ namespace Medical.Office.Infra.DataSources
                     await _con.QuerySingleAsync<Users>("SELECT top 1 * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr;", new { Usr }).ConfigureAwait(false);
 
                     /// <summary>
-                    /// 
+                    ///
                     /// </summary>
                     /// <param name="Usr"></param>
                     /// <returns></returns>
@@ -128,14 +128,14 @@ namespace Medical.Office.Infra.DataSources
                     await _con.QueryAsync<Users>("SELECT top 1 * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr Like @Usr;", new { Usr = $"%{Usr}%" }).ConfigureAwait(false);
 
                     /// <summary>
-                    /// 
+                    ///
                     /// </summary>
                     /// <returns></returns>
                     public async Task<IEnumerable<Users>> GetUsers() =>
                                 await _con.QueryAsync<Users>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Users];", new { }).ConfigureAwait(false);
 
                     /// <summary>
-                    /// 
+                    ///
                     /// </summary>
                     /// <param name="Usr"></param>
                     /// <param name="Psswd"></param>
@@ -144,7 +144,7 @@ namespace Medical.Office.Infra.DataSources
                         await _con.QuerySingleAsync<Users>("SELECT TOP (1) * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr AND Psswd = @Psswd;", new { Usr, Psswd }).ConfigureAwait(false);
 
                     /// <summary>
-                    /// 
+                    ///
                     /// </summary>
                     /// <param name="Usr"></param>
                     /// <param name="Psswd"></param>
@@ -161,14 +161,14 @@ namespace Medical.Office.Infra.DataSources
                             "VALUES(@Usr, @Psswd, @Name, @Lastname, @Role, @Position, @Specialtie);", new { Usr, Psswd, Name, Lastname, Role, Position, Specialtie }).ConfigureAwait(false);
 
                     /// <summary>
-                    /// 
+                    ///
                     /// </summary>
                     /// <returns></returns>
                     public async Task<IEnumerable<LoginHistory>> GetLoginHistory()
                         => await _con.QueryAsync<LoginHistory>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] ORDER BY DateTimeSnap DESC;").ConfigureAwait(false);
 
                     /// <summary>
-                    /// 
+                    ///
                     /// </summary>
                     /// <param name="Param"></param>
                     /// <param name="StartDate"></param>
@@ -181,7 +181,7 @@ namespace Medical.Office.Infra.DataSources
                             "ORDER BY DateTimeSnap ASC;", new { Param = $"%{Param}%", StartDate, EndDate }).ConfigureAwait(false);
 
                     /// <summary>
-                    /// 
+                    ///
                     /// </summary>
                     /// <param name="Usr"></param>
                     /// <param name="UsrName"></param>
@@ -193,14 +193,14 @@ namespace Medical.Office.Infra.DataSources
                             "VALUES(@Usr,@UsrName,@Token);", new { Usr, UsrName, Token }).ConfigureAwait(false);
 
                     /// <summary>
-                    /// 
+                    ///
                     /// </summary>
                     /// <returns></returns>
                     public async Task<IEnumerable<UsersMovements>> GetUsersMovements()
                         => await _con.QueryAsync<UsersMovements>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[UsersMovements];").ConfigureAwait(false);
 
                     /// <summary>
-                    /// 
+                    ///
                     /// </summary>
                     /// <param name="Param"></param>
                     /// <param name="StartDate"></param>
@@ -213,7 +213,7 @@ namespace Medical.Office.Infra.DataSources
                             "ORDER BY DateTimeSnap ASC", new { Param = $"%{Param}%", StartDate, EndDate }).ConfigureAwait(false);
 
                     /// <summary>
-                    /// 
+                    ///
                     /// </summary>
                     /// <param name="Usr"></param>
                     /// <param name="UsrName"></param>
@@ -229,7 +229,7 @@ namespace Medical.Office.Infra.DataSources
                     #endregion
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="NameOfOffice"></param>
         /// <param name="Address"></param>
@@ -247,7 +247,7 @@ namespace Medical.Office.Infra.DataSources
         #region MedicalOffice
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="FirstName"></param>
         /// <param name="LastName"></param>
@@ -262,14 +262,14 @@ namespace Medical.Office.Infra.DataSources
             new { FirstName, LastName, Specialty, PhoneNumber, Email }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<Doctors>> GetDoctors()
             => await _con.QueryAsync<Doctors>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Doctors]").ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <param name="IDDoctor"></param>
@@ -286,14 +286,14 @@ namespace Medical.Office.Infra.DataSources
                 new { IDPatient, IDDoctor, AppointmentDateTime, ReasonForVisit, AppointmentStatus, Notes, TypeOfAppointment }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendar()
             => await _con.QueryAsync<MedicalAppointmentCalendar>("SELECT * FROM MedicalAppointmentCalendar ").ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <returns></returns>
@@ -301,7 +301,7 @@ namespace Medical.Office.Infra.DataSources
             => await _con.QueryAsync<MedicalAppointmentCalendar>("SELECT * FROM MedicalAppointmentCalendar WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="Name"></param>
         /// <param name="FathersSurname"></param>
@@ -335,21 +335,21 @@ namespace Medical.Office.Infra.DataSources
                     EmergencyContactName,EmergencyContactPhone,InsuranceProvider,PolicyNumber,BloodType,Photo,InternalNotes}).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task<PatientData> GetLastPatientsData()
              => await _con.QuerySingleAsync<PatientData>("SELECT TOP 1 * FROM [Medical.Office.SqlLocalDB].[dbo].[PatientData] ORDER BY ID DESC").ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<PatientData>> GetPatientsDataList()
             => await _con.QueryAsync<PatientData>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[PatientData]").ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="ID"></param>
         /// <returns></returns>
@@ -361,7 +361,7 @@ namespace Medical.Office.Infra.DataSources
         #region AntecedentPatient
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <param name="AactiveMedicationsData"></param>
@@ -369,11 +369,11 @@ namespace Medical.Office.Infra.DataSources
         public async Task InsertActiveMedications(long IDPatient, string AactiveMedicationsData)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[ActiveMedications] " +
                 "([IDPatient],[AactiveMedicationsData]) " +
-                "VALUES (@IDPatient,@AactiveMedicationsData)", 
+                "VALUES (@IDPatient,@AactiveMedicationsData)",
                 new {IDPatient, AactiveMedicationsData }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <returns></returns>
@@ -381,7 +381,7 @@ namespace Medical.Office.Infra.DataSources
             => await _con.QuerySingleAsync<ActiveMedications>("SELECT * FROM ActiveMedications WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <param name="Diabetes"></param>
@@ -399,7 +399,7 @@ namespace Medical.Office.Infra.DataSources
                 new { IDPatient, Diabetes, Cardiopathies, Hypertension, ThyroidDiseases, ChronicKidneyDisease, Others, OthersData }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <returns></returns>
@@ -407,7 +407,7 @@ namespace Medical.Office.Infra.DataSources
             => await _con.QuerySingleAsync<FamilyHistory>("SELECT * FROM FamilyHistory WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <param name="MedicalHistoryNotesData"></param>
@@ -415,11 +415,11 @@ namespace Medical.Office.Infra.DataSources
         public async Task InsertMedicalHistoryNotes(long IDPatient, string MedicalHistoryNotesData)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[MedicalHistoryNotes]" +
                 "([IDPatient],[MedicalHistoryNotesData])" +
-                "VALUES(@IDPatient,@MedicalHistoryNotesData);", 
+                "VALUES(@IDPatient,@MedicalHistoryNotesData);",
                 new {IDPatient,MedicalHistoryNotesData}).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <returns></returns>
@@ -427,7 +427,7 @@ namespace Medical.Office.Infra.DataSources
             => await _con.QuerySingleAsync<MedicalHistoryNotes>("SELECT * FROM MedicalHistoryNotes WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <param name="PhysicalActivity"></param>
@@ -443,11 +443,11 @@ namespace Medical.Office.Infra.DataSources
         public async Task InsertNonPathologicalHistory(long IDPatient, int PhysicalActivity, int Smoking, int Alcoholism, int SubstanceAbuse, string SubstanceAbuseData, int RecentVaccination, string RecentVaccinationData, int Others, string OthersData)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[NonPathologicalHistory]" +
                 "([IDPatient],[PhysicalActivity],[Smoking],[Alcoholism],[SubstanceAbuse],[SubstanceAbuseData],[RecentVaccination],[RecentVaccinationData],[Others],[OthersData])" +
-                "VALUES(@IDPatient, @PhysicalActivity, @Smoking, @Alcoholism, @SubstanceAbuse, @SubstanceAbuseData, @RecentVaccination, @RecentVaccinationData, @Others, @OthersData )", 
+                "VALUES(@IDPatient, @PhysicalActivity, @Smoking, @Alcoholism, @SubstanceAbuse, @SubstanceAbuseData, @RecentVaccination, @RecentVaccinationData, @Others, @OthersData )",
                 new { IDPatient, PhysicalActivity, Smoking, Alcoholism, SubstanceAbuse, SubstanceAbuseData, RecentVaccination, RecentVaccinationData, Others, OthersData }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <returns></returns>
@@ -455,7 +455,7 @@ namespace Medical.Office.Infra.DataSources
             => await _con.QuerySingleAsync<NonPathologicalHistory>("SELECT * FROM NonPathologicalHistory WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <param name="PreviousHospitalization"></param>
@@ -478,11 +478,11 @@ namespace Medical.Office.Infra.DataSources
         public async Task InsertPathologicalBackground(long IDPatient, int PreviousHospitalization, int PreviousSurgeries, int Diabetes, int ThyroidDiseases, int Hypertension, int Cardiopathies, int Trauma, int Cancer, int Tuberculosis, int Transfusions, int RespiratoryDiseases, int GastrointestinalDiseases, int STDs, string STDsData, int ChronicKidneyDisease, string Others)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[PathologicalBackground]" +
                 "([IDPatient],[PreviousHospitalization],[PreviousSurgeries],[Diabetes],[ThyroidDiseases],[Hypertension],[Cardiopathies],[Trauma],[Cancer],[Tuberculosis],[Transfusions],[RespiratoryDiseases],[GastrointestinalDiseases],[STDs],[STDsData],[ChronicKidneyDisease],[Others])" +
-                "VALUES(@IDPatient, @PreviousHospitalization, @PreviousSurgeries, @Diabetes, @ThyroidDiseases, @Hypertension, @Cardiopathies, @Trauma, @Cancer, @Tuberculosis, @Transfusions, @RespiratoryDiseases, @GastrointestinalDiseases, @STDs, @STDsData, @ChronicKidneyDisease, @Others )", 
+                "VALUES(@IDPatient, @PreviousHospitalization, @PreviousSurgeries, @Diabetes, @ThyroidDiseases, @Hypertension, @Cardiopathies, @Trauma, @Cancer, @Tuberculosis, @Transfusions, @RespiratoryDiseases, @GastrointestinalDiseases, @STDs, @STDsData, @ChronicKidneyDisease, @Others )",
                 new { IDPatient, PreviousHospitalization, PreviousSurgeries, Diabetes, ThyroidDiseases,  Hypertension, Cardiopathies, Trauma, Cancer, Tuberculosis, Transfusions, RespiratoryDiseases, GastrointestinalDiseases, STDs, STDsData, ChronicKidneyDisease, Others }).ConfigureAwait(false);
-        
+
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <returns></returns>
@@ -490,7 +490,7 @@ namespace Medical.Office.Infra.DataSources
             => await _con.QuerySingleAsync<PathologicalBackground>("SELECT * FROM PathologicalBackground WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <param name="Allergies"></param>
@@ -498,11 +498,11 @@ namespace Medical.Office.Infra.DataSources
         public async Task InsertPatientAllergies(long IDPatient, string Allergies)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[PatientAllergies]" +
                 "([IDPatient],[Allergies])" +
-                "VALUES(@IDPatient , @Allergies )", 
+                "VALUES(@IDPatient , @Allergies )",
                 new { IDPatient , Allergies }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <returns></returns>
@@ -510,7 +510,7 @@ namespace Medical.Office.Infra.DataSources
             => await _con.QuerySingleAsync<PatientAllergies>("SELECT * FROM PatientAllergies WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <param name="FamilyHistory"></param>
@@ -528,11 +528,10 @@ namespace Medical.Office.Infra.DataSources
         public async Task InsertPsychiatricHistory(long IDPatient, int FamilyHistory, string FamilyHistoryData, string AffectedAreas, string PastAndCurrentTreatments, int FamilySocialSupport, string FamilySocialSupportData, string WorkLifeAspects, string SocialLifeAspects, string AuthorityRelationship, string ImpulseControl, string FrustrationManagement)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[PsychiatricHistory]" +
                 "([IDPatient],[FamilyHistory],[FamilyHistoryData],[AffectedAreas],[PastAndCurrentTreatments],[FamilySocialSupport],[FamilySocialSupportData],[WorkLifeAspects],[SocialLifeAspects],[AuthorityRelationship],[ImpulseControl],[FrustrationManagement])" +
-                "VALUES(@IDPatient, @FamilyHistory, @FamilyHistoryData, @AffectedAreas, @PastAndCurrentTreatments, @FamilySocialSupport, @FamilySocialSupportData, @WorkLifeAspects, @SocialLifeAspects, @AuthorityRelationship, @ImpulseControl, @FrustrationManagement )", 
+                "VALUES(@IDPatient, @FamilyHistory, @FamilyHistoryData, @AffectedAreas, @PastAndCurrentTreatments, @FamilySocialSupport, @FamilySocialSupportData, @WorkLifeAspects, @SocialLifeAspects, @AuthorityRelationship, @ImpulseControl, @FrustrationManagement )",
                 new { IDPatient, FamilyHistory, FamilyHistoryData, AffectedAreas, PastAndCurrentTreatments, FamilySocialSupport, FamilySocialSupportData, WorkLifeAspects, SocialLifeAspects, AuthorityRelationship, ImpulseControl, FrustrationManagement }).ConfigureAwait(false);
-        
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <returns></returns>
@@ -551,10 +550,10 @@ namespace Medical.Office.Infra.DataSources
         public async Task UpdateActiveMedications(long IDPatient, string AactiveMedicationsData, DateTime? DateTimeSnap)
         {
             await _con.ExecuteAsync(@"UPDATE [dbo].[ActiveMedications]
-                              SET AactiveMedicationsData = @AactiveMedicationsData,
-                                  DateTimeSnap = @DateTimeSnap
-                              WHERE IDPatient = @IDPatient;",
-                                      new { IDPatient, AactiveMedicationsData, DateTimeSnap }).ConfigureAwait(false);
+                            SET AactiveMedicationsData = @AactiveMedicationsData,
+                                DateTimeSnap = @DateTimeSnap
+                            WHERE IDPatient = @IDPatient;",
+                                    new { IDPatient, AactiveMedicationsData, DateTimeSnap }).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -574,16 +573,16 @@ namespace Medical.Office.Infra.DataSources
             int ThyroidDiseases, int ChronicKidneyDisease, int Others, string OthersData, DateTime? DateTimeSnap)
         {
             await _con.ExecuteAsync(@"UPDATE [dbo].[FamilyHistory]
-                              SET Diabetes = @Diabetes,
-                                  Cardiopathies = @Cardiopathies,
-                                  Hypertension = @Hypertension,
-                                  ThyroidDiseases = @ThyroidDiseases,
-                                  ChronicKidneyDisease = @ChronicKidneyDisease,
-                                  Others = @Others,
-                                  OthersData = @OthersData,
-                                  DateTimeSnap = @DateTimeSnap
-                              WHERE IDPatient = @IDPatient;",
-                                      new { IDPatient, Diabetes, Cardiopathies, Hypertension, ThyroidDiseases, ChronicKidneyDisease, Others, OthersData, DateTimeSnap }).ConfigureAwait(false);
+                            SET Diabetes = @Diabetes,
+                                Cardiopathies = @Cardiopathies,
+                                Hypertension = @Hypertension,
+                                ThyroidDiseases = @ThyroidDiseases,
+                                ChronicKidneyDisease = @ChronicKidneyDisease,
+                                Others = @Others,
+                                OthersData = @OthersData,
+                                DateTimeSnap = @DateTimeSnap
+                            WHERE IDPatient = @IDPatient;",
+                                    new { IDPatient, Diabetes, Cardiopathies, Hypertension, ThyroidDiseases, ChronicKidneyDisease, Others, OthersData, DateTimeSnap }).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -596,10 +595,10 @@ namespace Medical.Office.Infra.DataSources
         public async Task UpdateMedicalHistoryNotes(long IDPatient, string MedicalHistoryNotesData, DateTime? DateTimeSnap)
         {
             await _con.ExecuteAsync(@"UPDATE [dbo].[MedicalHistoryNotes]
-                              SET MedicalHistoryNotesData = @MedicalHistoryNotesData,
-                                  DateTimeSnap = @DateTimeSnap
-                              WHERE IDPatient = @IDPatient;",
-                                      new { IDPatient, MedicalHistoryNotesData, DateTimeSnap }).ConfigureAwait(false);
+                                SET MedicalHistoryNotesData = @MedicalHistoryNotesData,
+                                    DateTimeSnap = @DateTimeSnap
+                                WHERE IDPatient = @IDPatient;",
+                                        new { IDPatient, MedicalHistoryNotesData, DateTimeSnap }).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -622,18 +621,18 @@ namespace Medical.Office.Infra.DataSources
             int Others, string OthersData, DateTime? DateTimeSnap)
         {
             await _con.ExecuteAsync(@"UPDATE [dbo].[NonPathologicalHistory]
-                              SET PhysicalActivity = @PhysicalActivity,
-                                  Smoking = @Smoking,
-                                  Alcoholism = @Alcoholism,
-                                  SubstanceAbuse = @SubstanceAbuse,
-                                  SubstanceAbuseData = @SubstanceAbuseData,
-                                  RecentVaccination = @RecentVaccination,
-                                  RecentVaccinationData = @RecentVaccinationData,
-                                  Others = @Others,
-                                  OthersData = @OthersData,
-                                  DateTimeSnap = @DateTimeSnap
-                              WHERE IDPatient = @IDPatient;",
-                                      new { IDPatient, PhysicalActivity, Smoking, Alcoholism, SubstanceAbuse, SubstanceAbuseData, RecentVaccination, RecentVaccinationData, Others, OthersData, DateTimeSnap }).ConfigureAwait(false);
+                            SET PhysicalActivity = @PhysicalActivity,
+                                Smoking = @Smoking,
+                                Alcoholism = @Alcoholism,
+                                SubstanceAbuse = @SubstanceAbuse,
+                                SubstanceAbuseData = @SubstanceAbuseData,
+                                RecentVaccination = @RecentVaccination,
+                                RecentVaccinationData = @RecentVaccinationData,
+                                Others = @Others,
+                                OthersData = @OthersData,
+                                DateTimeSnap = @DateTimeSnap
+                            WHERE IDPatient = @IDPatient;",
+                                    new { IDPatient, PhysicalActivity, Smoking, Alcoholism, SubstanceAbuse, SubstanceAbuseData, RecentVaccination, RecentVaccinationData, Others, OthersData, DateTimeSnap }).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -665,26 +664,26 @@ namespace Medical.Office.Infra.DataSources
             string Others, DateTime? DateTimeSnap)
         {
             await _con.ExecuteAsync(@"UPDATE [dbo].[PathologicalBackground]
-                              SET PreviousHospitalization = @PreviousHospitalization,
-                                  PreviousSurgeries = @PreviousSurgeries,
-                                  Diabetes = @Diabetes,
-                                  ThyroidDiseases = @ThyroidDiseases,
-                                  Hypertension = @Hypertension,
-                                  Cardiopathies = @Cardiopathies,
-                                  Trauma = @Trauma,
-                                  Cancer = @Cancer,
-                                  Tuberculosis = @Tuberculosis,
-                                  Transfusions = @Transfusions,
-                                  RespiratoryDiseases = @RespiratoryDiseases,
-                                  GastrointestinalDiseases = @GastrointestinalDiseases,
-                                  STDs = @STDs,
-                                  STDsData = @STDsData,
-                                  ChronicKidneyDisease = @ChronicKidneyDisease,
-                                  Others = @Others,
-                                  DateTimeSnap = @DateTimeSnap
-                              WHERE IDPatient = @IDPatient;",
-                                      new { IDPatient, PreviousHospitalization, PreviousSurgeries, Diabetes, ThyroidDiseases, Hypertension, Cardiopathies, Trauma, Cancer, Tuberculosis, Transfusions, RespiratoryDiseases, GastrointestinalDiseases, STDs, STDsData, ChronicKidneyDisease, Others, DateTimeSnap }).ConfigureAwait(false);
-        }
+                            SET PreviousHospitalization = @PreviousHospitalization,
+                                PreviousSurgeries = @PreviousSurgeries,
+                                Diabetes = @Diabetes,
+                                ThyroidDiseases = @ThyroidDiseases,
+                                Hypertension = @Hypertension,
+                                Cardiopathies = @Cardiopathies,
+                                Trauma = @Trauma,
+                                Cancer = @Cancer,
+                                Tuberculosis = @Tuberculosis,
+                                Transfusions = @Transfusions,
+                                RespiratoryDiseases = @RespiratoryDiseases,
+                                GastrointestinalDiseases = @GastrointestinalDiseases,
+                                STDs = @STDs,
+                                STDsData = @STDsData,
+                                ChronicKidneyDisease = @ChronicKidneyDisease,
+                                Others = @Others,
+                                DateTimeSnap = @DateTimeSnap
+                            WHERE IDPatient = @IDPatient;",
+                                    new { IDPatient, PreviousHospitalization, PreviousSurgeries, Diabetes, ThyroidDiseases, Hypertension, Cardiopathies, Trauma, Cancer, Tuberculosis, Transfusions, RespiratoryDiseases, GastrointestinalDiseases, STDs, STDsData, ChronicKidneyDisease, Others, DateTimeSnap }).ConfigureAwait(false);
+    }
 
         /// <summary>
         /// Actualiza las alergias de un paciente.
@@ -696,10 +695,10 @@ namespace Medical.Office.Infra.DataSources
         public async Task UpdatePatientAllergies(long IDPatient, string Allergies, DateTime? DateTimeSnap)
         {
             await _con.ExecuteAsync(@"UPDATE [dbo].[PatientAllergies]
-                              SET Allergies = @Allergies,
-                                  DateTimeSnap = @DateTimeSnap
-                              WHERE IDPatient = @IDPatient;",
-                                      new { IDPatient, Allergies, DateTimeSnap }).ConfigureAwait(false);
+                            SET Allergies = @Allergies,
+                                DateTimeSnap = @DateTimeSnap
+                            WHERE IDPatient = @IDPatient;",
+                                    new { IDPatient, Allergies, DateTimeSnap }).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -725,20 +724,20 @@ namespace Medical.Office.Infra.DataSources
             string AuthorityRelationship, string ImpulseControl, string FrustrationManagement, DateTime? DateTimeSnap)
         {
             await _con.ExecuteAsync(@"UPDATE [dbo].[PsychiatricHistory]
-                              SET FamilyHistory = @FamilyHistory,
-                                  FamilyHistoryData = @FamilyHistoryData,
-                                  AffectedAreas = @AffectedAreas,
-                                  PastAndCurrentTreatments = @PastAndCurrentTreatments,
-                                  FamilySocialSupport = @FamilySocialSupport,
-                                  FamilySocialSupportData = @FamilySocialSupportData,
-                                  WorkLifeAspects = @WorkLifeAspects,
-                                  SocialLifeAspects = @SocialLifeAspects,
-                                  AuthorityRelationship = @AuthorityRelationship,
-                                  ImpulseControl = @ImpulseControl,
-                                  FrustrationManagement = @FrustrationManagement,
-                                  DateTimeSnap = @DateTimeSnap
-                              WHERE IDPatient = @IDPatient;",
-                                      new { IDPatient, FamilyHistory, FamilyHistoryData, AffectedAreas, PastAndCurrentTreatments, FamilySocialSupport, FamilySocialSupportData, WorkLifeAspects, SocialLifeAspects, AuthorityRelationship, ImpulseControl, FrustrationManagement, DateTimeSnap }).ConfigureAwait(false);
+                            SET FamilyHistory = @FamilyHistory,
+                                FamilyHistoryData = @FamilyHistoryData,
+                                AffectedAreas = @AffectedAreas,
+                                PastAndCurrentTreatments = @PastAndCurrentTreatments,
+                                FamilySocialSupport = @FamilySocialSupport,
+                                FamilySocialSupportData = @FamilySocialSupportData,
+                                WorkLifeAspects = @WorkLifeAspects,
+                                SocialLifeAspects = @SocialLifeAspects,
+                                AuthorityRelationship = @AuthorityRelationship,
+                                ImpulseControl = @ImpulseControl,
+                                FrustrationManagement = @FrustrationManagement,
+                                DateTimeSnap = @DateTimeSnap
+                            WHERE IDPatient = @IDPatient;",
+                            new { IDPatient, FamilyHistory, FamilyHistoryData, AffectedAreas, PastAndCurrentTreatments, FamilySocialSupport, FamilySocialSupportData, WorkLifeAspects, SocialLifeAspects, AuthorityRelationship, ImpulseControl, FrustrationManagement, DateTimeSnap }).ConfigureAwait(false);
         }
 
         #endregion

@@ -3,6 +3,6 @@
     public class SpecialtiesDto
     {
         //public int Id { get; set; }
-        public string Specialty { get; set; }
+        public string? Specialty { get; set; }
     }
 }

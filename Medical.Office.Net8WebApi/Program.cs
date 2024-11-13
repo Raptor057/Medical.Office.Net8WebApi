@@ -50,10 +50,10 @@ builder.Services.AddAuthorization(options =>
     policy.RequireAssertion(context =>
         context.User.HasClaim(c => c.Type == ClaimTypes.Role &&
             (c.Value == "Programador" ||
-             c.Value == "Doctor" ||
-             c.Value == "Enfermera" ||
-             c.Value == "Secretaria" ||
-             c.Value == "Asistente"))));
+                c.Value == "Doctor" ||
+                c.Value == "Enfermera" ||
+                c.Value == "Secretaria" ||
+                c.Value == "Asistente"))));
 });
 
 builder.Services.AddServices();
@@ -95,7 +95,8 @@ builder.Services.AddSwaggerGen(options =>
     });
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "ERP Medical Office", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "GT Modules TEST", Version = "v1" });
+    //options.SwaggerDoc("v1", new OpenApiInfo { Title = "ERP Medical Office", Version = "v1" });
     options.EnableAnnotations(); // Habilitar anotaciones
 });
 
