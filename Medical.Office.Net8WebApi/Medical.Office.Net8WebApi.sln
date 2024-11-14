@@ -13,14 +13,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Office.Infra", "..\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{87EEEE5F-D753-4BB2-9E7F-B12499AF742F}"
 	ProjectSection(SolutionItems) = preProject
+		..\.dockerignore = ..\.dockerignore
 		..\Documentacion\CHANGELOG.md = ..\Documentacion\CHANGELOG.md
 		..\README.md = ..\README.md
 		..\Documentacion\TODO.md = ..\Documentacion\TODO.md
+		token.txt = token.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Office.Domain", "..\Medical.Office.Domain\Medical.Office.Domain.csproj", "{31CEE679-F151-408C-AE58-112240924623}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Medical.Office.NUnit", "..\Medical.Office.NUnit\Medical.Office.NUnit.csproj", "{B6062CAD-D11E-499A-A409-87FC73D9D2E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Medical.Office.NUnit", "..\Medical.Office.NUnit\Medical.Office.NUnit.csproj", "{B6062CAD-D11E-499A-A409-87FC73D9D2E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
