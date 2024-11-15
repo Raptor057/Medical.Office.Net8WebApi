@@ -37,6 +37,16 @@ namespace Medical.Office.Infra.Repositories
         public async Task <IEnumerable<Users>> GetDataUserByUsrListAsync(string Usr)
         => await _db.GetDataUserByUsrList(Usr).ConfigureAwait(false);
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Usr"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<LoginHistory> GetLoginHistoryByUsrAsync(string Usr)
+            => await _db.GetLoginHistoryByUsr(Usr).ConfigureAwait(false);
+
         /// <summary>
         /// 
         /// </summary>

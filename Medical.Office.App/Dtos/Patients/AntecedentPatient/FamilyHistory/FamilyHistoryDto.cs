@@ -9,7 +9,7 @@
         bool? ThyroidDiseases,
         bool? ChronicKidneyDisease,
         bool? Others,
-        string OthersData,
+        string? OthersData,
         DateTime? DateTimeSnap
     );
 }

@@ -17,6 +17,9 @@ namespace Medical.Office.Infra.DataSources
 
         #region Configuracion
 
+        public async Task<LoginHistory> GetLoginHistoryByUsr(string Usr)
+            => await _con.QueryFirstAsync<LoginHistory>("SELECT TOP (1) *  FROM [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] WHERE Usr = @Usr ORDER BY DateTimeSnap DESC", new { Usr }).ConfigureAwait(false);
+
         /// <summary>
         ///
         /// </summary>
