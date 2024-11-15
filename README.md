@@ -152,3 +152,117 @@ Esta estructura asegura que el código sea mantenible, escalable, y fácilmente 
 |--|
 |[![PayPal](https://img.shields.io/badge/PayPal-00457C?style=for-the-badge&logo=paypal&logoColor=white)](https://paypal.me/RogelioArriaga?country.x=MX&locale.x=es_XC)|
   
+
+### Docker Web Api
+### Construir la Imagen
+Ejecuta el siguiente comando en la terminal para construir la imagen desde el Dockerfile y nombrarla como medicalofficeapi:
+
+    docker build -t medicalofficeapi .
+### Ejecutar el Contenedor con el Nombre MedicalOfficeApi
+Ahora que tienes la imagen construida, ejecuta el contenedor con el siguiente comando:
+
+    docker run --name MedicalOfficeApi -d -p 8080:8080 -p 8081:8081 medicalofficeapi
+
+### Verificación
+Para verificar que el contenedor está corriendo y tiene el nombre correcto, usa:
+
+    docker ps
+
+----------------------------------------------------------------------------------------------------------------------------------
+### Docker Seq
+### Construir la Imagen
+Ejecuta el siguiente comando en la terminal para construir la imagen desde el Dockerfile y nombrarla como medicalofficeapi:
+
+    docker build -t custom-seq .
+-----------------------------------------------------------------------------------------------------------------------------------
+
+### Ejecutar el Contenedor con el Nombre MedicalOfficeApi
+Ahora que tienes la imagen construida, ejecuta el contenedor con el siguiente comando:
+
+    docker run --name seq -d --restart unless-stopped -p 5341:80 custom-seq
+
+### Verificación
+Para verificar que el contenedor está corriendo y tiene el nombre correcto, usa:
+
+    docker ps
+
+## Ejecutar Yaml
+
+    docker-compose down
+    docker-compose up --build
+
+#### Verifica la conectividad entre los contenedores, por ejemplo, abriendo una consola dentro del contenedor MedicalOfficeApi y haciendo una prueba con curl:
+    docker exec -it MedicalOfficeApi curl http://seq:5341
+--------------------------------------------------------------------------------------------------------------------------------
+
+Eliminar la red existente: Si ya existe una red medicalnetwork externa, debes eliminarla antes de volver a ejecutar el docker-compose para que la nueva red interna se cree correctamente.
+
+    docker network rm medicalnetwork
+
+Ejecutar el Docker Compose: Después de modificar tu archivo docker-compose.yml, vuelve a ejecutar:
+    
+    docker-compose up -d
+
+Verificar la configuración: Para verificar que los contenedores están utilizando las IPs correctas, puedes usar el siguiente comando:
+
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' <container_name>
+
+-----------------------------------------------
+#### Eliminar redes previas
+Es posible que haya un conflicto con una red previamente definida. Puedes eliminar la red medicalnetwork si existe, para asegurar que Docker la recree con la configuración correcta.
+
+    docker network rm medicalnetwork
+
+#### Volver a levantar los contenedores:
+Ahora, vuelve a ejecutar el docker-compose para que los contenedores se levanten con la nueva configuración.
+
+    docker-compose up -d
+    o
+    docker-compose up
+
+#### Verificar IPs:
+Una vez que los contenedores estén en ejecución, puedes verificar que estén usando las IPs correctas.
+
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' seq
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' sql1
+    docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' MedicalOfficeApi
+
+-------------------------------------------------
+
+### Detener los contenedores:
+
+    docker-compose down
+
+#### Eliminar contenedores, redes y volúmenes: 
+
+Si deseas eliminar también los volúmenes asociados (por ejemplo, para eliminar datos persistentes de la base de datos), puedes añadir la opción --volumes:
+
+
+    docker-compose down --volumes
+
+Esto eliminará los contenedores, las redes definidas (si no son externas), y los volúmenes creados.
+
+### Eliminar imágenes no usadas (opcional): 
+Si deseas eliminar las imágenes no usadas que ya no están asociadas a ningún contenedor, puedes ejecutar:
+
+    docker image prune
+
+#### Verificar los contenedores y redes: 
+
+Después de ejecutar docker-compose down, puedes verificar que todo se ha detenido y eliminado con los siguientes comandos:
+
+#### Ver los contenedores activos:
+
+
+    docker ps -a
+
+#### Ver las redes de Docker:
+
+    docker network ls
+
+Ver las imágenes disponibles:
+
+
+    docker images
+
+Con estos pasos, habrás detenido y eliminado todo lo relacionado con tu entorno de Docker, y habrás configurado las IPs estáticas para tus contenedores en el archivo docker-compose.yml.
