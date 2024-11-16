@@ -48,9 +48,9 @@ namespace Medical.Office.Infra.Repositories
         public async Task InsertMedicalHistoryNotesAsync(long IDPatient, string MedicalHistoryNotesData)
             => await _db.InsertMedicalHistoryNotes(IDPatient, MedicalHistoryNotesData);
 
-        public async Task InsertNonPathologicalHistoryAsync(long IDPatient, int PhysicalActivity, int Smoking, int Alcoholism,
-            int SubstanceAbuse, string SubstanceAbuseData, int RecentVaccination, string RecentVaccinationData,
-            int Others, string OthersData)
+        public async Task InsertNonPathologicalHistoryAsync(long IDPatient, int? PhysicalActivity, int? Smoking, int? Alcoholism,
+            int? SubstanceAbuse, string? SubstanceAbuseData, int? RecentVaccination, string? RecentVaccinationData,
+            int? Others, string? OthersData)
             => await _db.InsertNonPathologicalHistory(IDPatient, PhysicalActivity, Smoking, Alcoholism,
                 SubstanceAbuse, SubstanceAbuseData, RecentVaccination, RecentVaccinationData, Others, OthersData);
 

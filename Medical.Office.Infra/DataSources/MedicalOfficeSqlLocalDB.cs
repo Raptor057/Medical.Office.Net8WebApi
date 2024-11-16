@@ -443,7 +443,7 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="Others"></param>
         /// <param name="OthersData"></param>
         /// <returns></returns>
-        public async Task InsertNonPathologicalHistory(long IDPatient, int PhysicalActivity, int Smoking, int Alcoholism, int SubstanceAbuse, string SubstanceAbuseData, int RecentVaccination, string RecentVaccinationData, int Others, string OthersData)
+        public async Task InsertNonPathologicalHistory(long IDPatient, int? PhysicalActivity, int? Smoking, int? Alcoholism, int? SubstanceAbuse, string? SubstanceAbuseData, int? RecentVaccination, string? RecentVaccinationData, int? Others, string? OthersData)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[NonPathologicalHistory]" +
                 "([IDPatient],[PhysicalActivity],[Smoking],[Alcoholism],[SubstanceAbuse],[SubstanceAbuseData],[RecentVaccination],[RecentVaccinationData],[Others],[OthersData])" +
                 "VALUES(@IDPatient, @PhysicalActivity, @Smoking, @Alcoholism, @SubstanceAbuse, @SubstanceAbuseData, @RecentVaccination, @RecentVaccinationData, @Others, @OthersData )",

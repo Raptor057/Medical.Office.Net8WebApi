@@ -41,9 +41,9 @@ namespace Medical.Office.Domain.Repository
 
         #region NonPathologicalHistory
         // Insert
-        Task InsertNonPathologicalHistoryAsync(long IDPatient, int PhysicalActivity, int Smoking, int Alcoholism,
-            int SubstanceAbuse, string SubstanceAbuseData, int RecentVaccination, string RecentVaccinationData,
-            int Others, string OthersData);
+        Task InsertNonPathologicalHistoryAsync(long IDPatient, int? PhysicalActivity, int? Smoking, int? Alcoholism,
+            int? SubstanceAbuse, string? SubstanceAbuseData, int? RecentVaccination, string? RecentVaccinationData,
+            int? Others, string? OthersData);
 
         // Get
         Task<NonPathologicalHistory> GetNonPathologicalHistoryByPatientIdAsync(long IDPatient);

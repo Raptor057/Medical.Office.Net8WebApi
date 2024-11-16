@@ -12,7 +12,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.G
         private readonly ILogger<GetFamilyHistoryHandler> _logger;
         private readonly IAntecedentPatient _antecedent;
 
-        public GetFamilyHistoryHandler(ILogger<GetFamilyHistoryHandler> logger, IAntecedentPatient antecedent) 
+        public GetFamilyHistoryHandler(ILogger<GetFamilyHistoryHandler> logger, IAntecedentPatient antecedent)
         {
             _logger=logger;
             _antecedent=antecedent;
@@ -21,7 +21,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.G
         public async Task<GetFamilyHistoryResponse> Handle(GetFamilyHistoryRequest request, CancellationToken cancellationToken)
         {
             var FamilyHistory = await _antecedent.GetFamilyHistoryByPatientIdAsync(request.IdPatient).ConfigureAwait(false);
-            if (FamilyHistory == null) 
+            if (FamilyHistory == null)
             {
                 return new FailureGetFamilyHistoryResponse("No se encontro informacion para este paciente");
             }
