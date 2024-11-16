@@ -3,12 +3,14 @@ using Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.Inser
 
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.InsertFamilyHistory
 {
-    public sealed record InsertFamilyHistoryRequest(long IDPatient,
-        bool? Diabetes,
-        bool? Cardiopathies,
-        bool? Hypertension,
-        bool? ThyroidDiseases,
-        bool? ChronicKidneyDisease,
-        bool? Others,
-        string? OthersData) : IRequest<InsertFamilyHistoryResponse>;
+    public sealed record InsertFamilyHistoryRequest(
+        long IDPatient,
+        int? Diabetes,
+        int? Cardiopathies,
+        int? Hypertension,
+        int? ThyroidDiseases,
+        int? ChronicKidneyDisease,
+        int? Others,
+        string? OthersData)
+        : IRequest<InsertFamilyHistoryResponse>;
 }

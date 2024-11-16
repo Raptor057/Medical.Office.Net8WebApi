@@ -3,7 +3,7 @@
     public record MedicalHistoryNotesDto(
         long Id,
         long? IDPatient,
-        string MedicalHistoryNotesData,
+        string? MedicalHistoryNotesData,
         DateTime? DateTimeSnap
     );
 }

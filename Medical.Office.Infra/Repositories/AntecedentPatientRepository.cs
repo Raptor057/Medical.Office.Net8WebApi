@@ -40,8 +40,8 @@ namespace Medical.Office.Infra.Repositories
         public async Task InsertActiveMedicationsAsync(long IDPatient, string AactiveMedicationsData)
             => await _db.InsertActiveMedications(IDPatient, AactiveMedicationsData);
 
-        public async Task InsertFamilyHistoryAsync(long IDPatient, int Diabetes, int Cardiopathies, int Hypertension,
-            int ThyroidDiseases, int ChronicKidneyDisease, int Others, string OthersData)
+        public async Task InsertFamilyHistoryAsync(long IDPatient, int? Diabetes, int? Cardiopathies, int? Hypertension,
+            int? ThyroidDiseases, int? ChronicKidneyDisease, int? Others, string? OthersData)
             => await _db.InsertFamilyHistory(IDPatient, Diabetes, Cardiopathies, Hypertension,
                 ThyroidDiseases, ChronicKidneyDisease, Others, OthersData);
 

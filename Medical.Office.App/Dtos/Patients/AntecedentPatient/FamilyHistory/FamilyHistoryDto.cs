@@ -3,12 +3,12 @@
     public record FamilyHistoryDto(
         long Id,
         long IDPatient,
-        bool? Diabetes,
-        bool? Cardiopathies,
-        bool? Hypertension,
-        bool? ThyroidDiseases,
-        bool? ChronicKidneyDisease,
-        bool? Others,
+        int? Diabetes,
+        int? Cardiopathies,
+        int? Hypertension,
+        int? ThyroidDiseases,
+        int? ChronicKidneyDisease,
+        int? Others,
         string? OthersData,
         DateTime? DateTimeSnap
     );

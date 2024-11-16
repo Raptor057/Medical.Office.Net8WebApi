@@ -395,7 +395,7 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="Others"></param>
         /// <param name="OthersData"></param>
         /// <returns></returns>
-        public async Task InsertFamilyHistory(long IDPatient, int Diabetes, int Cardiopathies, int Hypertension, int ThyroidDiseases, int ChronicKidneyDisease, int Others, string OthersData)
+        public async Task InsertFamilyHistory(long IDPatient, int? Diabetes, int? Cardiopathies, int? Hypertension, int? ThyroidDiseases, int? ChronicKidneyDisease, int? Others, string? OthersData)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[FamilyHistory]" +
                 "([IDPatient],[Diabetes],[Cardiopathies],[Hypertension],[ThyroidDiseases],[ChronicKidneyDisease],[Others],[OthersData])" +
                 "VALUES(@IDPatient, @Diabetes, @Cardiopathies, @Hypertension, @ThyroidDiseases, @ChronicKidneyDisease, @Others, @OthersData)", 

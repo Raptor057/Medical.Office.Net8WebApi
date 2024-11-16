@@ -18,13 +18,13 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedicatio
 
         public async Task<InsertActiveMedicationsResponse> Handle(InsertActiveMedicationsRequest request, CancellationToken cancellationToken)
         {
-           var GetPatient = await _patientsData.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
+        var GetPatient = await _patientsData.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
             if (GetPatient == null)
             {
                 return new FailureInsertActiveMedicationsResponse("No se puede agregar informacion a este paciente debido a que no esta dado de alta");
             }
 
-           var GetLastActiveMedications = await _patient.GetActiveMedicationsByPatientIdAsync(request.IDPatient).ConfigureAwait(false);
+        var GetLastActiveMedications = await _patient.GetActiveMedicationsByPatientIdAsync(request.IDPatient).ConfigureAwait(false);
 
             if (GetLastActiveMedications == null)
             {

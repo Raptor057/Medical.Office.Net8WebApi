@@ -1,6 +1,11 @@
-﻿namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.GetFamilyHistory
+﻿using Common.Common.CleanArch;
+using Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.GetFamilyHistory.Responses;
+
+namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.GetFamilyHistory
 {
-    internal class GetFamilyHistoryRequest
+    public sealed class GetFamilyHistoryRequest : IRequest<GetFamilyHistoryResponse>
     {
+        public GetFamilyHistoryRequest() { }
+        public long IdPatient { get; set; }
     }
 }

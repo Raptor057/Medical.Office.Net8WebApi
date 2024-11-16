@@ -17,8 +17,8 @@ namespace Medical.Office.Domain.Repository
 
         #region FamilyHistory
         // Insert
-        Task InsertFamilyHistoryAsync(long IDPatient, int Diabetes, int Cardiopathies, int Hypertension,
-            int ThyroidDiseases, int ChronicKidneyDisease, int Others, string OthersData);
+        Task InsertFamilyHistoryAsync(long IDPatient, int? Diabetes, int? Cardiopathies, int? Hypertension,
+            int? ThyroidDiseases, int? ChronicKidneyDisease, int? Others, string? OthersData);
 
         // Get
         Task<FamilyHistory> GetFamilyHistoryByPatientIdAsync(long IDPatient);
