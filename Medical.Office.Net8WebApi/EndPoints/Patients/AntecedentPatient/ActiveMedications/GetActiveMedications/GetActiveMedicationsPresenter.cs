@@ -1,4 +1,4 @@
-﻿using Common.Common;
+using Common.Common;
 using Common.Common.CleanArch;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedications.GetActiveMedications.Responses;
 
@@ -20,7 +20,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.ActiveM
                 _viewModel.Fail(failure.Message);
                 await Task.CompletedTask;
             }
-            else if (notification is SuccessGetActiveMedicationsResponse response) 
+            else if (notification is SuccessGetActiveMedicationsResponse response)
             {
                 _viewModel.OK(response);
                 await Task.CompletedTask;
