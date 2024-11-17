@@ -528,7 +528,7 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="ImpulseControl"></param>
         /// <param name="FrustrationManagement"></param>
         /// <returns></returns>
-        public async Task InsertPsychiatricHistory(long IDPatient, int FamilyHistory, string FamilyHistoryData, string AffectedAreas, string PastAndCurrentTreatments, int FamilySocialSupport, string FamilySocialSupportData, string WorkLifeAspects, string SocialLifeAspects, string AuthorityRelationship, string ImpulseControl, string FrustrationManagement)
+        public async Task InsertPsychiatricHistory(long IDPatient, int? FamilyHistory, string? FamilyHistoryData, string? AffectedAreas, string? PastAndCurrentTreatments, int? FamilySocialSupport, string? FamilySocialSupportData, string? WorkLifeAspects, string? SocialLifeAspects, string? AuthorityRelationship, string? ImpulseControl, string? FrustrationManagement)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[PsychiatricHistory]" +
                 "([IDPatient],[FamilyHistory],[FamilyHistoryData],[AffectedAreas],[PastAndCurrentTreatments],[FamilySocialSupport],[FamilySocialSupportData],[WorkLifeAspects],[SocialLifeAspects],[AuthorityRelationship],[ImpulseControl],[FrustrationManagement])" +
                 "VALUES(@IDPatient, @FamilyHistory, @FamilyHistoryData, @AffectedAreas, @PastAndCurrentTreatments, @FamilySocialSupport, @FamilySocialSupportData, @WorkLifeAspects, @SocialLifeAspects, @AuthorityRelationship, @ImpulseControl, @FrustrationManagement )",

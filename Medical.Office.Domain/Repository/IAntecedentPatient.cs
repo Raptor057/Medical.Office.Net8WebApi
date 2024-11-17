@@ -86,10 +86,10 @@ namespace Medical.Office.Domain.Repository
 
         #region PsychiatricHistory
         // Insert
-        Task InsertPsychiatricHistoryAsync(long IDPatient, int FamilyHistory, string FamilyHistoryData,
-            string AffectedAreas, string PastAndCurrentTreatments, int FamilySocialSupport,
-            string FamilySocialSupportData, string WorkLifeAspects, string SocialLifeAspects,
-            string AuthorityRelationship, string ImpulseControl, string FrustrationManagement);
+        Task InsertPsychiatricHistoryAsync(long IDPatient, int? FamilyHistory, string? FamilyHistoryData,
+            string? AffectedAreas, string? PastAndCurrentTreatments, int? FamilySocialSupport,
+            string? FamilySocialSupportData, string? WorkLifeAspects, string? SocialLifeAspects,
+            string? AuthorityRelationship, string? ImpulseControl, string? FrustrationManagement);
 
         // Get
         Task<PsychiatricHistory> GetPsychiatricHistoryByPatientIdAsync(long IDPatient);

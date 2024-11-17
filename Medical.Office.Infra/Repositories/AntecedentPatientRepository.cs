@@ -67,10 +67,10 @@ namespace Medical.Office.Infra.Repositories
         public async Task InsertPatientAllergiesAsync(long IDPatient, string Allergies)
             => await _db.InsertPatientAllergies(IDPatient, Allergies);
 
-        public async Task InsertPsychiatricHistoryAsync(long IDPatient, int FamilyHistory, string FamilyHistoryData,
-            string AffectedAreas, string PastAndCurrentTreatments, int FamilySocialSupport,
-            string FamilySocialSupportData, string WorkLifeAspects, string SocialLifeAspects,
-            string AuthorityRelationship, string ImpulseControl, string FrustrationManagement)
+        public async Task InsertPsychiatricHistoryAsync(long IDPatient, int? FamilyHistory, string? FamilyHistoryData,
+            string? AffectedAreas, string? PastAndCurrentTreatments, int? FamilySocialSupport,
+            string? FamilySocialSupportData, string? WorkLifeAspects, string? SocialLifeAspects,
+            string? AuthorityRelationship, string? ImpulseControl, string? FrustrationManagement)
             => await _db.InsertPsychiatricHistory(IDPatient, FamilyHistory, FamilyHistoryData,
                 AffectedAreas, PastAndCurrentTreatments, FamilySocialSupport, FamilySocialSupportData,
                 WorkLifeAspects, SocialLifeAspects, AuthorityRelationship, ImpulseControl,

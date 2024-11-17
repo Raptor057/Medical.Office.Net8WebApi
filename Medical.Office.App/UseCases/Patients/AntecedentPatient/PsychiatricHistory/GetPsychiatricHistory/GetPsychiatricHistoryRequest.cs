@@ -3,7 +3,12 @@ using Medical.Office.App.UseCases.Patients.AntecedentPatient.PsychiatricHistory.
 
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.PsychiatricHistory.GetPsychiatricHistory
 {
-    internal class GetPsychiatricHistoryRequest : IRequest<GetPsychiatricHistoryResponse>
+    public sealed class GetPsychiatricHistoryRequest : IRequest<GetPsychiatricHistoryResponse>
     {
+        public GetPsychiatricHistoryRequest()
+        {
+            
+        }
+        public long IdPatient { get; set; }
     }
 }
