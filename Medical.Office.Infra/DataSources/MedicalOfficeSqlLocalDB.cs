@@ -478,7 +478,7 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="ChronicKidneyDisease"></param>
         /// <param name="Others"></param>
         /// <returns></returns>
-        public async Task InsertPathologicalBackground(long IDPatient, int PreviousHospitalization, int PreviousSurgeries, int Diabetes, int ThyroidDiseases, int Hypertension, int Cardiopathies, int Trauma, int Cancer, int Tuberculosis, int Transfusions, int RespiratoryDiseases, int GastrointestinalDiseases, int STDs, string STDsData, int ChronicKidneyDisease, string Others)
+        public async Task InsertPathologicalBackground(long IDPatient, int? PreviousHospitalization, int? PreviousSurgeries, int? Diabetes, int? ThyroidDiseases, int? Hypertension, int? Cardiopathies, int? Trauma, int? Cancer, int? Tuberculosis, int? Transfusions, int? RespiratoryDiseases, int? GastrointestinalDiseases, int? STDs, string? STDsData, int? ChronicKidneyDisease, string? Others)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[PathologicalBackground]" +
                 "([IDPatient],[PreviousHospitalization],[PreviousSurgeries],[Diabetes],[ThyroidDiseases],[Hypertension],[Cardiopathies],[Trauma],[Cancer],[Tuberculosis],[Transfusions],[RespiratoryDiseases],[GastrointestinalDiseases],[STDs],[STDsData],[ChronicKidneyDisease],[Others])" +
                 "VALUES(@IDPatient, @PreviousHospitalization, @PreviousSurgeries, @Diabetes, @ThyroidDiseases, @Hypertension, @Cardiopathies, @Trauma, @Cancer, @Tuberculosis, @Transfusions, @RespiratoryDiseases, @GastrointestinalDiseases, @STDs, @STDsData, @ChronicKidneyDisease, @Others )",

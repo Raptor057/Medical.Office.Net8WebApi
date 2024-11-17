@@ -56,11 +56,11 @@ namespace Medical.Office.Domain.Repository
 
         #region PathologicalBackground
         // Insert
-        Task InsertPathologicalBackgroundAsync(long IDPatient, int PreviousHospitalization, int PreviousSurgeries,
-            int Diabetes, int ThyroidDiseases, int Hypertension, int Cardiopathies, int Trauma,
-            int Cancer, int Tuberculosis, int Transfusions, int RespiratoryDiseases,
-            int GastrointestinalDiseases, int STDs, string STDsData, int ChronicKidneyDisease,
-            string Others);
+        Task InsertPathologicalBackgroundAsync(long IDPatient, int? PreviousHospitalization, int? PreviousSurgeries,
+            int? Diabetes, int? ThyroidDiseases, int? Hypertension, int? Cardiopathies, int? Trauma,
+            int? Cancer, int? Tuberculosis, int? Transfusions, int? RespiratoryDiseases,
+            int? GastrointestinalDiseases, int? STDs, string? STDsData, int? ChronicKidneyDisease,
+            string? Others);
 
         // Get
         Task<PathologicalBackground> GetPathologicalBackgroundByPatientIdAsync(long IDPatient);

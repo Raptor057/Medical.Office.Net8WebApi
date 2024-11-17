@@ -54,11 +54,11 @@ namespace Medical.Office.Infra.Repositories
             => await _db.InsertNonPathologicalHistory(IDPatient, PhysicalActivity, Smoking, Alcoholism,
                 SubstanceAbuse, SubstanceAbuseData, RecentVaccination, RecentVaccinationData, Others, OthersData);
 
-        public async Task InsertPathologicalBackgroundAsync(long IDPatient, int PreviousHospitalization, int PreviousSurgeries,
-            int Diabetes, int ThyroidDiseases, int Hypertension, int Cardiopathies, int Trauma,
-            int Cancer, int Tuberculosis, int Transfusions, int RespiratoryDiseases,
-            int GastrointestinalDiseases, int STDs, string STDsData, int ChronicKidneyDisease,
-            string Others)
+        public async Task InsertPathologicalBackgroundAsync(long IDPatient, int? PreviousHospitalization, int? PreviousSurgeries,
+            int? Diabetes, int? ThyroidDiseases, int? Hypertension, int? Cardiopathies, int? Trauma,
+            int? Cancer, int? Tuberculosis, int? Transfusions, int? RespiratoryDiseases,
+            int? GastrointestinalDiseases, int? STDs, string? STDsData, int? ChronicKidneyDisease,
+            string? Others)
             => await _db.InsertPathologicalBackground(IDPatient, PreviousHospitalization, PreviousSurgeries,
                 Diabetes, ThyroidDiseases, Hypertension, Cardiopathies, Trauma, Cancer, Tuberculosis,
                 Transfusions, RespiratoryDiseases, GastrointestinalDiseases, STDs, STDsData, ChronicKidneyDisease,

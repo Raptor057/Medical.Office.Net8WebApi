@@ -3,7 +3,7 @@
     public record PatientAllergiesDto(
         long Id,
         long IDPatient,
-        string Allergies,
+        string? Allergies,
         DateTime? DateTimeSnap
     );
 }

@@ -21,7 +21,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.PathologicalBac
         {
             var PathologicalBackground = await _antecedent.GetPathologicalBackgroundByPatientIdAsync(request.IdPatient).ConfigureAwait(false);
 
-            if (PathologicalBackground == null) 
+            if (PathologicalBackground == null)
             {
                 return new FailureGetPathologicalBackgroundResponse("No se encontro informacion para este paciente");
             }
