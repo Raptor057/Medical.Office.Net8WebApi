@@ -1,3 +1,4 @@
+@Medical.Office.Net8WebApi_HostAddress = http://localhost:5038
 @baseUrl = http://localhost:5038
 @authToken = token
 
@@ -29,3 +30,7 @@ Authorization: Bearer {{authToken}}
   "position": "Doctor",
   "specialtie": "Doctor"
 }
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getactivemedications/{PatientID}
+
+###
