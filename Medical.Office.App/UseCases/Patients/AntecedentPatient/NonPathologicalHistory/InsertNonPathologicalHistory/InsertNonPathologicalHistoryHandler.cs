@@ -10,16 +10,25 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathological
     {
         private readonly ILogger<InsertNonPathologicalHistoryHandler> _logger;
         private readonly IAntecedentPatient _antecedent;
+        private readonly IPatientsData _patients;
 
-        public InsertNonPathologicalHistoryHandler(ILogger<InsertNonPathologicalHistoryHandler> logger, IAntecedentPatient antecedent)
+        public InsertNonPathologicalHistoryHandler(ILogger<InsertNonPathologicalHistoryHandler> logger, IAntecedentPatient antecedent, IPatientsData patients)
         {
             _logger=logger;
             _antecedent=antecedent;
+            _patients=patients;
         }
 
         public async Task<InsertNonPathologicalHistoryResponse> Handle(InsertNonPathologicalHistoryRequest request, CancellationToken cancellationToken)
         {
             var NonPathologicalHistory = await _antecedent.GetNonPathologicalHistoryByPatientIdAsync(request.IDPatient).ConfigureAwait(false);
+            var PatientsData = await _patients.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
+
+            if (PatientsData == null || !Equals(request.IDPatient, PatientsData.ID) || string.IsNullOrEmpty(Convert.ToString(request.IDPatient)))
+            {
+                return new FailureInsertNonPathologicalHistoryResponse ($"No se encontro al paciente {request.IDPatient} o no es valido con el registo que se quiere ingresar");
+            }
+
             if (NonPathologicalHistory != null)
             {
                 return new FailureInsertNonPathologicalHistoryResponse("Este paciente ya cuenta con un registro");

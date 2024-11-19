@@ -4,6 +4,7 @@ using Medical.Office.App.Methods;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.PathologicalBackground.InsertPathologicalBackground.Responses;
 using Medical.Office.Domain.Repository;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.PathologicalBackground.InsertPathologicalBackground
 {
@@ -11,16 +12,25 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.PathologicalBac
     {
         private readonly ILogger<InsertPathologicalBackgroundHandler> _logger;
         private readonly IAntecedentPatient _antecedent;
+        private readonly IPatientsData _patients;
 
-        public InsertPathologicalBackgroundHandler(ILogger<InsertPathologicalBackgroundHandler> logger, IAntecedentPatient antecedent)
+        public InsertPathologicalBackgroundHandler(ILogger<InsertPathologicalBackgroundHandler> logger, IAntecedentPatient antecedent, IPatientsData patients)
         {
             _logger=logger;
             _antecedent=antecedent;
+            _patients=patients;
         }
 
         public async Task<InsertPathologicalBackgroundResponse> Handle(InsertPathologicalBackgroundRequest request, CancellationToken cancellationToken)
         {
             var PathologicalBackground = await _antecedent.GetPathologicalBackgroundByPatientIdAsync(request.IDPatient).ConfigureAwait(false);
+
+            var PatientsData = await _patients.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
+
+            if (PatientsData == null || !Equals(request.IDPatient, PatientsData.ID) || string.IsNullOrEmpty(Convert.ToString(request.IDPatient)))
+            {
+                return new FailureInsertPathologicalBackgroundResponse ($"No se encontro al paciente {request.IDPatient} o no es valido con el registo que se quiere ingresar");
+            }
 
             if (PathologicalBackground != null)
             {

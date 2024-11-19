@@ -3,12 +3,13 @@ using Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathologicalHist
 
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathologicalHistory.GetNonPathologicalHistory
 {
-    internal sealed class GetNonPathologicalHistoryRequest : IRequest<GetNonPathologicalHistoryResponse>
-    {
-        public GetNonPathologicalHistoryRequest()
-        {
-            
-        }
-        public long IdPatient {  get; set; }
-    }
+    //public sealed class GetNonPathologicalHistoryRequest : IRequest<GetNonPathologicalHistoryResponse>
+    //{
+    //    public GetNonPathologicalHistoryRequest()
+    //    {
+
+    //    }
+    //    public long IdPatient {  get; set; }
+    //}
+    public sealed record GetNonPathologicalHistoryRequest(long IdPatient) : IRequest<GetNonPathologicalHistoryResponse>;
 }

@@ -2,8 +2,7 @@
 {
     public class InsertMedicalHistoryNotesRequestBody
     {
-        public long Id { get; set; }
-        public long? IDPatient { get; set; }
+        public long IDPatient { get; set; }
         public string? MedicalHistoryNotesData { get; set; }
     }
 }

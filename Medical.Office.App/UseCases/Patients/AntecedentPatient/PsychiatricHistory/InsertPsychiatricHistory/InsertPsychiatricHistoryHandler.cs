@@ -10,17 +10,26 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.PsychiatricHist
     {
         private readonly ILogger<InsertPsychiatricHistoryHandler> _logger;
         private readonly IAntecedentPatient _antecedent;
+        private readonly IPatientsData _patients;
 
-        public InsertPsychiatricHistoryHandler(ILogger<InsertPsychiatricHistoryHandler> logger, IAntecedentPatient antecedent)
+        public InsertPsychiatricHistoryHandler(ILogger<InsertPsychiatricHistoryHandler> logger, IAntecedentPatient antecedent, IPatientsData patients)
         {
             _logger=logger;
             _antecedent=antecedent;
+            _patients=patients;
         }
         public async Task<InsertPsychiatricHistoryResponse> Handle(InsertPsychiatricHistoryRequest request, CancellationToken cancellationToken)
         {
             var PsychiatricHistory = await _antecedent.GetPsychiatricHistoryByPatientIdAsync(request.IDPatient).ConfigureAwait(false);
 
-            if(PsychiatricHistory != null)
+            var PatientsData = await _patients.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
+
+            if (PatientsData == null || !Equals(request.IDPatient, PatientsData.ID) || string.IsNullOrEmpty(Convert.ToString(request.IDPatient)))
+            {
+                return new FailureInsertPsychiatricHistoryResponse ($"No se encontro al paciente {request.IDPatient} o no es valido con el registo que se quiere ingresar");
+            }
+
+            if (PsychiatricHistory != null)
             {
                 return new FailureInsertPsychiatricHistoryResponse("Este paciente ya cuenta con este registro");
             }

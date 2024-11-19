@@ -34,3 +34,32 @@ Authorization: Bearer {{authToken}}
 GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getactivemedications/{PatientID}
 
 ###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertpatient
+Content-Type: application/json
+
+{
+  "name": "Rogelio",
+  "fathersSurname": "Arriaga",
+  "mothersSurname": "Gonzalez",
+  "dateOfBirth": "1997-10-08T21:25:11.031Z",
+  "gender": "Masculino",
+  "address": "",
+  "country": "",
+  "city": "",
+  "state": "",
+  "zipCode": "",
+  "outsideNumber": "",
+  "insideNumber": "",
+  "phoneNumber": "",
+  "email": "",
+  "emergencyContactName": "",
+  "emergencyContactPhone": "",
+  "insuranceProvider": "",
+  "policyNumber": "",
+  "bloodType": "",
+  "photo": "",
+  "internalNotes": ""
+}
+
+###

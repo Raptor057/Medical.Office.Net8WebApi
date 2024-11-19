@@ -3,14 +3,15 @@ using Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathologicalHist
 
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathologicalHistory.InsertNonPathologicalHistory
 {
-    public sealed record InsertNonPathologicalHistoryRequest(long IDPatient,
+    public sealed record InsertNonPathologicalHistoryRequest(
+        long IDPatient,
         bool? PhysicalActivity,
         bool? Smoking,
         bool? Alcoholism,
         bool? SubstanceAbuse,
-        string SubstanceAbuseData,
+        string? SubstanceAbuseData,
         bool? RecentVaccination,
-        string RecentVaccinationData,
+        string? RecentVaccinationData,
         bool? Others,
-        string OthersData) : IRequest<InsertNonPathologicalHistoryResponse>;
+        string? OthersData) : IRequest<InsertNonPathologicalHistoryResponse>;
 }

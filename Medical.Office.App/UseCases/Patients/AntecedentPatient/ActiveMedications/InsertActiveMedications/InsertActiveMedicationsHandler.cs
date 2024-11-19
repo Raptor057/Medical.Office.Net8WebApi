@@ -8,23 +8,24 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedicatio
     internal sealed class InsertActiveMedicationsHandler : IInteractor<InsertActiveMedicationsRequest, InsertActiveMedicationsResponse>
     {
         private readonly IAntecedentPatient _patient;
-        private readonly IPatientsData _patientsData;
+        private readonly IPatientsData _patients;
 
-        public InsertActiveMedicationsHandler(IAntecedentPatient patient, IPatientsData patientsData)
+        public InsertActiveMedicationsHandler(IAntecedentPatient patient, IPatientsData patients)
         {
             _patient=patient;
-            _patientsData=patientsData;
+            _patients=patients;
         }
 
         public async Task<InsertActiveMedicationsResponse> Handle(InsertActiveMedicationsRequest request, CancellationToken cancellationToken)
         {
-        var GetPatient = await _patientsData.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
-            if (GetPatient == null)
+            var PatientsData = await _patients.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
+
+            if (PatientsData == null || !Equals(request.IDPatient, PatientsData.ID) || string.IsNullOrEmpty(Convert.ToString(request.IDPatient)))
             {
-                return new FailureInsertActiveMedicationsResponse("No se puede agregar informacion a este paciente debido a que no esta dado de alta");
+                return new FailureInsertActiveMedicationsResponse ($"No se encontro al paciente {request.IDPatient} o no es valido con el registo que se quiere ingresar");
             }
 
-        var GetLastActiveMedications = await _patient.GetActiveMedicationsByPatientIdAsync(request.IDPatient).ConfigureAwait(false);
+            var GetLastActiveMedications = await _patient.GetActiveMedicationsByPatientIdAsync(request.IDPatient).ConfigureAwait(false);
 
             if (GetLastActiveMedications == null)
             {
@@ -32,7 +33,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedicatio
             }
             else if (GetLastActiveMedications.IDPatient.Equals(request.IDPatient))
             {
-                return new FailureInsertActiveMedicationsResponse($"El paciente {GetPatient.Name} {GetPatient.FathersSurname} con numero {GetPatient.ID} ya cuenta con este registro del dia {GetLastActiveMedications.DateTimeSnap}");
+                return new FailureInsertActiveMedicationsResponse($"El paciente {PatientsData.Name} {PatientsData.FathersSurname} con numero {PatientsData.ID} ya cuenta con este registro del dia {GetLastActiveMedications.DateTimeSnap}");
             }
             else
             {

@@ -11,16 +11,25 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.PatientAllergie
     {
         private readonly ILogger<InsertPatientAllergiesHandler> _logger;
         private readonly IAntecedentPatient _antecedent;
+        private readonly IPatientsData _patients;
 
-        public InsertPatientAllergiesHandler(ILogger<InsertPatientAllergiesHandler> logger, IAntecedentPatient antecedent)
+        public InsertPatientAllergiesHandler(ILogger<InsertPatientAllergiesHandler> logger, IAntecedentPatient antecedent, IPatientsData patients)
         {
             _logger=logger;
             _antecedent=antecedent;
+            _patients=patients;
         }
 
         public async Task<InsertPatientAllergiesResponse> Handle(InsertPatientAllergiesRequest request, CancellationToken cancellationToken)
         {
             var PatientAllergies = await _antecedent.GetPatientAllergiesByPatientIdAsync(request.IDPatient).ConfigureAwait(false);
+
+            var PatientsData = await _patients.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
+
+            if (PatientsData == null || !Equals(request.IDPatient, PatientsData.ID) || string.IsNullOrEmpty(Convert.ToString(request.IDPatient)))
+            {
+                return new FailureInsertPatientAllergiesResponse ($"No se encontro al paciente {request.IDPatient} o no es valido con el registo que se quiere ingresar");
+            }
 
             if (PatientAllergies != null)
             {

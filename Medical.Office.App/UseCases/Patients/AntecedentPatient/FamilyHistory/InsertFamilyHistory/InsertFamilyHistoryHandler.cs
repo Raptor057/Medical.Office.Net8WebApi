@@ -23,16 +23,19 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.I
         public async Task<InsertFamilyHistoryResponse> Handle(InsertFamilyHistoryRequest request, CancellationToken cancellationToken)
         {
             var FamilyHistory = await _antecedent.GetFamilyHistoryByPatientIdAsync(request.IDPatient).ConfigureAwait(false);
-            var PatientData = await _patients.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
+
+            var PatientsData = await _patients.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
+
+            if (PatientsData == null || !Equals(request.IDPatient, PatientsData.ID) || string.IsNullOrEmpty(Convert.ToString(request.IDPatient)))
+            {
+                return new FailureInsertFamilyHistoryResponse ($"No se encontro al paciente {request.IDPatient} o no es valido con el registo que se quiere ingresar");
+            }
 
             if (FamilyHistory != null)
             {
                 return new FailureInsertFamilyHistoryResponse("Este paciente ya cuenta con un registro");
             }
-            else if(!Equals(request.IDPatient, PatientData.ID))
-            {
-                return new FailureInsertFamilyHistoryResponse("Este paciente no esta registrado o el ID del registro del paciente no coincide con el paciente");
-            }
+
 
             await _antecedent.InsertFamilyHistoryAsync(
                 request.IDPatient,

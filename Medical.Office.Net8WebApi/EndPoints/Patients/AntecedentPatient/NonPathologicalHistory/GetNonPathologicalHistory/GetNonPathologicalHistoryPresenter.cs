@@ -6,9 +6,9 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.NonPath
 {
     public class GetNonPathologicalHistoryPresenter<T> : IPresenter<GetNonPathologicalHistoryResponse> where T : GetNonPathologicalHistoryResponse
     {
-        private readonly GenericViewModel<InsertNonPathologicalHistoryController> _viewModel;
+        private readonly GenericViewModel<GetNonPathologicalHistoryController> _viewModel;
 
-        public GetNonPathologicalHistoryPresenter(GenericViewModel<InsertNonPathologicalHistoryController> viewModel)
+        public GetNonPathologicalHistoryPresenter(GenericViewModel<GetNonPathologicalHistoryController> viewModel)
         {
             _viewModel=viewModel;
         }

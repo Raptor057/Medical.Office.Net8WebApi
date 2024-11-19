@@ -1,9 +1,7 @@
 ﻿using Common.Common.CleanArch;
 using Medical.Office.App.Dtos.Patients.AntecedentPatient.NonPathologicalHistory;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathologicalHistory.GetNonPathologicalHistory.Responses;
-using Medical.Office.App.UseCases.Patients.AntecedentPatient.PathologicalBackground.GetPathologicalBackground.Responses;
 using Medical.Office.Domain.Repository;
-using Microsoft.Extensions.FileSystemGlobbing.Internal;
 using Microsoft.Extensions.Logging;
 
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathologicalHistory.GetNonPathologicalHistory
@@ -21,6 +19,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathological
         public async Task<GetNonPathologicalHistoryResponse> Handle(GetNonPathologicalHistoryRequest request, CancellationToken cancellationToken)
         {
             var NonPathologicalHistory = await _antecedent.GetNonPathologicalHistoryByPatientIdAsync(request.IdPatient).ConfigureAwait(false);
+
             if (NonPathologicalHistory == null)
             {
                 return new FailureGetNonPathologicalHistoryResponse("No se encontro informacion para este paciente");

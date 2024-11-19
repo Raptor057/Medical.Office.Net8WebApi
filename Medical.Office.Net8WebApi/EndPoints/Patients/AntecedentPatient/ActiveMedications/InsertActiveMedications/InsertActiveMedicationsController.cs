@@ -30,9 +30,9 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.ActiveM
                 Id: 1, // Proporciona el valor adecuado para Id
                 IDPatient: requestBody.IDPatient,
                 ActiveMedicationsData: requestBody.ActiveMedicationsData,
-                DateTimeSnap: DateTime.Now
-);
-            if (!InsertActiveMedicationsRequest.CanInsert(activeMedicationsDto, out var errors)) 
+                DateTimeSnap: DateTime.Now);
+
+            if (!InsertActiveMedicationsRequest.CanInsert(activeMedicationsDto, out var errors))
             {
                 return StatusCode(400, _viewModel.Fail(errors.ToString()));
             }
