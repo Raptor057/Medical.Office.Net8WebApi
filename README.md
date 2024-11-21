@@ -266,3 +266,32 @@ Ver las imágenes disponibles:
     docker images
 
 Con estos pasos, habrás detenido y eliminado todo lo relacionado con tu entorno de Docker, y habrás configurado las IPs estáticas para tus contenedores en el archivo docker-compose.yml.
+
+
+------
+
+# Cómo ejecutar el yml
+## Levantar el stack: 
+
+### Ejecuta:
+
+
+    docker-compose up -d
+
+## Verificar la red y servicios: 
+
+### Verifica que los contenedores estén conectados con las IPs asignadas:
+
+
+    docker network inspect medicalnetwork
+
+## Probar conectividad: 
+
+### Accede a uno de los contenedores y prueba conectarte a otro:
+
+
+    docker exec -it MedicalOfficeApi sh
+    ping 192.168.1.102  # IP del contenedor sql1
+
+## Resultado
+Con esta configuración, tendrás una red privada con IPs estáticas para tus contenedores, asegurando comunicación directa y predecible entre ellos.

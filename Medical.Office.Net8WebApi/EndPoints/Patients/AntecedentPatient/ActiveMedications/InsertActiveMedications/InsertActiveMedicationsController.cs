@@ -3,7 +3,6 @@ using MediatR;
 using Medical.Office.App.Dtos.Patients.AntecedentPatient.ActiveMedications;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedications.InsertActiveMedications;
 using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.ActiveMedications.InsertActiveMedications
 {

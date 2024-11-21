@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Common.Common.CleanArch;
+﻿using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.UseCases.Configurations.GetAllConfigurations;
 using Medical.Office.Net8WebApi.EndPoints.Users.UsersLogin;
