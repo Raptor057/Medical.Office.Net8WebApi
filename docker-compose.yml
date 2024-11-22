@@ -1,3 +1,71 @@
+# services:
+#   seq:
+#     image: datalust/seq:latest
+#     container_name: seq
+#     environment:
+#       - ACCEPT_EULA=Y
+#     ports:
+#       - "5341:80"
+#     networks:
+#       medicalnetwork:
+#         ipv4_address: 192.168.1.100
+#     restart: always
+
+#   sql1:
+#     container_name: sql1
+#     image: mcr.microsoft.com/mssql/server:latest  # Ejemplo de imagen de SQL Server
+#     environment:
+#       - ACCEPT_EULA=Y
+#       - SA_PASSWORD=Cbmwjmkq23
+#     ports:
+#       - "1433:1433"
+#     networks:
+#       medicalnetwork:
+#         ipv4_address: 192.168.1.102
+#     restart: always
+
+#   medicalofficeapi:
+#     build:
+#       context: .  # Usamos el directorio actual como contexto
+#       dockerfile: "./Medical.Office.Net8WebApi/Dockerfile"  # Apunta al Dockerfile en el directorio actual
+#     container_name: MedicalOfficeApi
+#     ports:
+#       - "8080:8080"
+#       - "8081:8081"
+#     networks:
+#     medicalnetwork:
+#         ipv4_address: 192.168.1.101
+#     depends_on:
+#       - seq
+#     restart: always
+
+#   frontend:
+#     build:
+#       context: .
+#       dockerfile: "../Medical.Office.ReactWebClient/Medical.Office.ReactWebClient/dockerfile"
+#     container_name: MedicalOfficeFrontend
+#     ports:
+#       - "3000:3000"
+#     networks:
+#       medicalnetwork:
+#         ipv4_address: 192.168.1.103
+#     depends_on:
+#       - medicalofficeapi
+#     restart: always
+
+# networks:
+#     medicalnetwork:
+#         external: true
+
+# # networks:
+# #   medicalnetwork:
+# #     external:
+# #      name: medicalnetwork
+# #     driver: bridge
+# #     ipam:
+# #       config:
+# #         - subnet: 192.168.1.0/24
+
 services:
   seq:
     image: datalust/seq:latest
@@ -13,7 +81,7 @@ services:
 
   sql1:
     container_name: sql1
-    image: mcr.microsoft.com/mssql/server:latest  # Ejemplo de imagen de SQL Server
+    image: mcr.microsoft.com/mssql/server:latest
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Cbmwjmkq23
@@ -26,28 +94,34 @@ services:
 
   medicalofficeapi:
     build:
-      context: .  # Usamos el directorio actual como contexto
-      dockerfile: "./Medical.Office.Net8WebApi/Dockerfile"  # Apunta al Dockerfile en el directorio actual
+      context: .
+      dockerfile: "./Medical.Office.Net8WebApi/Dockerfile"
     container_name: MedicalOfficeApi
     ports:
       - "8080:8080"
       - "8081:8081"
     networks:
-     medicalnetwork:
+      medicalnetwork:
         ipv4_address: 192.168.1.101
     depends_on:
       - seq
     restart: always
 
-networks:
-    medicalnetwork:
-        external: true
+  frontend:
+    build:
+      context: .
+      dockerfile: "../Medical.Office.ReactWebClient/Medical.Office.ReactWebClient/dockerfile"
+    container_name: MedicalOfficeFrontend
+    ports:
+      - "3000:3000"
+    networks:
+      medicalnetwork:
+        ipv4_address: 192.168.1.103
+    depends_on:
+      - medicalofficeapi
+    restart: always
 
-# networks:
-#   medicalnetwork:
-#     external:
-#      name: medicalnetwork
-#     driver: bridge
-#     ipam:
-#       config:
-#         - subnet: 192.168.1.0/24
+networks:
+  medicalnetwork:
+    external:
+      name: medicalnetwork

@@ -30,7 +30,7 @@ This can prevent Docker from starting. Use at your own risk.
 	  "storage-driver": "overlay2"
 	}
 
-## Crear una Red
+## 1) Crear una Red
 Usa el comando docker network create para definir una red con un rango de IP específico.
 
 	`docker network rm medicalnetwork
@@ -103,15 +103,10 @@ Detén los servicios activos (si aplica):
 
 	docker-compose down
 
-### Reconstruye las imágenes:
+### 2) Reconstruye las imágenes:
 
 
 	docker-compose build
-
-### Levanta los servicios:
-
-
-	docker-compose up -d
 
 # Volver a levantar los contenedores:
 Ahora, vuelve a ejecutar el docker-compose para que los contenedores se levanten con la nueva configuración.
