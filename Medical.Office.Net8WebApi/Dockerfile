@@ -22,10 +22,10 @@ COPY ["Medical.Office.Infra/Medical.Office.Infra.csproj", "Medical.Office.Infra/
 # Restaurar dependencias de todos los proyectos
 RUN dotnet restore "Medical.Office.Net8WebApi/Medical.Office.Net8WebApi.csproj"
 
-# Copiar todo el código fuente de la solución
+# Copiar todo el codigo fuente de la solucion
 COPY . .
 
-# Build del proyecto principal con configuración de build
+# Build del proyecto principal con configuracion de build
 WORKDIR "/src/Medical.Office.Net8WebApi"
 RUN dotnet build "Medical.Office.Net8WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 

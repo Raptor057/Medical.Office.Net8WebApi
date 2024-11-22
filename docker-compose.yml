@@ -11,21 +11,6 @@ services:
         ipv4_address: 192.168.1.100
     restart: always
 
-  medicalofficeapi:
-    build:
-      context: .  # Usamos el directorio actual como contexto
-      dockerfile: "./Medical.Office.Net8WebApi/Dockerfile"  # Apunta al Dockerfile en el directorio actual
-    container_name: MedicalOfficeApi
-    ports:
-      - "8080:8080"
-      - "8081:8081"
-    networks:
-      medicalnetwork:
-        ipv4_address: 192.168.1.101
-    depends_on:
-      - seq
-    restart: always
-
   sql1:
     container_name: sql1
     image: mcr.microsoft.com/mssql/server:latest  # Ejemplo de imagen de SQL Server
@@ -39,9 +24,30 @@ services:
         ipv4_address: 192.168.1.102
     restart: always
 
+  medicalofficeapi:
+    build:
+      context: .  # Usamos el directorio actual como contexto
+      dockerfile: "./Medical.Office.Net8WebApi/Dockerfile"  # Apunta al Dockerfile en el directorio actual
+    container_name: MedicalOfficeApi
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    networks:
+     medicalnetwork:
+        ipv4_address: 192.168.1.101
+    depends_on:
+      - seq
+    restart: always
+
 networks:
-  medicalnetwork:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 192.168.1.0/24
+    medicalnetwork:
+        external: true
+
+# networks:
+#   medicalnetwork:
+#     external:
+#      name: medicalnetwork
+#     driver: bridge
+#     ipam:
+#       config:
+#         - subnet: 192.168.1.0/24

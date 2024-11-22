@@ -41,7 +41,7 @@ namespace Medical.Office.App.UseCases.Configurations.GetAllConfigurations
             var Specialities = GetSpecialities.Select(s => new SpecialtiesDto { Specialty = s.Specialty }).ToList();
             var UserStatuses = GetUserStatuses.Select(u => new GetUserStatuesDto { TypeUserStatuses = u.TypeUserStatuses }).ToList();
 
-            var GetAllConfigurationsDto = new GetAllConfigurationsDto(
+            var AllConfigurations = new GetAllConfigurationsDto(
                 OfficeSetup,   // Primer parámetro es GetOfficeSetupDto
                 Positions,     // Segundo parámetro es IEnumerable<GetPositionsDto>
                 Roles,         // Tercer parámetro es IEnumerable<GetRolesDto>
@@ -50,7 +50,7 @@ namespace Medical.Office.App.UseCases.Configurations.GetAllConfigurations
                 UserStatuses   // Se agregan los estados de usuario
             );
 
-            return new SuccessGetAllConfigurationsResponse(GetAllConfigurationsDto);
+            return new SuccessGetAllConfigurationsResponse(AllConfigurations);
         }
     }
 }

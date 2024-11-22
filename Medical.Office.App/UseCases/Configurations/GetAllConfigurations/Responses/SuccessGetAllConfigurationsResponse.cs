@@ -2,5 +2,5 @@
 
 namespace Medical.Office.App.UseCases.Configurations.GetAllConfigurations.Responses
 {
-    public record SuccessGetAllConfigurationsResponse(GetAllConfigurationsDto GetAllConfigurations): GetAllConfigurationsResponse;
+    public record SuccessGetAllConfigurationsResponse(GetAllConfigurationsDto AllConfigurations): GetAllConfigurationsResponse;
 }
