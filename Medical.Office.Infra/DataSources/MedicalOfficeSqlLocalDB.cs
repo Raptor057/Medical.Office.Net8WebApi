@@ -17,8 +17,34 @@ namespace Medical.Office.Infra.DataSources
 
         #region Configuracion
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Usr"></param>
+        /// <returns></returns>
         public async Task<LoginHistory> GetLoginHistoryByUsr(string Usr)
             => await _con.QueryFirstAsync<LoginHistory>("SELECT TOP (1) *  FROM [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] WHERE Usr = @Usr ORDER BY DateTimeSnap DESC", new { Usr }).ConfigureAwait(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<LaboralDays> GetTodaysWorkSchedule()
+            => await _con.QuerySingleAsync<LaboralDays>("SELECT *  FROM [Medical.Office.SqlLocalDB].[dbo].[LaboralDays] WHERE [Days] = (SELECT * FROM TodayInLettersView);").ConfigureAwait(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<LaboralDays>> GetWorkSchedule()
+            => await _con.QueryAsync<LaboralDays>("SELECT *  FROM [Medical.Office.SqlLocalDB].[dbo].[LaboralDays] ORDER BY Id ASC;").ConfigureAwait(false);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="laboralDays"></param>
+        /// <returns></returns>
+        public async Task UpdateWorkSchedule(LaboralDays laboralDays)
+            => await _con.ExecuteAsync("UPDATE LaboralDays SET [Laboral] = @Laboral,OpeningTime = @OpeningTime, ClosingTime = @ClosingTime WHERE [Days] = @Days", new {laboralDays.Laboral,laboralDays.OpeningTime,laboralDays.ClosingTime, laboralDays.Days}).ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -26,6 +52,23 @@ namespace Medical.Office.Infra.DataSources
         /// <returns></returns>
         public async Task<OfficeSetup> GetOfficeSetup()
             => await _con.QueryFirstAsync<OfficeSetup>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[OfficeSetup]").ConfigureAwait(false);
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="NameOfOffice"></param>
+        /// <param name="Address"></param>
+        /// <param name="OpeningTime"></param>
+        /// <param name="ClosingTime"></param>
+        /// <returns></returns>
+        public async Task InsertOfficeSetup(string NameOfOffice, string Address)
+            => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[OfficeSetup]" +
+                "([NameOfOffice],[Address])" +
+                "VALUES(@NameOfOffice, @Address)",
+                new { NameOfOffice, Address }).ConfigureAwait(false);
+
+        public async Task UpdateOfficeSetup(OfficeSetup officeSetup)
+            => await _con.ExecuteAsync("UPDATE OfficeSetup SET NameOfOffice = @NameOfOffice , [Address] = @Address WHERE Id = 1", new {officeSetup.NameOfOffice,officeSetup.Address }).ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -231,19 +274,7 @@ namespace Medical.Office.Infra.DataSources
 
                     #endregion
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="NameOfOffice"></param>
-        /// <param name="Address"></param>
-        /// <param name="OpeningTime"></param>
-        /// <param name="ClosingTime"></param>
-        /// <returns></returns>
-        public async Task InsertOfficeSetup(string NameOfOffice, string Address, TimeSpan OpeningTime, TimeSpan ClosingTime)
-            => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[OfficeSetup]" +
-                "([NameOfOffice],[Address],[OpeningTime],[ClosingTime])" +
-                "VALUES(@NameOfOffice, @Address, @OpeningTime, @ClosingTime )", 
-                new { NameOfOffice, Address, OpeningTime, ClosingTime }).ConfigureAwait(false);
+
 
         #endregion
 
@@ -271,6 +302,9 @@ namespace Medical.Office.Infra.DataSources
         public async Task<IEnumerable<Doctors>> GetDoctors()
             => await _con.QueryAsync<Doctors>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Doctors]").ConfigureAwait(false);
 
+        public async Task<Doctors> GetDoctor(long IDDoctor)
+            => await _con.QuerySingleAsync<Doctors>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Doctors] WHERE ID = @IDDoctor", new { IDDoctor }).ConfigureAwait(false);
+
         /// <summary>
         ///
         /// </summary>
@@ -282,7 +316,7 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="Notes"></param>
         /// <param name="TypeOfAppointment"></param>
         /// <returns></returns>
-        public async Task InsertMedicalAppointmentCalendar(long IDPatient, long IDDoctor, DateTime AppointmentDateTime, string ReasonForVisit, string AppointmentStatus, string Notes, string TypeOfAppointment)
+        public async Task InsertMedicalAppointmentCalendar(long IDPatient, long IDDoctor, DateTime AppointmentDateTime, string ReasonForVisit, string AppointmentStatus, string? Notes, string TypeOfAppointment)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar]" +
                 "([IDPatient],[IDDoctor],[AppointmentDateTime],[ReasonForVisit],[AppointmentStatus],[Notes],[TypeOfAppointment])" +
                 "VALUES(@IDPatient, @IDDoctor, @AppointmentDateTime, @ReasonForVisit, @AppointmentStatus, @Notes, @TypeOfAppointment)", 
@@ -292,8 +326,22 @@ namespace Medical.Office.Infra.DataSources
         ///
         /// </summary>
         /// <returns></returns>
-        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendar()
+        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetListMedicalAppointmentCalendar()
             => await _con.QueryAsync<MedicalAppointmentCalendar>("SELECT * FROM MedicalAppointmentCalendar ").ConfigureAwait(false);
+
+        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarByParams(long IDPatient, long IDDoctor, DateTime AppointmentDateTime, string ReasonForVisit, string AppointmentStatus, string? Notes, string TypeOfAppointment)
+            => await _con.QueryAsync<MedicalAppointmentCalendar>(@"SELECT *
+            FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] WHERE 
+            (IDPatient IS NULL OR IDPatient = @IDPatient) -- Considera que los ID podrían ser nulos o 0
+            OR (IDDoctor IS NULL OR IDDoctor = @IDDoctor) -- Considera que los ID podrían ser nulos o 0
+            OR (AppointmentDateTime IS NULL OR AppointmentDateTime = @AppointmentDateTime) -- Para fechas nulas
+            OR (AppointmentStatus IS NULL OR AppointmentStatus = @AppointmentStatus)
+            OR (Notes IS NULL OR Notes = @Notes)
+            OR (TypeOfAppointment IS NULL OR TypeOfAppointment = @TypeOfAppointment)", new { IDPatient, IDDoctor, AppointmentDateTime, ReasonForVisit, AppointmentStatus, Notes, TypeOfAppointment }).ConfigureAwait(false);
+
+        //public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarByIDPatient(long IDPatient)
+        //    => await _con.QueryAsync<MedicalAppointmentCalendar>(@"SELECT *  FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] WHERE IDPatient = @IDPatient)", new { IDPatient}).ConfigureAwait(false);
+
 
         /// <summary>
         ///
@@ -302,6 +350,9 @@ namespace Medical.Office.Infra.DataSources
         /// <returns></returns>
         public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarByIDPatient(long IDPatient)
             => await _con.QueryAsync<MedicalAppointmentCalendar>("SELECT * FROM MedicalAppointmentCalendar WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
+
+        public async Task<MedicalAppointmentCalendar> GetLastMedicalAppointmentCalendarByIDPatient(long IDPatient)
+    => await _con.QuerySingleAsync<MedicalAppointmentCalendar>("SELECT TOP 1 * FROM MedicalAppointmentCalendar WHERE IDPatient = @IDPatient ORDER BY CreatedAt DESC", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
         ///

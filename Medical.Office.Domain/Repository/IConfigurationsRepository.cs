@@ -18,7 +18,7 @@ namespace Medical.Office.Domain.Repository
         /// <param name="OpeningTime"></param>
         /// <param name="ClosingTime"></param>
         /// <returns></returns>
-        Task InsertOfficeSetupAsync(string NameOfOffice, string Address, TimeSpan OpeningTime, TimeSpan ClosingTime);
+        Task InsertOfficeSetupAsync(string NameOfOffice, string Address);
 
         /// <summary>
         /// 
@@ -113,6 +113,14 @@ namespace Medical.Office.Domain.Repository
         /// <param name="Token"></param>
         /// <returns></returns>
         Task InsertUsersMovementsAsync(string Usr, string UsrName, string UsrRole, string UsrMovement, string? Token);
+
+        Task<LaboralDays> GetTodaysWorkScheduleAsync();
+        Task<IEnumerable<LaboralDays>> GetWorkScheduleAsync();
+        Task UpdateOfficeSetupAsync(OfficeSetup officeSetup);
+        Task UpdateWorkScheduleAsync(LaboralDays laboralDays);
+        Task <IEnumerable<Doctors>> GetDoctorsAsync();
+        Task<Doctors> GetDoctorAsync(long IDDoctor);
+
 
     }
 }

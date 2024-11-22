@@ -17,8 +17,6 @@ namespace Medical.Office.App.UseCases.Configurations.OfficeSetup.InsertOfficeSet
         {
             NameOfOffice = officeSetup.NameOfOffice;
             Address= officeSetup.Address;
-            OpeningTime= officeSetup.OpeningTime;
-            ClosingTime= officeSetup.ClosingTime;
         }
 
         public static void Validations(OfficeSetupDto officeSetup, ErrorList errors)
@@ -35,14 +33,6 @@ namespace Medical.Office.App.UseCases.Configurations.OfficeSetup.InsertOfficeSet
             if (string.IsNullOrEmpty(officeSetup.Address))
             {
                 errors.Add("No se ingreso una direccion");
-            }
-            if (officeSetup.OpeningTime == null || officeSetup.OpeningTime == TimeSpan.Zero)
-            {
-                errors.Add("No se ingreso hora de apertura");
-            }
-            if (officeSetup.ClosingTime == null || officeSetup.ClosingTime == TimeSpan.Zero)
-            {
-                errors.Add("No se ingreso hora de cierre");
             }
         }
 

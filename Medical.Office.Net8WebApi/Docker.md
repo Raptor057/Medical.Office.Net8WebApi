@@ -5,6 +5,21 @@ Configure the Docker daemon by typing a json Docker daemon configuration file⁠
 
 This can prevent Docker from starting. Use at your own risk.
 
+--------------
+Original
+
+	{
+	"builder": {
+		"gc": {
+		"defaultKeepStorage": "20GB",
+		"enabled": true
+		}
+	},
+	"experimental": false
+	}
+
+--------------
+Modificado
 	{
 	  "builder": {
 		"gc": {

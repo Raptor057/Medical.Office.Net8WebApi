@@ -28,7 +28,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.OfficeSetup.InsertOf
         [Route("/api/insertofficesetup")]
         public async Task<IActionResult> Execute([FromBody] InsertOfficeSetupRequestBody requestBody)
         {
-            if(!InsertOfficeSetupRequest.CanInsert((new OfficeSetupDto {NameOfOffice = requestBody.NameOfOffice ?? "" ,Address = requestBody.Address ?? "", OpeningTime = TimeSpan.Parse(requestBody.OpeningTime), ClosingTime = TimeSpan.Parse(requestBody.ClosingTime)}),out var errors))
+            if(!InsertOfficeSetupRequest.CanInsert((new OfficeSetupDto {NameOfOffice = requestBody.NameOfOffice ?? "" ,Address = requestBody.Address ?? ""}),out var errors))
             {
                 return StatusCode(400, _viewModel.Fail(errors.ToString()));
             }
@@ -36,9 +36,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.OfficeSetup.InsertOf
                 (new OfficeSetupDto
                 {
                     NameOfOffice = requestBody.NameOfOffice,
-                    Address=requestBody.Address,
-                    OpeningTime= TimeSpan.Parse(requestBody.OpeningTime),
-                    ClosingTime=TimeSpan.Parse(requestBody.ClosingTime)
+                    Address=requestBody.Address
                 });
             try
             {

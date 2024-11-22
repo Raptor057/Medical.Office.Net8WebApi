@@ -22,14 +22,12 @@ namespace Medical.Office.App.UseCases.Configurations.OfficeSetup.InsertOfficeSet
 
             if (GetOfficeSetupData == null)
             {
-                await _configurations.InsertOfficeSetupAsync(request.NameOfOffice, request.Address, request.OpeningTime, request.ClosingTime).ConfigureAwait(false);
+                await _configurations.InsertOfficeSetupAsync(request.NameOfOffice, request.Address).ConfigureAwait(false);
                 _logger.LogInformation("Se agrego informacion de consultorio exitosamente");
                 return new SuccessInsertOfficeSetupResponse(new OfficeSetupDto
                 {
                     NameOfOffice = request.NameOfOffice,
-                    Address = request.Address,
-                    OpeningTime = request.OpeningTime,
-                    ClosingTime = request.ClosingTime
+                    Address = request.Address
                 });
             }
             return new FailureInsertOfficeSetupResponse("No se puede agregar informacion debido a que ya existe");

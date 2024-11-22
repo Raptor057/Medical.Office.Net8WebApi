@@ -118,13 +118,30 @@ namespace Medical.Office.Infra.Repositories
         public async Task<OfficeSetup> GetOfficeSetupAsync()
             => await _db.GetOfficeSetup().ConfigureAwait(false);
 
-        public async Task InsertOfficeSetupAsync(string NameOfOffice, string Address, TimeSpan OpeningTime, TimeSpan ClosingTime)
-            => await _db.InsertOfficeSetup(NameOfOffice, Address, OpeningTime, ClosingTime).ConfigureAwait(true);
+        public async Task InsertOfficeSetupAsync(string NameOfOffice, string Address)
+            => await _db.InsertOfficeSetup(NameOfOffice, Address).ConfigureAwait(true);
 
         public async Task InsertPositionsAsync(string PositionName)
             => await _db.InsertPositions(PositionName).ConfigureAwait(false);
 
         public async Task InsertSpecialtiesAsync(string Specialty)
             => await _db.InsertSpecialties(Specialty).ConfigureAwait(false);
+
+        public async Task<LaboralDays> GetTodaysWorkScheduleAsync()
+            => await _db.GetTodaysWorkSchedule().ConfigureAwait(false);
+
+        public async Task<IEnumerable<LaboralDays>> GetWorkScheduleAsync()
+            => await _db.GetWorkSchedule().ConfigureAwait(false);
+
+        public async Task UpdateOfficeSetupAsync(OfficeSetup officeSetup)
+            => await _db.UpdateOfficeSetup(officeSetup).ConfigureAwait(false);
+        public async Task UpdateWorkScheduleAsync(LaboralDays laboralDays)
+            => await _db.UpdateWorkSchedule(laboralDays).ConfigureAwait(false);
+
+        public async Task<IEnumerable<Doctors>> GetDoctorsAsync()
+            => await _db.GetDoctors().ConfigureAwait(false);
+
+        public async Task<Doctors> GetDoctorAsync(long IDDoctor)
+        => await _db.GetDoctor(IDDoctor).ConfigureAwait(false);
     }
 }

@@ -15,9 +15,7 @@ namespace Medical.Office.NUnit.Medical.Office.App.UseCases.Configurations.Office
             var officeSetup = new OfficeSetupDto
             {
                 NameOfOffice = "Main Office",
-                Address = "123 Main St",
-                OpeningTime = new TimeSpan(9, 0, 0),
-                ClosingTime = new TimeSpan(17, 0, 0)
+                Address = "123 Main St"
             };
 
             // Act
@@ -38,9 +36,7 @@ namespace Medical.Office.NUnit.Medical.Office.App.UseCases.Configurations.Office
             var officeSetup = new OfficeSetupDto
             {
                 NameOfOffice = string.Empty,
-                Address = string.Empty,
-                OpeningTime = TimeSpan.Zero,
-                ClosingTime = TimeSpan.Zero
+                Address = string.Empty
             };
 
             // Act & Assert
