@@ -5,13 +5,11 @@ namespace Medical.Office.App.Dtos.Patients
         long Id,
         long IDPatient,
         long IDDoctor,
-        DateTime AppointmentDateTime,
-        string ReasonForVisit,
-        string AppointmentStatus,
+        DateTime? AppointmentDateTime,
+        string? ReasonForVisit,
+        string? AppointmentStatus,
         string? Notes,
         DateTime? CreatedAt,
         DateTime? UpdatedAt,
-        string TypeOfAppointment
-    );
-
+        string? TypeOfAppointment);
 }

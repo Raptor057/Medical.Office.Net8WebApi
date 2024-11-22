@@ -1,9 +1,9 @@
 ﻿using Common.Common;
 using Common.Common.CleanArch;
 using Medical.Office.App.Dtos.Patients;
-using Medical.Office.App.UseCases.Patients.InsertMedicalAppointmentCalendar.Response;
+using Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.InsertMedicalAppointmentCalendar.Response;
 
-namespace Medical.Office.App.UseCases.Patients.InsertMedicalAppointmentCalendar
+namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.InsertMedicalAppointmentCalendar
 {
     public sealed class InsertMedicalAppointmentCalendarRequest : IRequest<InsertMedicalAppointmentCalendarResponse>
     {
@@ -64,12 +64,12 @@ namespace Medical.Office.App.UseCases.Patients.InsertMedicalAppointmentCalendar
         // Propiedades
         public long IDPatient { get; }
         public long IDDoctor { get; }
-        public DateTime AppointmentDateTime { get; }
-        public string ReasonForVisit { get; }
-        public string AppointmentStatus { get; }
+        public DateTime? AppointmentDateTime { get; }
+        public string? ReasonForVisit { get; }
+        public string? AppointmentStatus { get; }
         public string? Notes { get; }
         public DateTime? CreatedAt { get; }
         public DateTime? UpdatedAt { get; }
-        public string TypeOfAppointment { get; }
+        public string? TypeOfAppointment { get; }
     }
 }

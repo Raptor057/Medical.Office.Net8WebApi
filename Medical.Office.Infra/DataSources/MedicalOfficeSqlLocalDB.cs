@@ -316,7 +316,7 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="Notes"></param>
         /// <param name="TypeOfAppointment"></param>
         /// <returns></returns>
-        public async Task InsertMedicalAppointmentCalendar(long IDPatient, long IDDoctor, DateTime AppointmentDateTime, string ReasonForVisit, string AppointmentStatus, string? Notes, string TypeOfAppointment)
+        public async Task InsertMedicalAppointmentCalendar(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar]" +
                 "([IDPatient],[IDDoctor],[AppointmentDateTime],[ReasonForVisit],[AppointmentStatus],[Notes],[TypeOfAppointment])" +
                 "VALUES(@IDPatient, @IDDoctor, @AppointmentDateTime, @ReasonForVisit, @AppointmentStatus, @Notes, @TypeOfAppointment)", 
@@ -329,7 +329,7 @@ namespace Medical.Office.Infra.DataSources
         public async Task<IEnumerable<MedicalAppointmentCalendar>> GetListMedicalAppointmentCalendar()
             => await _con.QueryAsync<MedicalAppointmentCalendar>("SELECT * FROM MedicalAppointmentCalendar ").ConfigureAwait(false);
 
-        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarByParams(long IDPatient, long IDDoctor, DateTime AppointmentDateTime, string ReasonForVisit, string AppointmentStatus, string? Notes, string TypeOfAppointment)
+        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarByParams(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
             => await _con.QueryAsync<MedicalAppointmentCalendar>(@"SELECT *
             FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] WHERE 
             (IDPatient IS NULL OR IDPatient = @IDPatient) -- Considera que los ID podrían ser nulos o 0

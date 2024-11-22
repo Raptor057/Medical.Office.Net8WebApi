@@ -21,8 +21,11 @@ namespace Medical.Office.Infra.Repositories
         public async Task<IEnumerable<MedicalAppointmentCalendar>> GetListMedicalAppointmentCalendarByIDPatientAsync(long IDPatient)
             => await _db.GetMedicalAppointmentCalendarByIDPatient(IDPatient).ConfigureAwait(false);
 
-        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetListMedicalAppointmentCalendarByParamsAsync(long IDPatient, long IDDoctor, DateTime AppointmentDateTime, string ReasonForVisit, string AppointmentStatus, string Notes, string TypeOfAppointment)
+        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetListMedicalAppointmentCalendarByParamsAsync(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
             => await _db.GetMedicalAppointmentCalendarByParams(IDPatient, IDDoctor, AppointmentDateTime, ReasonForVisit, AppointmentStatus, Notes, TypeOfAppointment).ConfigureAwait(false);
+
+        public async Task InsertMedicalAppointmentCalendarAsync(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
+            => await _db.InsertMedicalAppointmentCalendar(IDPatient, IDDoctor, AppointmentDateTime, ReasonForVisit, AppointmentStatus, Notes, TypeOfAppointment).ConfigureAwait(false);
 
         /// <summary>
         /// 
@@ -41,8 +44,6 @@ namespace Medical.Office.Infra.Repositories
         public async Task<IEnumerable<PatientData>> GetPatientsDataListAsync()
             => await _db.GetPatientsDataList().ConfigureAwait(false);
 
-        public async Task InsertMedicalAppointmentCalendarAsync(long IDPatient, long IDDoctor, DateTime AppointmentDateTime, string ReasonForVisit, string AppointmentStatus, string Notes, string TypeOfAppointment)
-            => await _db.InsertMedicalAppointmentCalendar(IDPatient, IDDoctor, AppointmentDateTime, ReasonForVisit, AppointmentStatus,Notes, TypeOfAppointment).ConfigureAwait(false);
 
         /// <summary>
         /// 
