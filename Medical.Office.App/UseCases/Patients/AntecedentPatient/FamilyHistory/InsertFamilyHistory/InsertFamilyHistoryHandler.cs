@@ -50,15 +50,27 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.I
 
             FamilyHistory = await _antecedent.GetFamilyHistoryByPatientIdAsync(request.IDPatient).ConfigureAwait(false);
 
+            //return new SuccessInsertFamilyHistoryResponse(new FamilyHistoryDto(
+            //FamilyHistory.Id,
+            //FamilyHistory.IDPatient,
+            //FamilyHistory.Diabetes.HasValue ? (FamilyHistory.Diabetes.Value ? 1 : 0) : (int?)null,
+            //FamilyHistory.Cardiopathies.HasValue ? (FamilyHistory.Cardiopathies.Value ? 1 : 0) : (int?)null,
+            //FamilyHistory.Hypertension.HasValue ? (FamilyHistory.Hypertension.Value ? 1 : 0) : (int?)null,
+            //FamilyHistory.ThyroidDiseases.HasValue ? (FamilyHistory.ThyroidDiseases.Value ? 1 : 0) : (int?)null,
+            //FamilyHistory.ChronicKidneyDisease.HasValue ? (FamilyHistory.ChronicKidneyDisease.Value ? 1 : 0) : (int?)null,
+            //FamilyHistory.Others.HasValue ? (FamilyHistory.Others.Value ? 1 : 0) : (int?)null,
+            //FamilyHistory.OthersData ?? "",
+            //FamilyHistory.DateTimeSnap));
+
             return new SuccessInsertFamilyHistoryResponse(new FamilyHistoryDto(
             FamilyHistory.Id,
             FamilyHistory.IDPatient,
-            FamilyHistory.Diabetes.HasValue ? (FamilyHistory.Diabetes.Value ? 1 : 0) : (int?)null,
-            FamilyHistory.Cardiopathies.HasValue ? (FamilyHistory.Cardiopathies.Value ? 1 : 0) : (int?)null,
-            FamilyHistory.Hypertension.HasValue ? (FamilyHistory.Hypertension.Value ? 1 : 0) : (int?)null,
-            FamilyHistory.ThyroidDiseases.HasValue ? (FamilyHistory.ThyroidDiseases.Value ? 1 : 0) : (int?)null,
-            FamilyHistory.ChronicKidneyDisease.HasValue ? (FamilyHistory.ChronicKidneyDisease.Value ? 1 : 0) : (int?)null,
-            FamilyHistory.Others.HasValue ? (FamilyHistory.Others.Value ? 1 : 0) : (int?)null,
+            FamilyHistory.Diabetes,
+            FamilyHistory.Cardiopathies,
+            FamilyHistory.Hypertension,
+            FamilyHistory.ThyroidDiseases,
+            FamilyHistory.ChronicKidneyDisease,
+            FamilyHistory.Others,
             FamilyHistory.OthersData ?? "",
             FamilyHistory.DateTimeSnap));
         }

@@ -109,6 +109,9 @@
 //        }
 //    }
 //}
+
+//----------------------------------------
+//V 2
 using Common.Common.CleanArch;
 using Medical.Office.App.Dtos.Users;
 using Medical.Office.App.UseCases.Users.LoginUsers.Responses;
@@ -135,18 +138,67 @@ namespace Medical.Office.App.UseCases.Users.LoginUsers
                         ?? throw new ArgumentNullException("ApiAuthenticationSettings:SecretKey");
         }
 
+        //public async Task<LoginUsersResponse> Handle(LoginUsersRequest request, CancellationToken cancellationToken)
+        //{
+        //    var UserLogin = await _users.LoginUserAsync(request.User, request.Password).ConfigureAwait(false);
+        //    if (UserLogin == null)
+        //    {
+        //        return new FailureLoginUsersResponse("Usuario no encontrado o credenciales equivocadas");
+        //    }
+
+        //    var GetLastTokenByUrs = await _users.GetLoginHistoryByUsrAsync(request.User).ConfigureAwait(false);
+
+        //    // Validar si existe un token previo y verificar su validez
+        //    if (!string.IsNullOrEmpty(GetLastTokenByUrs.UsrToken))
+        //    {
+        //        if (ValidateToken(GetLastTokenByUrs.UsrToken, SecretKey))
+        //        {
+        //            return new SuccessLoginUsersResponse(new UserLoginResponseDto(
+        //                new LoginDataUserDto(
+        //                    UserLogin.Usr,
+        //                    UserLogin.Name,
+        //                    UserLogin.Lastname,
+        //                    UserLogin.Role,
+        //                    UserLogin.Position,
+        //                    UserLogin.Specialtie),
+        //                UserLogin.Role,
+        //                GetLastTokenByUrs.UsrToken
+        //            ));
+        //        }
+        //    }
+
+        //    // Generar un nuevo token
+        //    var Token = GenerateToken(UserLogin);
+
+        //    // Registrar el historial del login
+        //    await _configurations.InsertLoginHistoryAsync(UserLogin.Usr, UserLogin.Name, Token).ConfigureAwait(false);
+
+        //    return new SuccessLoginUsersResponse(new UserLoginResponseDto(
+        //        new LoginDataUserDto(
+        //            UserLogin.Usr,
+        //            UserLogin.Name,
+        //            UserLogin.Lastname,
+        //            UserLogin.Role,
+        //            UserLogin.Position,
+        //            UserLogin.Specialtie),
+        //        UserLogin.Role,
+        //        Token
+        //    ));
+        //}
         public async Task<LoginUsersResponse> Handle(LoginUsersRequest request, CancellationToken cancellationToken)
         {
+            // Validar las credenciales del usuario
             var UserLogin = await _users.LoginUserAsync(request.User, request.Password).ConfigureAwait(false);
             if (UserLogin == null)
             {
                 return new FailureLoginUsersResponse("Usuario no encontrado o credenciales equivocadas");
             }
 
+            // Obtener historial de login del usuario
             var GetLastTokenByUrs = await _users.GetLoginHistoryByUsrAsync(request.User).ConfigureAwait(false);
 
-            // Validar si existe un token previo y verificar su validez
-            if (!string.IsNullOrEmpty(GetLastTokenByUrs.UsrToken))
+            // Validar si hay un historial de login y si el token es válido
+            if (GetLastTokenByUrs != null && !string.IsNullOrEmpty(GetLastTokenByUrs.UsrToken))
             {
                 if (ValidateToken(GetLastTokenByUrs.UsrToken, SecretKey))
                 {
@@ -164,10 +216,10 @@ namespace Medical.Office.App.UseCases.Users.LoginUsers
                 }
             }
 
-            // Generar un nuevo token
+            // Si no hay token previo válido, generar un nuevo token
             var Token = GenerateToken(UserLogin);
 
-            // Registrar el historial del login
+            // Registrar el nuevo historial de login
             await _configurations.InsertLoginHistoryAsync(UserLogin.Usr, UserLogin.Name, Token).ConfigureAwait(false);
 
             return new SuccessLoginUsersResponse(new UserLoginResponseDto(
@@ -182,6 +234,7 @@ namespace Medical.Office.App.UseCases.Users.LoginUsers
                 Token
             ));
         }
+
 
         // Método para validar el token
         private bool ValidateToken(string token, string secretKey)

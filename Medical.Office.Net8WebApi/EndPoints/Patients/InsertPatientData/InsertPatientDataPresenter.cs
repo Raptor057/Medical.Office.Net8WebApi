@@ -9,7 +9,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.InsertPatientData
     {
         private readonly GenericViewModel<InsertPatientDataController> _viewModel;
 
-        public InsertPatientDataPresenter(GenericViewModel<InsertPatientDataController> viewModel) 
+        public InsertPatientDataPresenter(GenericViewModel<InsertPatientDataController> viewModel)
         {
             _viewModel=viewModel;
         }

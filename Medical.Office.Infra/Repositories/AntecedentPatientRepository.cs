@@ -40,8 +40,8 @@ namespace Medical.Office.Infra.Repositories
         public async Task InsertActiveMedicationsAsync(long IDPatient, string AactiveMedicationsData)
             => await _db.InsertActiveMedications(IDPatient, AactiveMedicationsData);
 
-        public async Task InsertFamilyHistoryAsync(long IDPatient, int? Diabetes, int? Cardiopathies, int? Hypertension,
-            int? ThyroidDiseases, int? ChronicKidneyDisease, int? Others, string? OthersData)
+        public async Task InsertFamilyHistoryAsync(long IDPatient, bool? Diabetes, bool? Cardiopathies, bool? Hypertension,
+            bool? ThyroidDiseases, bool? ChronicKidneyDisease, bool? Others, string? OthersData)
             => await _db.InsertFamilyHistory(IDPatient, Diabetes, Cardiopathies, Hypertension,
                 ThyroidDiseases, ChronicKidneyDisease, Others, OthersData);
 
@@ -81,8 +81,8 @@ namespace Medical.Office.Infra.Repositories
         public async Task UpdateActiveMedicationsAsync(long IDPatient, string AactiveMedicationsData, DateTime? DateTimeSnap)
             => await _db.UpdateActiveMedications(IDPatient, AactiveMedicationsData, DateTimeSnap);
 
-        public async Task UpdateFamilyHistoryAsync(long IDPatient, int Diabetes, int Cardiopathies, int Hypertension,
-            int ThyroidDiseases, int ChronicKidneyDisease, int Others, string OthersData, DateTime? DateTimeSnap)
+        public async Task UpdateFamilyHistoryAsync(long IDPatient, bool? Diabetes, bool? Cardiopathies, bool? Hypertension,
+            bool? ThyroidDiseases, bool? ChronicKidneyDisease, bool? Others, string OthersData, DateTime? DateTimeSnap)
             => await _db.UpdateFamilyHistory(IDPatient, Diabetes, Cardiopathies, Hypertension,
                 ThyroidDiseases, ChronicKidneyDisease, Others, OthersData, DateTimeSnap);
 

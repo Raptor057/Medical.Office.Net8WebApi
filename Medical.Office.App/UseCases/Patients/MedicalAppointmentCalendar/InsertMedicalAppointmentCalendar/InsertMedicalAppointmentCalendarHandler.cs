@@ -3,6 +3,7 @@ using Medical.Office.App.Dtos.Patients;
 using Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.InsertMedicalAppointmentCalendar.Response;
 using Medical.Office.Domain.Repository;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.InsertMedicalAppointmentCalendar
 {
@@ -29,20 +30,27 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.Insert
 
                 var Patient = await _patients.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
                 var Doctor = await _configurations.GetDoctorAsync(request.IDDoctor).ConfigureAwait(false);
+                var TypeOfAppointment = await _configurations.GetTypeOfAppointmentsListAsync();
                 if (Patient == null)
                 {
-                    return new FailureInsertMedicalAppointmentCalendarResponse($"No se puede agregar esta cita a este paciente {request.IDPatient} debido a que no se encontro registro");
+                    return new FailureInsertMedicalAppointmentCalendarResponse($"No se puede agregar esta cita al paciente #{request.IDPatient} debido a que no se encontro registro del paciente");
                 }
                 if (Doctor == null)
                 {
-                    return new FailureInsertMedicalAppointmentCalendarResponse($"No se puede agregar esta cita a este paciente {request.IDPatient} debido a que no se encontro registro del doctor {request.IDDoctor}");
+                    return new FailureInsertMedicalAppointmentCalendarResponse($"No se puede agregar esta cita al paciente #{request.IDPatient} debido a que no se encontro registro del doctor #{request.IDDoctor}");
+                }
+                if (TypeOfAppointment == null || !TypeOfAppointment.Select(x => x.NameTypeOfAppointment).Contains(request.TypeOfAppointment))
+                {
+                    return new FailureInsertMedicalAppointmentCalendarResponse(
+                        $"No se puede agregar esta cita al paciente #{request.IDPatient} debido a que no se encontró un tipo de cita válido."
+                    );
                 }
 
                 await _patients.InsertMedicalAppointmentCalendarAsync(request.IDPatient, request.IDDoctor, request.AppointmentDateTime, request.ReasonForVisit, request.AppointmentStatus, request.Notes, request.TypeOfAppointment).ConfigureAwait(false);
 
                 var LastMedicalAppointmentCalendar = await _patients.GetLastMedicalAppointmentCalendarByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
 
-                var MedicalAppointmentCalendar = new MedicalAppointmentCalendarDto(LastMedicalAppointmentCalendar.Id ?? 0, LastMedicalAppointmentCalendar.IDPatient ?? 0, LastMedicalAppointmentCalendar.IDDoctor ?? 0, LastMedicalAppointmentCalendar.AppointmentDateTime, LastMedicalAppointmentCalendar.ReasonForVisit, LastMedicalAppointmentCalendar.AppointmentStatus, LastMedicalAppointmentCalendar.Notes, LastMedicalAppointmentCalendar.CreatedAt, LastMedicalAppointmentCalendar.UpdatedAt, LastMedicalAppointmentCalendar.TypeOfAppointment);
+                var MedicalAppointmentCalendar = new MedicalAppointmentCalendarDto(LastMedicalAppointmentCalendar.Id, LastMedicalAppointmentCalendar.IDPatient, LastMedicalAppointmentCalendar.IDDoctor, LastMedicalAppointmentCalendar.AppointmentDateTime, LastMedicalAppointmentCalendar.ReasonForVisit, LastMedicalAppointmentCalendar.AppointmentStatus, LastMedicalAppointmentCalendar.Notes, LastMedicalAppointmentCalendar.CreatedAt, LastMedicalAppointmentCalendar.UpdatedAt, LastMedicalAppointmentCalendar.TypeOfAppointment);
 
                 return new SuccessInsertMedicalAppointmentCalendarResponse(MedicalAppointmentCalendar);
             }

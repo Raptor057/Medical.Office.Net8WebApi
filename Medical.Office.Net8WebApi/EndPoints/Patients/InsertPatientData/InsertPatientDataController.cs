@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.InsertPatientData
 {
-    
+
     [ApiController]
     [Route("[controller]")]
     public class InsertPatientDataController : ControllerBase
