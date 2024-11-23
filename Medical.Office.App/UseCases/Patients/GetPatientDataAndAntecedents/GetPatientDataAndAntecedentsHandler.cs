@@ -138,9 +138,8 @@ namespace Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents
                 PsychiatricHistory.ImpulseControl,
                 PsychiatricHistory.FrustrationManagement,
                 PsychiatricHistory.DateTimeSnap),
-            Enumerable.Empty<PatientsFilesDto>(), // Lista vacía
-                Enumerable.Empty<MedicalAppointmentCalendarDto>() // Lista vacía
-            );
+                Enumerable.Empty<PatientsFilesDto>(),
+                Enumerable.Empty<MedicalAppointmentCalendarDto>());
             return new SuccessGetPatientDataAndAntecedentsResponse(patientDataAndAntecedents);
 
         }
