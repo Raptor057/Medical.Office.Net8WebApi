@@ -27,7 +27,7 @@ namespace Medical.Office.App.UseCases.Configurations.Positions.InsertPositions
             {
                 errors.Add("No se agrego ninguna posicion");
             }
-            if (!Regex.IsMatch(positions.PositionName, pattern))
+            if (!Regex.IsMatch(positions.PositionName.Trim(), pattern))
             {
                 errors.Add("Formato de texto invalido, el nombre de la posición debe comenzar con una letra mayúscula y el resto en minúsculas y sin numeros");
             }

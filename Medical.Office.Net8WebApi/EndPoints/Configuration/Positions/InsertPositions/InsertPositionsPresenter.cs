@@ -4,7 +4,8 @@ using Medical.Office.App.UseCases.Configurations.Positions.InsertPositions.Respo
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Positions.InsertPositions
 {
-    public sealed class InsertPositionsPresenter<T> : IPresenter<InsertPositionsResponse> where T : InsertPositionsResponse
+    public sealed class InsertPositionsPresenter<T> : IPresenter<InsertPositionsResponse> 
+        where T : InsertPositionsResponse
     {
         private readonly GenericViewModel<InsertPositionsController> _viewModel;
 

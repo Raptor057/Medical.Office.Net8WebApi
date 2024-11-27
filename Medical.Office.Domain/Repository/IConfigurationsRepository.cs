@@ -127,13 +127,66 @@ namespace Medical.Office.Domain.Repository
         /// <returns></returns>
         Task InsertUsersMovementsAsync(string Usr, string UsrName, string UsrRole, string UsrMovement, string? Token);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         Task<LaboralDays> GetTodaysWorkScheduleAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         Task<IEnumerable<LaboralDays>> GetWorkScheduleAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="officeSetup"></param>
+        /// <returns></returns>
         Task UpdateOfficeSetupAsync(OfficeSetup officeSetup);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="laboralDays"></param>
+        /// <returns></returns>
         Task UpdateWorkScheduleAsync(LaboralDays laboralDays);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         Task <IEnumerable<Doctors>> GetDoctorsAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDDoctor"></param>
+        /// <returns></returns>
         Task<Doctors> GetDoctorAsync(long IDDoctor);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<LaboralDays>> GetLaboralDaysListAsync();
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task<LaboralDays> GetLaboralDayByIdAsync(int Id);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="Laboral"></param>
+        /// <param name="OpeningTime"></param>
+        /// <param name="ClosingTime"></param>
+        /// <returns></returns>
+        Task UpdateLaboralDaysByIdAsync(int Id, bool Laboral, TimeSpan OpeningTime, TimeSpan ClosingTime);
 
     }
 }

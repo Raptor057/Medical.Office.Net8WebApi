@@ -20,6 +20,30 @@ namespace Medical.Office.Infra.DataSources
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public async Task<LaboralDays> GetLaboralDayByID(int Id)
+            => await _con.QuerySingleAsync<LaboralDays>("SELECT * FROM LaboralDays WHERE Id = @Id", new { Id }).ConfigureAwait(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IEnumerable<LaboralDays>> GetLaboralDaysList()
+            => await _con.QueryAsync<LaboralDays>("SELECT *  FROM [Medical.Office.SqlLocalDB].[dbo].[LaboralDays]").ConfigureAwait(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="laboralDays"></param>
+        /// <returns></returns>
+        public async Task UpdateLaboralDaysById(LaboralDays laboralDays)
+            => await _con.ExecuteAsync("UPDATE [LaboralDays] SET [Laboral] = @Laboral, [OpeningTime] = @OpeningTime, [ClosingTime] = @ClosingTime WHERE [Id] = @Id;", new { laboralDays .Laboral, laboralDays.OpeningTime, laboralDays .ClosingTime, laboralDays .Id}).ConfigureAwait(false);
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="typeOfAppointment"></param>
         /// <returns></returns>
         public async Task InsertTypeOfAppointment(string typeOfAppointment)

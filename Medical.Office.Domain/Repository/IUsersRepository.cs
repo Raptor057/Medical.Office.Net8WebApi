@@ -54,6 +54,11 @@ namespace Medical.Office.Domain.Repository
         /// <returns></returns>
         Task<Users> GetDataUserByIdAsync(long Id);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Usr"></param>
+        /// <returns></returns>
         Task<LoginHistory> GetLoginHistoryByUsrAsync(string Usr);
     }
 }

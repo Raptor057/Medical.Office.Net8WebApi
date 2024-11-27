@@ -1,7 +1,6 @@
 ﻿using Common.Common;
 using System.Text.RegularExpressions;
 using Medical.Office.App.Dtos.Configurations;
-using Medical.Office.App.UseCases.Configurations.Positions.InsertPositions;
 using Common.Common.CleanArch;
 using Medical.Office.App.UseCases.Configurations.Specialties.InsertSpecialties.Responses;
 
@@ -29,7 +28,7 @@ namespace Medical.Office.App.UseCases.Configurations.Specialties.InsertSpecialti
             {
                 errors.Add("No se agrego ninguna posicion");
             }
-            if (!Regex.IsMatch(Specialtie.Specialty, pattern))
+            if (!Regex.IsMatch(Specialtie.Specialty.Trim(), pattern))
             {
                 errors.Add("Formato de texto invalido, el nombre de la especialidad debe comenzar con una letra mayúscula y el resto en minúsculas y sin numeros");
             }
@@ -42,10 +41,10 @@ namespace Medical.Office.App.UseCases.Configurations.Specialties.InsertSpecialti
             return errors.IsEmpty;
         }
 
-        public static InsertPositionsRequest Create(SpecialtiesDto Specialtie)
+        public static InsertSpecialtiesRequest Create(SpecialtiesDto Specialtie)
         {
             if (!CanInsert(Specialtie, out ErrorList errors)) throw errors.AsException();
-            return new InsertPositionsRequest(Specialtie.Specialty);
+            return new InsertSpecialtiesRequest(Specialtie.Specialty);
         }
 
     }

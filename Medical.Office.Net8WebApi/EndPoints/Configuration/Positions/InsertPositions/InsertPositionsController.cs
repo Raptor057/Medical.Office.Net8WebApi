@@ -1,9 +1,7 @@
-﻿using Azure.Core;
-using Common.Common.CleanArch;
+﻿using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.Dtos.Configurations;
 using Medical.Office.App.UseCases.Configurations.Positions.InsertPositions;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Positions.InsertPositions
@@ -28,12 +26,12 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Positions.InsertPosi
         [Route("/api/insertposition/{Position}")]
         public async Task<IActionResult> Execute([FromRoute] string Position)
         {
-            if (!InsertPositionsRequest.CanInsert((new PositionsDto { PositionName = Position ?? ""}), out var errors))
+            if (!InsertPositionsRequest.CanInsert((new PositionsDto { PositionName = Position.Trim() ?? ""}), out var errors))
             {
                 return StatusCode(400, _viewModel.Fail(errors.ToString()));
             }
 
-            var request = InsertPositionsRequest.Create(new App.Dtos.Configurations.PositionsDto { PositionName = Position});
+            var request = InsertPositionsRequest.Create(new PositionsDto { PositionName = Position.Trim() });
 
             try
             {

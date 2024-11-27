@@ -4,7 +4,8 @@ using Medical.Office.App.UseCases.Configurations.Specialties.InsertSpecialties.R
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Specialties.InsertSpecialties
 {
-    public sealed class InsertSpecialtiesPresenter<T> : IPresenter<InsertSpecialtiesResponse> where T : InsertSpecialtiesResponse
+    public sealed class InsertSpecialtiesPresenter<T> : IPresenter<InsertSpecialtiesResponse> 
+        where T : InsertSpecialtiesResponse
     {
         private readonly GenericViewModel<InsertSpecialtiesController> _viewModel;
 
@@ -19,7 +20,6 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Specialties.InsertSp
                 _viewModel.Fail(failure.Message);
                 await Task.CompletedTask;
             }
-            //else if (notification is SuccessInsertSpecialtiesResponse response)
             else if (notification is ISuccess response)
             {
                 _viewModel.OK(response);

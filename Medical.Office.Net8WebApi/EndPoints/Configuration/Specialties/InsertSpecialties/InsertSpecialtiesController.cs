@@ -1,9 +1,7 @@
-﻿using Azure.Core;
-using Common.Common.CleanArch;
+﻿using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.Dtos.Configurations;
 using Medical.Office.App.UseCases.Configurations.Specialties.InsertSpecialties;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Specialties.InsertSpecialties
@@ -28,12 +26,12 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Specialties.InsertSp
         public async Task<IActionResult> Execute([FromRoute] string Specialtie)
         {
 
-            if (!InsertSpecialtiesRequest.CanInsert((new SpecialtiesDto { Specialty = Specialtie ?? ""}),out var errors))
+            if (!InsertSpecialtiesRequest.CanInsert((new SpecialtiesDto { Specialty = Specialtie.Trim() ?? ""}),out var errors))
             {
                 return StatusCode(400, _viewModel.Fail(errors.ToString()));
             }
 
-            var request = InsertSpecialtiesRequest.Create(new SpecialtiesDto { Specialty = Specialtie });
+            var request = InsertSpecialtiesRequest.Create(new SpecialtiesDto { Specialty = Specialtie.Trim() });
 
             try
             {

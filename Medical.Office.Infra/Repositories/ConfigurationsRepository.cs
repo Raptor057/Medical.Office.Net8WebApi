@@ -149,5 +149,39 @@ namespace Medical.Office.Infra.Repositories
 
         public async Task InsertTypeOfAppointmentAsync(string typeOfAppointment)
         => await _db.InsertTypeOfAppointment(typeOfAppointment).ConfigureAwait(false);
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="laboralDays"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        //public Task UpdateLaboralDaysByIdAsync(LaboralDays laboralDays)
+        //    => _db.UpdateLaboralDaysById(laboralDays);
+        public async Task UpdateLaboralDaysByIdAsync(int Id, bool Laboral, TimeSpan OpeningTime, TimeSpan ClosingTime)
+        {
+
+            LaboralDays laboralDays = new();
+            {
+                laboralDays.Id = Id;
+                laboralDays.Laboral= Laboral;
+                laboralDays.OpeningTime = OpeningTime;
+                laboralDays.ClosingTime = ClosingTime;
+            };
+
+           await _db.UpdateLaboralDaysById(laboralDays).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public Task<IEnumerable<LaboralDays>> GetLaboralDaysListAsync()
+            => _db.GetLaboralDaysList();
+
+        public async Task<LaboralDays> GetLaboralDayByIdAsync(int Id)
+            => await _db.GetLaboralDayByID(Id).ConfigureAwait(false);
     }
 }
