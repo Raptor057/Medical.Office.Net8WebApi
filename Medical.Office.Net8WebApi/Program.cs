@@ -95,7 +95,7 @@ builder.Services.AddSwaggerGen(options =>
     });
 
     options.OperationFilter<SecurityRequirementsOperationFilter>();
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "GT Modules TEST", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Medical Office ERP End Points Documentation", Version = "v1" });
     //options.SwaggerDoc("v1", new OpenApiInfo { Title = "ERP Medical Office", Version = "v1" });
     options.EnableAnnotations(); // Habilitar anotaciones
 });
