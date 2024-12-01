@@ -31,6 +31,11 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.GetPatientDataList
                 _viewModel.OK(responselist);
                 await Task.CompletedTask;
             }
+            else if (notification is SuccessGetShortPatientDataListResponse responseshortlist)
+            {
+                _viewModel.OK(responseshortlist);
+                await Task.CompletedTask;
+            }
         }
     }
 }

@@ -30,39 +30,23 @@ namespace Medical.Office.App.UseCases.Patients.GetPatientDataList
                     return new FailureGetPatientDataListResponse($"No se encontraron pacientes");
                 }
                 var patientDataListDto = PatientData.Select(p =>
-                    new GetPatientsDto(
+                    new GetShortPatientsDto(
                         p.ID,
                         p.Name,
                         p.FathersSurname,
                         p.MothersSurname,
                         p.DateOfBirth,
-                        p.Gender,
-                        p.Address,
-                        p.Country,
-                        p.City,
-                        p.State,
-                        p.ZipCode,
-                        p.OutsideNumber,
-                        p.InsideNumber,
                         p.PhoneNumber,
                         p.Email,
-                        p.EmergencyContactName,
-                        p.EmergencyContactPhone,
-                        p.InsuranceProvider,
-                        p.PolicyNumber,
-                        p.BloodType,
-                        p.DateCreated,
-                        p.LastUpdated,
-                        p.Photo,
-                        p.InternalNotes
+                        p.Photo
                     )).ToList();
-                return new SuccessGetPatientDataListResponse(new GetPatientsDtoList(patientDataListDto));
+                return new SuccessGetShortPatientDataListResponse(new GetShortPatientsDtoList(patientDataListDto));
 
             }
-            else if(request.IDPatient > 0) 
+            else if(request.IDPatient > 0)
             {
                 var PatientData = await _patients.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
-                if (PatientData == null) 
+                if (PatientData == null)
                 {
                     return new FailureGetPatientDataListResponse($"No se encontro el paciente con ID {request.IDPatient}");
                 }

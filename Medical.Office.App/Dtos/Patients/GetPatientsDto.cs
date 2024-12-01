@@ -26,4 +26,15 @@
         byte[]? Photo,
         string? InternalNotes
     );
+
+    public record GetShortPatientsDto(
+        long ID,
+        string Name,
+        string FathersSurname,
+        string MothersSurname,
+        DateTime DateOfBirth,
+        string? PhoneNumber,
+        string? Email,
+        byte[]? Photo
+    );
 }
