@@ -1,7 +1,6 @@
 ﻿namespace Medical.Office.App.Dtos.POS
 {
     public record ProductsDto(
-
         int ProductId,
         string ProductName,
         string Description,
