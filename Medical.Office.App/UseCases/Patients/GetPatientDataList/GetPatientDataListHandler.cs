@@ -81,8 +81,6 @@ namespace Medical.Office.App.UseCases.Patients.GetPatientDataList
             {
                 return new FailureGetPatientDataListResponse("Ocurrio un error inesperado.");
             }
-
-            throw new NotImplementedException();
         }
     }
 }
