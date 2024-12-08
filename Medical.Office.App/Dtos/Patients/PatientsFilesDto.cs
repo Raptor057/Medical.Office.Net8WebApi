@@ -7,10 +7,8 @@
         string FileName,
         string FileType,
         string FileExtension,
-        int ChunkIndex,
-        int TotalChunks,
         string Description,
         byte[] FileData,
-        DateTime DateTimeSnap
+        DateTime DateTimeUploaded
     );
 }

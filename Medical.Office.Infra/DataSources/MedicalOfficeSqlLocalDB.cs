@@ -463,7 +463,45 @@ namespace Medical.Office.Infra.DataSources
         #endregion
 
         #region AntecedentPatient
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="patientsFiles"></param>
+        public async Task InsertPatientFiles(PatientsFiles patientsFiles)
+            => await _con.ExecuteAsync(
+                "INSERT INTO PatientsFiles (IDPatient,[FileName],FileType,FileExtension,[Description],FileData) VALUES(@IDPatient,@FileName,@FileType,@FileExtension,@ChunkIndex,@TotalChunks,@Description,@FileData)",
+                new {patientsFiles.IDPatient,
+                    patientsFiles.FileName,patientsFiles.FileType,patientsFiles.FileExtension,patientsFiles.Description,patientsFiles.FileData }).ConfigureAwait(false);
 
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="FileName"></param>
+        /// <param name="FileType"></param>
+        public async Task DeletePatientFiles(long IDPatient ,int Id)
+            => await _con.ExecuteAsync("DELETE PatientsFiles WHERE IDPatient = @IDPatient AND [Id] = @Id",new {IDPatient,Id}).ConfigureAwait(false);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<PatientsFiles>> GetPatientsFilesListByIDPatient(long IDPatient)
+        => await _con.QueryAsync<PatientsFiles>("SELECT [Id], [IDPatient], [FileName], [FileType],[FileExtension],[Description],[DateTimeUploaded] from PatientsFiles WHERE IDPatient = @IDPatient", new {IDPatient}).ConfigureAwait(false);
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="IDPatient"></param>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public async Task<PatientsFiles> GetPatientFileByIDPatient(long IDPatient, long Id)
+            => await _con.QueryFirstAsync<PatientsFiles>("SELECT * from PatientsFiles WHERE IDPatient = @IDPatient AND Id = @Id", new {IDPatient,Id}).ConfigureAwait(false);
+
+        
         /// <summary>
         ///
         /// </summary>

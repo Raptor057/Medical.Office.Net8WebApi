@@ -44,6 +44,17 @@ namespace Medical.Office.Infra.Repositories
         public async Task<IEnumerable<PatientData>> GetPatientsDataListAsync()
             => await _db.GetPatientsDataList().ConfigureAwait(false);
 
+        public async Task<IEnumerable<PatientsFiles>> GetPatientsFilesListAsync(long IDPatient)
+        => await _db.GetPatientsFilesListByIDPatient(IDPatient).ConfigureAwait(false);
+
+        public async Task<PatientsFiles> GetPatientFileByIDPatientAndIdAsync(long IDPatient, long Id)
+        => await _db.GetPatientFileByIDPatient(IDPatient,Id).ConfigureAwait(false);
+        public async Task DeletePatientFileAsync(long IDPatient, int Id)
+        => await _db.DeletePatientFiles(IDPatient, Id).ConfigureAwait(false);
+
+        public async Task InsertPatientFileAsync(PatientsFiles PatientFiles)
+        => await _db.InsertPatientFiles(PatientFiles).ConfigureAwait(false);
+
 
         /// <summary>
         /// 

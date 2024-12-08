@@ -15,5 +15,12 @@ namespace Medical.Office.Domain.Repository
 
         Task<PatientData> GetPatientDataByIDPatientAsync(long ID);
         Task <IEnumerable<PatientData>> GetPatientsDataListAsync();
+        
+        Task <IEnumerable<PatientsFiles>> GetPatientsFilesListAsync(long IDPatient);
+        Task<PatientsFiles> GetPatientFileByIDPatientAndIdAsync(long IDPatient, long Id);
+        
+        Task DeletePatientFileAsync(long IDPatient, int Id);
+        Task InsertPatientFileAsync(PatientsFiles PatientFiles);
+
     }
 }
