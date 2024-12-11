@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using System.Runtime;
 using System.Security.Claims;
 using System.Text;
 
@@ -14,6 +15,9 @@ Action<CorsPolicyBuilder> cors = builder => builder
                 .AllowCredentials();
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Esto compactará el heap de objetos grandes cuando se ejecute el recolector de basura.
+GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
 
 // Add services to the container.
 builder.Services.AddCors(options => options.AddDefaultPolicy(cors));

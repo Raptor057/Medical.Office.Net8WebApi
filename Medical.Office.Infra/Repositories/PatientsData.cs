@@ -52,9 +52,22 @@ namespace Medical.Office.Infra.Repositories
         public async Task DeletePatientFileAsync(long IDPatient, int Id)
         => await _db.DeletePatientFiles(IDPatient, Id).ConfigureAwait(false);
 
-        public async Task InsertPatientFileAsync(PatientsFiles PatientFiles)
-        => await _db.InsertPatientFiles(PatientFiles).ConfigureAwait(false);
+        public async Task InsertPatientFileAsync(long IDPatient, string FileName, string FileType, string FileExtension, string Description, byte[] FileData, DateTime DateTimeUploaded)
+        {
+            var PatientFile = new PatientsFiles
+            {
+                Id=0,
+                IDPatient = IDPatient,
+                FileName = FileName,
+                FileType = FileType,
+                FileExtension = FileExtension,
+                Description = Description,
+                FileData = FileData,
+                DateTimeUploaded = DateTimeUploaded
+            };
 
+            await _db.InsertPatientFiles(PatientFile);
+        }
 
         /// <summary>
         /// 
@@ -84,5 +97,7 @@ namespace Medical.Office.Infra.Repositories
         public async Task InsertPatientDataAsync(string Name, string FathersSurname, string MothersSurname,
             DateTime? DateOfBirth, string Gender, string Address, string Country, string City, string State, string ZipCode, string OutsideNumber, string InsideNumber, string PhoneNumber, string Email, string EmergencyContactName, string EmergencyContactPhone, string InsuranceProvider, string PolicyNumber, string BloodType, byte[] Photo, string InternalNotes)
             => await _db.InsertPatientData(Name, FathersSurname, MothersSurname, DateOfBirth, Gender, Address, Country, City, State, ZipCode, OutsideNumber, InsideNumber, PhoneNumber, Email,EmergencyContactName, EmergencyContactPhone, InsuranceProvider, PolicyNumber, BloodType, Photo, InternalNotes).ConfigureAwait(false);
+
+
     }
 }

@@ -18,7 +18,7 @@ namespace Medical.Office.Infra.DataSources
         public async Task<int> ExecuteAsync(string sql, object? param = null)
         {
             using var con = await _connections.GetOpenConnectionAsync().ConfigureAwait(false);
-            return await con.ExecuteAsync(sql, param).ConfigureAwait(false);
+            return await con.ExecuteAsync(sql, param,commandTimeout:300).ConfigureAwait(false);
         }
 
         public async Task<T> ExecuteScalarAsync<T>(string sql, object? param = null)

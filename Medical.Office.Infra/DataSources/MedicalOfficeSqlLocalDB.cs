@@ -470,7 +470,7 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="patientsFiles"></param>
         public async Task InsertPatientFiles(PatientsFiles patientsFiles)
             => await _con.ExecuteAsync(
-                "INSERT INTO PatientsFiles (IDPatient,[FileName],FileType,FileExtension,[Description],FileData) VALUES(@IDPatient,@FileName,@FileType,@FileExtension,@ChunkIndex,@TotalChunks,@Description,@FileData)",
+                "INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[PatientsFiles]([IDPatient],[FileName],[FileType],[FileExtension],[Description],[FileData])VALUES(@IDPatient,@FileName,@FileType,@FileExtension,@Description,@FileData)",
                 new {patientsFiles.IDPatient,
                     patientsFiles.FileName,patientsFiles.FileType,patientsFiles.FileExtension,patientsFiles.Description,patientsFiles.FileData }).ConfigureAwait(false);
 
