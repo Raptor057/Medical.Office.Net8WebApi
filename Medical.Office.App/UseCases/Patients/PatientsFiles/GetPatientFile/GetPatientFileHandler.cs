@@ -19,7 +19,7 @@ internal sealed class GetPatientFileHandler : IInteractor<GetPatientFileRequest,
     }
     public async Task<GetPatientFileResponse> Handle(GetPatientFileRequest request, CancellationToken cancellationToken)
     {
-        if (request.Id == 0)
+        if (request.Id == 0 && request.IDPatient > 0)
         {
             // Obtener la lista de archivos del paciente
             var patientFileList = await _patientsData.GetPatientsFilesListAsync(request.IDPatient).ConfigureAwait(false);
@@ -31,7 +31,7 @@ internal sealed class GetPatientFileHandler : IInteractor<GetPatientFileRequest,
             _logger.LogInformation($"Lista de archivos del paciente {request.IDPatient} obtenida con exito.");
             return new SuccessGetPatientFilesListResponse(filesDto);
         }
-        else if (request.Id > 0)
+        else if (request.Id > 0 && request.IDPatient > 0)
         {
             // Obtener el archivo del paciente por ID
             var patientFile = await _patientsData.GetPatientFileByIDPatientAndIdAsync(request.IDPatient, request.Id).ConfigureAwait(false);

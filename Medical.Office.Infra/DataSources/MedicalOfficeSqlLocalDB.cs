@@ -331,6 +331,10 @@ namespace Medical.Office.Infra.DataSources
                 "VALUES(@FirstName,@LastName,@Specialty,@PhoneNumber,@Email);",
             new { FirstName, LastName, Specialty, PhoneNumber, Email }).ConfigureAwait(false);
 
+        public async Task UpdateDoctor(Doctors doctor)
+            => await _con.ExecuteAsync("Update Doctors SET FirstName = @FirstName, LastName = @LastName, Specialty = @Specialty, PhoneNumber = @PhoneNumber, Email = @Email, UpdatedAt = GETUTCDATE()", new {doctor.FirstName, doctor.LastName, doctor.Specialty, doctor .PhoneNumber, doctor.Email}).ConfigureAwait(false);
+
+
         /// <summary>
         ///
         /// </summary>
@@ -481,7 +485,7 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="IDPatient"></param>
         /// <param name="FileName"></param>
         /// <param name="FileType"></param>
-        public async Task DeletePatientFiles(long IDPatient ,int Id)
+        public async Task DeletePatientFiles(long IDPatient ,long Id)
             => await _con.ExecuteAsync("DELETE PatientsFiles WHERE IDPatient = @IDPatient AND [Id] = @Id",new {IDPatient,Id}).ConfigureAwait(false);
 
         /// <summary>

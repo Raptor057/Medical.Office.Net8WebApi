@@ -5,6 +5,7 @@ using Medical.Office.App.UseCases.Patients.FilesPatients.InsertPatientFile.Respo
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.PatientFile.InsertPatientFile
 {
     public sealed class InsertPatientFilePresenter<T> : IPresenter<InsertPatientFileResponse>
+        where T : InsertPatientFileResponse
     {
         private readonly GenericViewModel<InsertPatientFileController> _viewModel;
 

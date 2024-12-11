@@ -49,7 +49,7 @@ namespace Medical.Office.Infra.Repositories
 
         public async Task<PatientsFiles> GetPatientFileByIDPatientAndIdAsync(long IDPatient, long Id)
         => await _db.GetPatientFileByIDPatient(IDPatient,Id).ConfigureAwait(false);
-        public async Task DeletePatientFileAsync(long IDPatient, int Id)
+        public async Task DeletePatientFileAsync(long IDPatient, long Id)
         => await _db.DeletePatientFiles(IDPatient, Id).ConfigureAwait(false);
 
         public async Task InsertPatientFileAsync(long IDPatient, string FileName, string FileType, string FileExtension, string Description, byte[] FileData, DateTime DateTimeUploaded)

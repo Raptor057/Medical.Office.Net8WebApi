@@ -1,9 +1,7 @@
 ﻿using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.Dtos.Patients;
-using Medical.Office.App.UseCases.Patients.InsertPatientData;
 using Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.InsertMedicalAppointmentCalendar;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.MedicalAppointmentCalendar.InsertMedicalAppointmentCalendar

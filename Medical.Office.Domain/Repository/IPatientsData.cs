@@ -19,7 +19,7 @@ namespace Medical.Office.Domain.Repository
         Task <IEnumerable<PatientsFiles>> GetPatientsFilesListAsync(long IDPatient);
         Task<PatientsFiles> GetPatientFileByIDPatientAndIdAsync(long IDPatient, long Id);
         
-        Task DeletePatientFileAsync(long IDPatient, int Id);
+        Task DeletePatientFileAsync(long IDPatient, long Id);
         Task InsertPatientFileAsync(long IDPatient, string FileName, string FileType, string FileExtension, string Description ,byte[] FileData, DateTime DateTimeUploaded);
 
     }

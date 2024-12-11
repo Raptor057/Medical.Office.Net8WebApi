@@ -3,4 +3,4 @@ using Medical.Office.App.UseCases.Patients.FilesPatients.DeletePatientFile.Respo
 
 namespace Medical.Office.App.UseCases.Patients.FilesPatients.DeletePatientFile;
 
-public sealed record DeletePatientFileRequest(long IDPatient, int Id) : IRequest<DeletePatientFileResponse>;
+public sealed record DeletePatientFileRequest(long IDPatient, long Id) : IRequest<DeletePatientFileResponse>;

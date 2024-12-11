@@ -25,7 +25,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.PatientFile.InsertPatient
             _viewModel = viewModel;
         }
 
-        #region Original Limite 1.8 GB Consume un maximo de 6.9 GB de ram en archivos de 1.8 GB
+        #region Original - Archivos con un limite de 1.8 GB de peso, Consume un maximo de 6.9 GB de ram en archivos de 1.8 GB en su pico mas alto, en promedio se mantiene entre 1 y 2 GB de ram.
         [HttpPost("UploadPatientFile")]
         public async Task<IActionResult> Execute([FromBody] InsertPatientFileRequestBody requestBody)
         {

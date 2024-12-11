@@ -19,7 +19,7 @@ internal sealed class DeletePatientFileHandler : IInteractor<DeletePatientFileRe
     public async Task<DeletePatientFileResponse> Handle(DeletePatientFileRequest request, CancellationToken cancellationToken)
     {
         _logger.LogInformation("DeletePatientFileHandler Started");
-        _patientsData.DeletePatientFileAsync(request.IDPatient, request.Id).ConfigureAwait(false);
+        await _patientsData.DeletePatientFileAsync(request.IDPatient, request.Id).ConfigureAwait(false);
         _logger.LogInformation("DeletePatientFileHandler Completed");
         return new SucessDeletePatientFileResponse($"Archivo borrado correctamente");
     }

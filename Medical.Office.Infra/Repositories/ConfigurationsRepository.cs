@@ -183,5 +183,27 @@ namespace Medical.Office.Infra.Repositories
 
         public async Task<LaboralDays> GetLaboralDayByIdAsync(int Id)
             => await _db.GetLaboralDayByID(Id).ConfigureAwait(false);
+
+
+        public async Task InsertDoctorAsync(string FirstName, string LastName, string Specialty, string PhoneNumber, string Email)
+            => await _db.InsertDoctors(FirstName, LastName, Specialty, PhoneNumber,Email).ConfigureAwait(false);
+
+        public Task DeleteDoctorAsync(long IDDoctor)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task UpdateDoctorAsync(string FirstName, string LastName, string Specialty, string PhoneNumber, string Email)
+        {
+            Doctors doctors = new();
+            {
+                doctors.FirstName = FirstName;
+                doctors.LastName = LastName;
+                doctors.Specialty = Specialty;
+                doctors.PhoneNumber = PhoneNumber;
+                doctors.Email = Email;
+            }
+            await _db.UpdateDoctor(doctors).ConfigureAwait(false);
+        }
     }
 }
