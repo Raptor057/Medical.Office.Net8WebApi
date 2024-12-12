@@ -31,6 +31,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="EndPoints\Configuration\Doctors\GetDoctors\" />
+    <Folder Include="EndPoints\Configuration\Doctors\InsertDoctors\" />
+    <Folder Include="EndPoints\Configuration\Doctors\UpdateDoctors\" />
     <Folder Include="EndPoints\Patients\MedicalAppointmentCalendar\UpdateMedicalAppointmentCalendar\" />
   </ItemGroup>
 

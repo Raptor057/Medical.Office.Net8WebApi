@@ -2,5 +2,5 @@
 
 namespace Medical.Office.App.UseCases.Configurations.Doctors.InsertDoctors.Response
 {
-    public record FailureInsertDoctorsResponse(string Message): InsertDoctorsResponse, IFailure;
+    public record FailureInsertDoctorsResponse(string Message) : InsertDoctorsResponse, IFailure;
 }
