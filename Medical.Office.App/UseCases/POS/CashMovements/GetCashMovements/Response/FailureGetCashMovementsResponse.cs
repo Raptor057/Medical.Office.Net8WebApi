@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Common.Common;
 
 namespace Medical.Office.App.UseCases.POS.CashMovements.GetCashMovements.Response
 {
-    internal class FailureGetCashMovementsResponse
-    {
-    }
+    public record FailureGetCashMovementsResponse (string Message): GetCashMovementsResponse, IFailure;
 }

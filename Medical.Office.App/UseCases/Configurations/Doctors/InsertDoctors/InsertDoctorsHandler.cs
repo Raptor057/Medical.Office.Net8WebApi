@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Medical.Office.Domain.Repository;
 using Medical.Office.App.Dtos.Configurations;
 using Medical.Office.App.UseCases.Configurations.Doctors.InsertDoctors.Response;
+using Medical.Office.Domain.Entities.MedicalOffice;
 
 namespace Medical.Office.App.UseCases.Configurations.Doctors.InsertDoctors
 {
@@ -25,6 +26,16 @@ namespace Medical.Office.App.UseCases.Configurations.Doctors.InsertDoctors
             }
 
             var DoctorData = request.Doctor;
+            
+            var Speciality = await _repository.GetSpecialtiesAsync();
+
+            // Verifica si existe una especialidad con el valor de 'x'
+            bool ValidSpecialityts = Speciality.Any(s => s.Specialty.Equals(request.Doctor.Specialty, StringComparison.OrdinalIgnoreCase));
+
+            if (!ValidSpecialityts)
+            {
+                return new FailureInsertDoctorsResponse("Especialidad no valida");
+            }
 
             await _repository.InsertDoctorAsync(DoctorData.FirstName, DoctorData.LastName, DoctorData.Specialty, DoctorData.PhoneNumber, DoctorData.Email).ConfigureAwait(false);
 

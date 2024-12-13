@@ -144,7 +144,7 @@ namespace Medical.Office.Domain.Repository
         /// </summary>
         /// <param name="officeSetup"></param>
         /// <returns></returns>
-        Task UpdateOfficeSetupAsync(OfficeSetup officeSetup);
+        Task UpdateOfficeSetupAsync(string NameOfOffice, string Address);
 
         /// <summary>
         /// 

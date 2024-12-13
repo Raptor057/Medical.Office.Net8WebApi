@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MediatR;
+using Medical.Office.App.UseCases.POS.CashMovements.GetCashMovements.Response;
 
 namespace Medical.Office.App.UseCases.POS.CashMovements.GetCashMovements
 {
-    internal class GetCashMovementsRequest
+    public sealed class GetCashMovementsRequest
     {
+
     }
 }

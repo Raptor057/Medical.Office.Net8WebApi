@@ -133,8 +133,16 @@ namespace Medical.Office.Infra.Repositories
         public async Task<IEnumerable<LaboralDays>> GetWorkScheduleAsync()
             => await _db.GetWorkSchedule().ConfigureAwait(false);
 
-        public async Task UpdateOfficeSetupAsync(OfficeSetup officeSetup)
-            => await _db.UpdateOfficeSetup(officeSetup).ConfigureAwait(false);
+        public async Task UpdateOfficeSetupAsync(string NameOfOffice, string Address)
+        {
+            OfficeSetup OfficeSetupData = new()
+            {
+                NameOfOffice = NameOfOffice,
+                Address = Address
+            };
+
+            await _db.UpdateOfficeSetup(OfficeSetupData).ConfigureAwait(false);
+        }
         public async Task UpdateWorkScheduleAsync(LaboralDays laboralDays)
             => await _db.UpdateWorkSchedule(laboralDays).ConfigureAwait(false);
 

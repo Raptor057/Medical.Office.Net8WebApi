@@ -2,10 +2,12 @@
 using Common.Common.CleanArch;
 using Medical.Office.App.Dtos.Configurations;
 using Medical.Office.App.UseCases.Configurations.Doctors.InsertDoctors.Response;
+using Microsoft.Extensions.FileSystemGlobbing.Internal;
+using System.Text.RegularExpressions;
 
 namespace Medical.Office.App.UseCases.Configurations.Doctors.InsertDoctors
 {
-    internal class InsertDoctorsRequest : IRequest<InsertDoctorsResponse>
+    public class InsertDoctorsRequest : IRequest<InsertDoctorsResponse>
     {
 
         public DoctorsDto Doctor { get; set; }
@@ -16,6 +18,7 @@ namespace Medical.Office.App.UseCases.Configurations.Doctors.InsertDoctors
         public static void Validations(DoctorsDto Doctor, out ErrorList errors)
         {
             errors = [];
+            string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
 
             if (Doctor == null)
             {
@@ -33,6 +36,11 @@ namespace Medical.Office.App.UseCases.Configurations.Doctors.InsertDoctors
             if (string.IsNullOrEmpty(Doctor.Specialty))
             {
                 errors.Add("Especialidad Obligatorio");
+            }
+            if (!string.IsNullOrWhiteSpace(Doctor.Email))
+            {
+                if (!Regex.IsMatch(Doctor.Email, pattern))
+                    errors.Add("Formato de correo no valido");
             }
         }
 
