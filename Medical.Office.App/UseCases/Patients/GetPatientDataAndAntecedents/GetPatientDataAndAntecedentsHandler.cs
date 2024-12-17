@@ -8,9 +8,8 @@ using Medical.Office.App.Dtos.Patients.AntecedentPatient.PathologicalBackground;
 using Medical.Office.App.Dtos.Patients.AntecedentPatient.PatientAllergies;
 using Medical.Office.App.Dtos.Patients.AntecedentPatient.PsychiatricHistory;
 using Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents.Responses;
-using Medical.Office.Domain.Entities.MedicalOffice.AntecedentPatient;
 using Medical.Office.Domain.Repository;
-using System.Linq;
+
 
 namespace Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents
 {
@@ -36,7 +35,10 @@ namespace Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents
             var PathologicalBackground = await _antecedent.GetPathologicalBackgroundByPatientIdAsync(request.IdPatient).ConfigureAwait(false);
             var PatientAllergies = await _antecedent.GetPatientAllergiesByPatientIdAsync(request.IdPatient).ConfigureAwait(false);
             var PsychiatricHistory = await _antecedent.GetPsychiatricHistoryByPatientIdAsync(request.IdPatient).ConfigureAwait(false);
+            var PatientFiles = await _patientsData.GetPatientsFilesListAsync(request.IdPatient).ConfigureAwait(false);
             var MedicalAppointmentCalendar = await _patientsData.GetListMedicalAppointmentCalendarByIDPatientAsync(request.IdPatient).ConfigureAwait(false);
+
+            var PatientFilesList = PatientFiles.Select(F => new PatientsFilesDto(F.Id,F.IDPatient, F.FileName, F.FileType, F.FileExtension, F.Description, F.FileData, F.DateTimeUploaded)).OrderByDescending(F => F.DateTimeUploaded).ToList();
 
             var MedicalAppointmentList = MedicalAppointmentCalendar.Select(appointment => new MedicalAppointmentCalendarDto(
                 appointment.Id,
@@ -163,7 +165,7 @@ namespace Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents
                     PsychiatricHistory?.FrustrationManagement ?? "",
                     PsychiatricHistory?.DateTimeSnap ?? DateTime.MinValue
                 ),
-                Enumerable.Empty<PatientsFilesDto>(),
+                PatientFilesList,
                 MedicalAppointmentListActive,
                 MedicalAppointmentListHistory
             );
