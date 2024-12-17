@@ -32,16 +32,16 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.GetMed
                     var appointments = await _patients.GetListMedicalAppointmentCalendarAsync();
 
                     var appointmentsDto = appointments.Select(m => new MedicalAppointmentCalendarDto(
-                    Id: m.Id , // Ajusta a un valor predeterminado si es necesario
-                    IDPatient: m.IDPatient,
+                    m.Id , // Ajusta a un valor predeterminado si es necesario
+                    m.IDPatient,
                     IDDoctor: m.IDDoctor,
-                    AppointmentDateTime: m.AppointmentDateTime,
+                    m.AppointmentDate + m.AppointmentTime,
                     ReasonForVisit: m.ReasonForVisit,
-                    AppointmentStatus: m.AppointmentStatus,
+                    m.AppointmentStatus,
                     Notes: m.Notes,
-                    CreatedAt: m.CreatedAt,
+                    m.CreatedAt,
                     UpdatedAt: m.UpdatedAt,
-                    TypeOfAppointment: m.TypeOfAppointment));
+                    m.TypeOfAppointment));
 
                     return new SuccessGetListMedicalAppointmentCalendarResponse(appointmentsDto);
                 }
@@ -55,15 +55,15 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.GetMed
                     var appointments = await _patients.GetListMedicalAppointmentCalendarByIDPatientAsync(request.IDPatient);
 
                     var appointmentsDto = appointments.Select(m => new MedicalAppointmentCalendarDto(
-                    Id: m.Id, // Ajusta a un valor predeterminado si es necesario
-                    IDPatient: m.IDPatient,
+                    m.Id, // Ajusta a un valor predeterminado si es necesario
+                    m.IDPatient,
                     IDDoctor: m.IDDoctor,
-                    AppointmentDateTime: m.AppointmentDateTime,
-                    ReasonForVisit: m.ReasonForVisit,
+                    m.AppointmentDate+m.AppointmentTime,
+                    m.ReasonForVisit,
                     AppointmentStatus: m.AppointmentStatus,
-                    Notes: m.Notes,
+                    m.Notes,
                     CreatedAt: m.CreatedAt,
-                    UpdatedAt: m.UpdatedAt,
+                    m.UpdatedAt,
                     TypeOfAppointment: m.TypeOfAppointment));
                     return new SuccessGetListMedicalAppointmentCalendarByIDPatientResponse(appointmentsDto);
                 }
@@ -73,7 +73,7 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.GetMed
                 {
                     var appointment = await _patients.GetLastMedicalAppointmentCalendarByIDPatientAsync(request.IDPatient);
 
-                    var appointmentDto = new MedicalAppointmentCalendarDto(appointment.Id,appointment.IDPatient,appointment.IDDoctor,appointment.AppointmentDateTime,appointment.ReasonForVisit,appointment.AppointmentStatus,appointment.Notes,appointment.CreatedAt,appointment.UpdatedAt,appointment.TypeOfAppointment);
+                    var appointmentDto = new MedicalAppointmentCalendarDto(appointment.Id,appointment.IDPatient,appointment.IDDoctor,appointment.AppointmentDate+ appointment.AppointmentTime, appointment.ReasonForVisit,appointment.AppointmentStatus,appointment.Notes,appointment.CreatedAt,appointment.UpdatedAt,appointment.TypeOfAppointment);
                     
                     return new SuccessGetLastMedicalAppointmentCalendarByIDPatientResponse(appointmentDto);
                 }
@@ -89,16 +89,16 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.GetMed
                     request.TypeOfAppointment ?? string.Empty);
 
                 var filteredAppointmentsDto = filteredAppointments.Select(m => new MedicalAppointmentCalendarDto(
-                    Id: m.Id, // Ajusta a un valor predeterminado si es necesario
-                    IDPatient: m.IDPatient,
-                    IDDoctor: m.IDDoctor,
-                    AppointmentDateTime: m.AppointmentDateTime,
-                    ReasonForVisit: m.ReasonForVisit,
-                    AppointmentStatus: m.AppointmentStatus,
-                    Notes: m.Notes,
-                    CreatedAt: m.CreatedAt,
-                    UpdatedAt: m.UpdatedAt,
-                    TypeOfAppointment: m.TypeOfAppointment));
+                    m.Id, // Ajusta a un valor predeterminado si es necesario
+                    m.IDPatient,
+                    m.IDDoctor,
+                    m.AppointmentDate+m.AppointmentTime,
+                    m.ReasonForVisit,
+                    m.AppointmentStatus,
+                    m.Notes,
+                    m.CreatedAt,
+                    m.UpdatedAt,
+                    m.TypeOfAppointment));
 
                 return new SuccessGetListMedicalAppointmentCalendarByParamsResponse(filteredAppointmentsDto);
             }
@@ -108,6 +108,5 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.GetMed
                 return new FailureGetMedicalAppointmentCalendarResponse($"{new List<string> { ex.Message }}");
             }
         }
-
     }
 }

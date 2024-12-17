@@ -10,6 +10,7 @@ using Medical.Office.App.Dtos.Patients.AntecedentPatient.PsychiatricHistory;
 using Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents.Responses;
 using Medical.Office.Domain.Entities.MedicalOffice.AntecedentPatient;
 using Medical.Office.Domain.Repository;
+using System.Linq;
 
 namespace Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents
 {
@@ -37,110 +38,22 @@ namespace Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents
             var PsychiatricHistory = await _antecedent.GetPsychiatricHistoryByPatientIdAsync(request.IdPatient).ConfigureAwait(false);
             var MedicalAppointmentCalendar = await _patientsData.GetListMedicalAppointmentCalendarByIDPatientAsync(request.IdPatient).ConfigureAwait(false);
 
+            var MedicalAppointmentList = MedicalAppointmentCalendar.Select(appointment => new MedicalAppointmentCalendarDto(
+                appointment.Id,
+                appointment.IDPatient,
+                appointment.IDDoctor,
+                appointment.AppointmentDate + appointment.AppointmentTime,
+                appointment.ReasonForVisit,
+                appointment.AppointmentStatus,
+                appointment.Notes,
+                appointment.CreatedAt,
+                appointment.UpdatedAt,
+                appointment.TypeOfAppointment
+                )).ToList();
 
-            //// Crear una instancia "vacía" del DTO
-            //var patientDataAndAntecedents = new PatientDataAndAntecedentsDto(
-            //    new GetPatientsDto(
-            //    GetPatients.ID,
-            //    GetPatients.Name,
-            //    GetPatients.FathersSurname,
-            //    GetPatients.MothersSurname,
-            //    GetPatients.DateOfBirth,
-            //    GetPatients.Gender,
-            //    GetPatients.Address,
-            //    GetPatients.Country,
-            //    GetPatients.City,
-            //    GetPatients.State,
-            //    GetPatients.ZipCode,
-            //    GetPatients.OutsideNumber,
-            //    GetPatients.InsideNumber,
-            //    GetPatients.PhoneNumber,
-            //    GetPatients.Email,
-            //    GetPatients.EmergencyContactName,
-            //    GetPatients.EmergencyContactPhone,
-            //    GetPatients.InsuranceProvider,
-            //    GetPatients.PolicyNumber,
-            //    GetPatients.BloodType,
-            //    GetPatients.DateCreated,
-            //    GetPatients.LastUpdated,
-            //    GetPatients.Photo,
-            //    GetPatients.InternalNotes),
-            //    new ActiveMedicationsDto(
-            //    ActiveMedications.Id,
-            //    ActiveMedications.IDPatient,
-            //    ActiveMedications.ActiveMedicationsData,
-            //    ActiveMedications.DateTimeSnap),
-            //    new FamilyHistoryDto(
-            //    FamilyHistory.Id,
-            //    FamilyHistory.IDPatient,
-            //    FamilyHistory.Diabetes,
-            //    FamilyHistory.Cardiopathies,
-            //    FamilyHistory.Hypertension,
-            //    FamilyHistory.ThyroidDiseases,
-            //    FamilyHistory.ChronicKidneyDisease,
-            //    FamilyHistory.Others,
-            //    FamilyHistory.OthersData,
-            //    FamilyHistory.DateTimeSnap),
-            //    new MedicalHistoryNotesDto(
-            //    MedicalHistoryNotes.Id,
-            //    MedicalHistoryNotes.IDPatient,
-            //    MedicalHistoryNotes.MedicalHistoryNotesData,
-            //    MedicalHistoryNotes.DateTimeSnap),
-            //    new NonPathologicalHistoryDto(
-            //    NonPathologicalHistory.Id,
-            //    NonPathologicalHistory.IDPatient,
-            //    NonPathologicalHistory.PhysicalActivity,
-            //    NonPathologicalHistory.Smoking,
-            //    NonPathologicalHistory.Alcoholism,
-            //    NonPathologicalHistory.SubstanceAbuse,
-            //    NonPathologicalHistory.SubstanceAbuseData,
-            //    NonPathologicalHistory.RecentVaccination,
-            //    NonPathologicalHistory.RecentVaccinationData,
-            //    NonPathologicalHistory.Others,
-            //    NonPathologicalHistory.OthersData,
-            //    NonPathologicalHistory.DateTimeSnap),
-            //    new PathologicalBackgroundDto(
-            //    PathologicalBackground.Id,
-            //    PathologicalBackground.IDPatient,
-            //    PathologicalBackground.PreviousHospitalization,
-            //    PathologicalBackground.PreviousSurgeries,
-            //    PathologicalBackground.Diabetes,
-            //    PathologicalBackground.ThyroidDiseases,
-            //    PathologicalBackground.Hypertension,
-            //    PathologicalBackground.Cardiopathies,
-            //    PathologicalBackground.Trauma,
-            //    PathologicalBackground.Cancer,
-            //    PathologicalBackground.Tuberculosis,
-            //    PathologicalBackground.Transfusions,
-            //    PathologicalBackground.RespiratoryDiseases,
-            //    PathologicalBackground.GastrointestinalDiseases,
-            //    PathologicalBackground.STDs,
-            //    PathologicalBackground.STDsData,
-            //    PathologicalBackground.ChronicKidneyDisease,
-            //    PathologicalBackground.Others,
-            //    PathologicalBackground.DateTimeSnap),
-            //    new PatientAllergiesDto(
-            //    PatientAllergies.Id,
-            //    PatientAllergies.IDPatient,
-            //    PatientAllergies.Allergies,
-            //    PatientAllergies.DateTimeSnap),
-            //    new PsychiatricHistoryDto(
-            //    PsychiatricHistory.id,
-            //    PsychiatricHistory.IDPatient,
-            //    PsychiatricHistory.FamilyHistory,
-            //    PsychiatricHistory.FamilyHistoryData,
-            //    PsychiatricHistory.AffectedAreas,
-            //    PsychiatricHistory.PastAndCurrentTreatments,
-            //    PsychiatricHistory.FamilySocialSupport,
-            //    PsychiatricHistory.FamilySocialSupportData,
-            //    PsychiatricHistory.WorkLifeAspects,
-            //    PsychiatricHistory.SocialLifeAspects,
-            //    PsychiatricHistory.AuthorityRelationship,
-            //    PsychiatricHistory.ImpulseControl,
-            //    PsychiatricHistory.FrustrationManagement,
-            //    PsychiatricHistory.DateTimeSnap),
-            //    Enumerable.Empty<PatientsFilesDto>(),
-            //    Enumerable.Empty<MedicalAppointmentCalendarDto>());
+            var MedicalAppointmentListActive = MedicalAppointmentList.Where(m => m.AppointmentDateTime >= DateTime.Now).OrderBy(m => m.AppointmentDateTime);
+            var MedicalAppointmentListHistory = MedicalAppointmentList.Where(m => m.AppointmentDateTime < DateTime.Now).OrderByDescending(m => m.AppointmentDateTime);
+            
 
             var patientDataAndAntecedents = new PatientDataAndAntecedentsDto(
                 new GetPatientsDto(
@@ -251,7 +164,8 @@ namespace Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents
                     PsychiatricHistory?.DateTimeSnap ?? DateTime.MinValue
                 ),
                 Enumerable.Empty<PatientsFilesDto>(),
-                Enumerable.Empty<MedicalAppointmentCalendarDto>()
+                MedicalAppointmentListActive,
+                MedicalAppointmentListHistory
             );
 
 

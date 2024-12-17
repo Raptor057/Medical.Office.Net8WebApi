@@ -19,10 +19,19 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.Update
 
         public async Task<UpdateMedicalAppointmentCalendarResponse> Handle(UpdateMedicalAppointmentCalendarRequest request, CancellationToken cancellationToken)
         {
+            var MedicalAppointmentData = request.MedicalAppointment;
             try
             {
-                
+                if (MedicalAppointmentData == null)
+                {
+                    return new FailureUpdateMedicalAppointmentCalendarResponse("No se recibieron datos de consulta.");
+                }
 
+               await _patients.UpdateMedicalAppointmentCalendarAsync(MedicalAppointmentData.IDPatient, MedicalAppointmentData.IDDoctor, MedicalAppointmentData.AppointmentDateTime, MedicalAppointmentData.ReasonForVisit, MedicalAppointmentData.AppointmentStatus, MedicalAppointmentData.Notes, MedicalAppointmentData.TypeOfAppointment).ConfigureAwait(false);
+
+                var MedicalAppointment = _patients.GetLastMedicalAppointmentCalendarByIDPatientAsync(MedicalAppointmentData.IDPatient).ConfigureAwait(false);
+
+                return new SuccessUpdateMedicalAppointmentCalendarResponse(MedicalAppointmentData);
             }
             catch (Exception ex) 
             {

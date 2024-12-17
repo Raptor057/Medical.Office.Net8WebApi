@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.MedicalAppointmentCalendar.GetMedicalAppointmentCalendar
 {
@@ -7,5 +6,6 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.MedicalAppointmentCalenda
     [ApiController]
     public class GetMedicalAppointmentCalendarController : ControllerBase
     {
+
     }
 }

@@ -50,7 +50,7 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.Insert
 
                 var LastMedicalAppointmentCalendar = await _patients.GetLastMedicalAppointmentCalendarByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
 
-                var MedicalAppointmentCalendar = new MedicalAppointmentCalendarDto(LastMedicalAppointmentCalendar.Id, LastMedicalAppointmentCalendar.IDPatient, LastMedicalAppointmentCalendar.IDDoctor, LastMedicalAppointmentCalendar.AppointmentDateTime, LastMedicalAppointmentCalendar.ReasonForVisit, LastMedicalAppointmentCalendar.AppointmentStatus, LastMedicalAppointmentCalendar.Notes, LastMedicalAppointmentCalendar.CreatedAt, LastMedicalAppointmentCalendar.UpdatedAt, LastMedicalAppointmentCalendar.TypeOfAppointment);
+                var MedicalAppointmentCalendar = new MedicalAppointmentCalendarDto(LastMedicalAppointmentCalendar.Id, LastMedicalAppointmentCalendar.IDPatient, LastMedicalAppointmentCalendar.IDDoctor, LastMedicalAppointmentCalendar.AppointmentDate + LastMedicalAppointmentCalendar.AppointmentTime, LastMedicalAppointmentCalendar.ReasonForVisit, LastMedicalAppointmentCalendar.AppointmentStatus, LastMedicalAppointmentCalendar.Notes, LastMedicalAppointmentCalendar.CreatedAt, LastMedicalAppointmentCalendar.UpdatedAt, LastMedicalAppointmentCalendar.TypeOfAppointment);
 
                 return new SuccessInsertMedicalAppointmentCalendarResponse(MedicalAppointmentCalendar);
             }
@@ -59,7 +59,6 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.Insert
                 _logger.LogError(ex, "Error al manejar la inserción de la cita médica.");
                 return new FailureInsertMedicalAppointmentCalendarResponse($"Ocurrió un error al procesar la solicitud. {ex}");
             }
-            //return new SuccessInsertMedicalAppointmentCalendarResponse(new MedicalAppointmentCalendarDto(LastMedicalAppointmentCalendar.Id, LastMedicalAppointmentCalendar.IDPatient, LastMedicalAppointmentCalendar.IDDoctor, LastMedicalAppointmentCalendar.AppointmentDateTime, LastMedicalAppointmentCalendar.ReasonForVisit, LastMedicalAppointmentCalendar.AppointmentStatus, LastMedicalAppointmentCalendar.Notes, LastMedicalAppointmentCalendar.CreatedAt, LastMedicalAppointmentCalendar.UpdatedAt, LastMedicalAppointmentCalendar.TypeOfAppointment));
         }
     }
 }

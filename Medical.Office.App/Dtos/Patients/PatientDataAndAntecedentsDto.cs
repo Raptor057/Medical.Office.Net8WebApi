@@ -18,5 +18,6 @@ namespace Medical.Office.App.Dtos.Patients
         PatientAllergiesDto PatientAllergies,
         PsychiatricHistoryDto PsychiatricHistory,
         IEnumerable<PatientsFilesDto> PatientsFilesList,
-        IEnumerable<MedicalAppointmentCalendarDto> MedicalAppointments);
+        IEnumerable<MedicalAppointmentCalendarDto> MedicalAppointmentsActive,
+        IEnumerable<MedicalAppointmentCalendarDto> MedicalAppointmentsHistory);
 }
