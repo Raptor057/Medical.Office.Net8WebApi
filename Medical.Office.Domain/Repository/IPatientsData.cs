@@ -8,6 +8,7 @@ namespace Medical.Office.Domain.Repository
         Task InsertMedicalAppointmentCalendarAsync(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment);
 
         Task UpdateMedicalAppointmentCalendarAsync(long IDPatient,long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment);
+        Task UpdateAppointmentStatusAsync();
 
         Task<IEnumerable<MedicalAppointmentCalendar>> GetListMedicalAppointmentCalendarAsync();
         Task<IEnumerable<MedicalAppointmentCalendar>> GetListMedicalAppointmentCalendarByIDPatientAsync(long IDPatient);

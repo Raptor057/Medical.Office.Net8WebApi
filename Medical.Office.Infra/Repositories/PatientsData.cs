@@ -118,5 +118,8 @@ namespace Medical.Office.Infra.Repositories
 
             await _db.UpdateMedicalAppointmentCalendar(medicalAppointment).ConfigureAwait(false);
         }
+
+        public Task UpdateAppointmentStatusAsync()
+            => _db.UpdateAppointmentStatus();
     }
 }

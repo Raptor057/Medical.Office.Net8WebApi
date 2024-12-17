@@ -16,6 +16,10 @@ namespace Medical.Office.Infra.DataSources
             _con = con;
         }
 
+        #region Hosted Services
+        public async Task UpdateAppointmentStatus()
+            => await _con.ExecuteAsync("UPDATE MedicalAppointmentCalendar set AppointmentStatus = 'Inactiva' WHERE AppointmentDate <= CONVERT (date, GETDATE()) AND AppointmentTime <= CONVERT (TIME, GETDATE()) AND AppointmentStatus != 'Inactiva'").ConfigureAwait(false);
+        #endregion
         #region Configuracion
 
         /// <summary>
