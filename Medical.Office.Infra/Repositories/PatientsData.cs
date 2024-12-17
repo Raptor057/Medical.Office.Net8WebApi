@@ -98,6 +98,22 @@ namespace Medical.Office.Infra.Repositories
             DateTime? DateOfBirth, string Gender, string Address, string Country, string City, string State, string ZipCode, string OutsideNumber, string InsideNumber, string PhoneNumber, string Email, string EmergencyContactName, string EmergencyContactPhone, string InsuranceProvider, string PolicyNumber, string BloodType, byte[] Photo, string InternalNotes)
             => await _db.InsertPatientData(Name, FathersSurname, MothersSurname, DateOfBirth, Gender, Address, Country, City, State, ZipCode, OutsideNumber, InsideNumber, PhoneNumber, Email,EmergencyContactName, EmergencyContactPhone, InsuranceProvider, PolicyNumber, BloodType, Photo, InternalNotes).ConfigureAwait(false);
 
+        public Task UpdateMedicalAppointmentCalendarAsync(long IDPatient,long IDDoctor, DateTime? AppointmentDateTime, string ReasonForVisit, string AppointmentStatus, string Notes, string TypeOfAppointment)
+        {
+            var medicalAppointment = new MedicalAppointmentCalendar
+            {
+                IDPatient = IDPatient,
+                IDDoctor = IDDoctor,
+                AppointmentDateTime = AppointmentDateTime,
+                ReasonForVisit = ReasonForVisit,
+                AppointmentStatus = AppointmentStatus,
+                Notes = Notes,
+                //CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow,
+                TypeOfAppointment = TypeOfAppointment
+            };
 
+
+        }
     }
 }

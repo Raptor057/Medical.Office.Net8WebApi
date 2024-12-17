@@ -8,20 +8,21 @@
 
         public long IDDoctor { get; set; }
 
-        public DateTime? AppointmentDateTime { get; set; }
+        public DateTime AppointmentDate { get; set; }
 
-        public string? ReasonForVisit { get; set; }
+        public TimeSpan AppointmentTime { get; set; }
 
-        public string? AppointmentStatus { get; set; }
+        public string ReasonForVisit { get; set; }
 
-        public string? Notes { get; set; }
+        public string AppointmentStatus { get; set; }
+
+        public string Notes { get; set; }
 
         public DateTime? CreatedAt { get; set; }
 
         public DateTime? UpdatedAt { get; set; }
 
-        public string? TypeOfAppointment { get; set; }
+        public string TypeOfAppointment { get; set; }
 
     }
-
 }

@@ -369,6 +369,8 @@ namespace Medical.Office.Infra.DataSources
             ).ConfigureAwait(false);
         }
 
+        public async Task UpdateMedical(MedicalAppointmentCalendar medicalAppointment) 
+            => await _con.ExecuteAsync("UPDATE MedicalAppointmentCalendar SET IDDoctor = '@IDDoctor' , AppointmentDate = @AppointmentDate, AppointmentTime = @AppointmentTime, ReasonForVisit = @ReasonForVisit, AppointmentStatus = @AppointmentStatus, Notes = @Notes, UpdatedAt = GETDATE(), TypeOfAppointment = @TypeOfAppointment WHERE IDPatient = @IDPatient", new {medicalAppointment.IDDoctor , medicalAppointment.AppointmentDate, medicalAppointment .AppointmentTime, medicalAppointment .ReasonForVisit, medicalAppointment .AppointmentStatus, medicalAppointment .Notes, medicalAppointment .TypeOfAppointment, medicalAppointment.IDPatient}).ConfigureAwait(false);
 
         //public async Task InsertMedicalAppointmentCalendar(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
         //    => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar]" +
