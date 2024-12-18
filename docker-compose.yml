@@ -1,3 +1,64 @@
+# services:
+#   seq:
+#     image: datalust/seq:latest
+#     container_name: seq
+#     environment:
+#       - ACCEPT_EULA=Y
+#     ports:
+#       - "5341:80"
+#     networks:
+#       medicalnetwork:
+#         ipv4_address: 192.168.1.100
+#     restart: always
+
+#   sql1:
+#     container_name: sql
+#     image: mcr.microsoft.com/mssql/server:latest
+#     environment:
+#       - ACCEPT_EULA=Y
+#       - SA_PASSWORD=Cbmwjmkq23
+#     ports:
+#       - "1433:1433"
+#     networks:
+#       medicalnetwork:
+#         ipv4_address: 192.168.1.102
+#     restart: always
+
+#   medicalofficeapi:
+#     build:
+#       context: .
+#       dockerfile: "./Medical.Office.Net8WebApi/Dockerfile"
+#     container_name: MedicalOfficeWebApi
+#     ports:
+#       - "8080:8080"
+#       - "8081:8081"
+#     networks:
+#       medicalnetwork:
+#         ipv4_address: 192.168.1.101
+#     depends_on:
+#       - seq
+#     restart: always
+
+#   frontend:
+#     build:
+#       context: ../Medical.Office.ReactWebClient
+#       dockerfile: Dockerfile
+#     container_name: MedicalOfficeWebClient
+#     ports:
+#       - "3000:3000"
+#     networks:
+#       medicalnetwork:
+#         ipv4_address: 192.168.1.103
+#     depends_on:
+#       - medicalofficeapi
+#     restart: always
+
+# networks:
+#   medicalnetwork:
+#     external:
+#       name: medicalnetwork
+
+
 services:
   seq:
     image: datalust/seq:latest
@@ -19,6 +80,8 @@ services:
       - SA_PASSWORD=Cbmwjmkq23
     ports:
       - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
     networks:
       medicalnetwork:
         ipv4_address: 192.168.1.102
@@ -41,7 +104,7 @@ services:
 
   frontend:
     build:
-      context: ../Medical.Office.ReactWebClient  # Configura el contexto al directorio correcto
+      context: ../Medical.Office.ReactWebClient
       dockerfile: Dockerfile
     container_name: MedicalOfficeWebClient
     ports:
@@ -58,3 +121,5 @@ networks:
     external:
       name: medicalnetwork
 
+volumes:
+  sql_data:
