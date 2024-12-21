@@ -2,5 +2,5 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.Medical
 
 public class UpdateMedicalHistoryNotesRequestBody
 {
-    
+    public string Notes { get; set; }
 }

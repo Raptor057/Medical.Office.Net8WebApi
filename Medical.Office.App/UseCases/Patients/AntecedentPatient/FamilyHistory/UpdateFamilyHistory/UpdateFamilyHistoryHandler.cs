@@ -1,6 +1,5 @@
 using Common.Common.CleanArch;
 using Medical.Office.App.Dtos.Patients.AntecedentPatient.FamilyHistory;
-using Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.UpdateFamilyHistory;
 using Medical.Office.Domain.Repository;
 
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.UpdateFamilyHistory
@@ -18,7 +17,42 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.U
 
         public async Task<UpdateFamilyHistoryResponse> Handle(UpdateFamilyHistoryRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var data = request.FamilyHistory;
+
+            await _patient.UpdateFamilyHistoryAsync(
+                data.IDPatient,
+                data.Diabetes,
+                data.Cardiopathies,
+                data.Hypertension,
+                data.ThyroidDiseases,
+                data.ChronicKidneyDisease,
+                data.Others,
+                data.OthersData,
+                DateTime.Now
+            ).ConfigureAwait(false);
+
+            var patient = await _patients.GetPatientDataByIDPatientAsync(data.IDPatient).ConfigureAwait(false);
+
+            if (patient == null)
+            {
+                return new FailureUpdateFamilyHistoryResponse("Patient not found");
+            }
+
+            var updatedData = new FamilyHistoryDto
+            (
+                data.Id,
+                data.IDPatient,
+                data.Diabetes,
+                data.Cardiopathies,
+                data.Hypertension,
+                data.ThyroidDiseases,
+                data.ChronicKidneyDisease,
+                data.Others,
+                data.OthersData,
+                data.DateTimeSnap
+            );
+
+            return new SuccessUpdateFamilyHistoryResponse(updatedData);
         }
     }
 }

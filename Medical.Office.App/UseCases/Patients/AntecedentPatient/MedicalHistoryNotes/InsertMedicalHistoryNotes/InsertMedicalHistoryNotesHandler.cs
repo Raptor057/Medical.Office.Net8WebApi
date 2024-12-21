@@ -43,7 +43,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.MedicalHistoryN
             MedicalHistoryNotes = await _antecedent.GetMedicalHistoryNotesByPatientIdAsync(request.IDPatient).ConfigureAwait(false);
 
             return new SuccessInsertMedicalHistoryNotesResponse(new MedicalHistoryNotesDto(MedicalHistoryNotes.Id,
-                MedicalHistoryNotes.IDPatient,
+                MedicalHistoryNotes.IDPatient ?? 0,
                 MedicalHistoryNotes.MedicalHistoryNotesData,
                 MedicalHistoryNotes.DateTimeSnap));
         }

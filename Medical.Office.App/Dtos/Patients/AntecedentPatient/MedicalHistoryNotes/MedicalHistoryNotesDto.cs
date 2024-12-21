@@ -2,7 +2,7 @@
 {
     public record MedicalHistoryNotesDto(
         long Id,
-        long? IDPatient,
+        long IDPatient,
         string? MedicalHistoryNotesData,
         DateTime? DateTimeSnap
     );

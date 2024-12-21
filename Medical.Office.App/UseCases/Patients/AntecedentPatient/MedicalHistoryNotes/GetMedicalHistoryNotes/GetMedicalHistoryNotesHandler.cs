@@ -30,7 +30,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.MedicalHistoryN
 
             return new SuccessGetMedicalHistoryNotesResponse(new MedicalHistoryNotesDto(
                 MedicalHistoryNotes.Id,
-                MedicalHistoryNotes.IDPatient,
+                MedicalHistoryNotes.IDPatient ?? 0,
                 MedicalHistoryNotes.MedicalHistoryNotesData,
                 MedicalHistoryNotes.DateTimeSnap));
         }

@@ -2,5 +2,5 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.Patient
 
 public class UpdatePatientAllergiesRequestBody
 {
-    
+    public string? Allergies { get; set; }
 }
