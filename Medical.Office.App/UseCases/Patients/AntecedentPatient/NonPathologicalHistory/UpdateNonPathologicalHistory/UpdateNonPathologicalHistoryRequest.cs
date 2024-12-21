@@ -1,6 +1,7 @@
+using Common.Common.CleanArch;
+using Medical.Office.App.Dtos.Patients.AntecedentPatient.NonPathologicalHistory;
+using Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathologicalHistory.UpdateNonPathologicalHistory.Response;
+
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathologicalHistory.UpdateNonPathologicalHistory;
 
-public class UpdateNonPathologicalHistoryRequest
-{
-    
-}
+public record class UpdateNonPathologicalHistoryRequest(NonPathologicalHistoryDto NonPathologicalHistory) : IRequest<UpdateNonPathologicalHistoryResponse>;

@@ -1,6 +1,7 @@
+using Common.Common.CleanArch;
+using Medical.Office.App.Dtos.Patients.AntecedentPatient.PathologicalBackground;
+using Medical.Office.App.UseCases.Patients.AntecedentPatient.PathologicalBackground.UpdatePathologicalBackground.Response;
+
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.PathologicalBackground.UpdatePathologicalBackground;
 
-public class UpdatePathologicalBackgroundRequest
-{
-    
-}
+public record class UpdatePathologicalBackgroundRequest(PathologicalBackgroundDto PathologicalBackground) : IRequest<UpdatePathologicalBackgroundResponse>;

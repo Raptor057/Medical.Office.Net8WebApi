@@ -18,7 +18,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UseCases\Patients\AntecedentPatient\PsychiatricHistory\UpdatePsychiatricHistory\" />
     <Folder Include="UseCases\Patients\UpdatePatiensData\" />
     <Folder Include="UseCases\Users\UpdateUsers\" />
   </ItemGroup>
