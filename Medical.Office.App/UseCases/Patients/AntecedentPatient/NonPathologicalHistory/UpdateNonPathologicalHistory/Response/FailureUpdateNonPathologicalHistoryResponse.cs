@@ -1,3 +1,5 @@
+using Common.Common;
+
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathologicalHistory.UpdateNonPathologicalHistory.Response;
 
-public record FailureUpdateNonPathologicalHistoryResponse();
+public record FailureUpdateNonPathologicalHistoryResponse(string Message) : UpdateNonPathologicalHistoryResponse, IFailure;

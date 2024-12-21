@@ -1,3 +1,5 @@
+using Common.Common.CleanArch;
+
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathologicalHistory.UpdateNonPathologicalHistory.Response;
 
-public record UpdateNonPathologicalHistoryResponse();
+public abstract record UpdateNonPathologicalHistoryResponse : IResponse;

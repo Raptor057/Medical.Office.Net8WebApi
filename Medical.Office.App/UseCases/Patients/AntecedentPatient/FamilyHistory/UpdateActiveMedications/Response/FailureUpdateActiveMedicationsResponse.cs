@@ -1,3 +1,7 @@
+using Common.Common;
+using Common.Common.CleanArch;
+using Medical.Office.App.Dtos.Patients.AntecedentPatient.ActiveMedications;
+
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.UpdateActiveMedications.Response;
 
-public record FailureUpdateActiveMedicationsResponse();
+public record FailureUpdateActiveMedicationsResponse(string Message) : UpdateActiveMedicationsResponse, IFailure;
