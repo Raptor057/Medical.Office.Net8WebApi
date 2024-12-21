@@ -4,4 +4,4 @@ using Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedications.U
 
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedications.UpdateActiveMedications;
 
-public record UpdateActiveMedicationsRequest(ActiveMedicationsDto ActiveMedications) : IRequest<UpdateActiveMedicationsResponse>;
+public sealed record UpdateActiveMedicationsRequest(ActiveMedicationsDto activeMedications) : IRequest<UpdateActiveMedicationsResponse>;

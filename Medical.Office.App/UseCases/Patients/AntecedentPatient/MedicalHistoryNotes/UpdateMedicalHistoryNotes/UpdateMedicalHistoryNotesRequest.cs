@@ -4,4 +4,4 @@ using Medical.Office.App.UseCases.Patients.AntecedentPatient.MedicalHistoryNotes
 
 namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.MedicalHistoryNotes.UpdateMedicalHistoryNotes;
 
-public record class UpdateMedicalHistoryNotesRequest(MedicalHistoryNotesDto MedicalHistoryNotes) : IRequest<UpdateMedicalHistoryNotesResponse>;
+public record UpdateMedicalHistoryNotesRequest(MedicalHistoryNotesDto MedicalHistoryNotes) : IRequest<UpdateMedicalHistoryNotesResponse>;
