@@ -1,0 +1,3 @@
+namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.MedicalHistoryNotes.UpdateMedicalHistoryNotes.Response;
+
+public record FailureUpdateMedicalHistoryNotesResponse();

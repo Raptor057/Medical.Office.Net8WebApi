@@ -1,0 +1,3 @@
+namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathologicalHistory.UpdateNonPathologicalHistory.Response;
+
+public record FailureUpdateNonPathologicalHistoryResponse();

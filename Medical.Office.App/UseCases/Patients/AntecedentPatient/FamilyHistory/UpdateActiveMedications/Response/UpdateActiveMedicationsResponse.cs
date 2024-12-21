@@ -1,0 +1,3 @@
+namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.UpdateActiveMedications.Response;
+
+public record UpdateActiveMedicationsResponse();

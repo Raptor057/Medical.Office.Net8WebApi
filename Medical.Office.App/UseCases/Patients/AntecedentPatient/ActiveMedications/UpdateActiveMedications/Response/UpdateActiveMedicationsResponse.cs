@@ -1,0 +1,6 @@
+namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedications.UpdateActiveMedications.Response;
+
+public class UpdateActiveMedicationsResponse
+{
+    
+}
