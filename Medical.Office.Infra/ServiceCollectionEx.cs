@@ -17,10 +17,18 @@ namespace Medical.Office.Infra
                 .AddSingleton(typeof(ConfigurationSqlDbConnectionFactory<>))
                 .AddSingleton(typeof(ConfigurationSqlDbConnection<>))
                 .AddSingleton<MedicalOfficeSqlLocalDB>()
+
+                // Repositorios generales
                 .AddSingleton<IUsersRepository, UsersRepository>()
                 .AddSingleton<IConfigurationsRepository, ConfigurationsRepository>()
                 .AddSingleton<IPatientsData, PatientsData>()
-                .AddSingleton<IAntecedentPatient, AntecedentPatientRepository>();
+                .AddSingleton<IAntecedentPatient, AntecedentPatientRepository>()
+
+                // Repositorios y servicios de ExpressPos
+                .AddSingleton<POSInterfacesRepository.IProductoService, ExpressPosRepository>()
+                .AddSingleton<POSInterfacesRepository.IVentaService, ExpressPosRepository>()
+                .AddSingleton<POSInterfacesRepository.ICorteService, ExpressPosRepository>()
+                .AddSingleton<POSInterfacesRepository.IReporteService, ExpressPosRepository>();
         }
     }
 }
