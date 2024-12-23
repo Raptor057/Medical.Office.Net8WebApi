@@ -1631,6 +1631,14 @@ public async Task<IEnumerable<Productos>> ObtenerProductosConBajoStock(int limit
         new { LimiteStock = limiteStock }).ConfigureAwait(false);
 }
 
+public async Task<IEnumerable<Productos>> ObtenerProductosPorIdsAsync(IEnumerable<int> productoIds)
+{
+    return await _con.QueryAsync<Productos>(
+        "SELECT * FROM Productos WHERE ProductoID IN @ProductoIDs",
+        new { ProductoIDs = productoIds }).ConfigureAwait(false);
+}
+
+
 /// <summary>
 /// Implementación de operaciones relacionadas con las ventas.
 /// </summary>

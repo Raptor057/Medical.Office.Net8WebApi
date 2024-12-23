@@ -4,5 +4,5 @@ public record VentasDto(
 
     int VentaID,
     DateTime? FechaHora,
-    decimal Total
+    double Total
 );

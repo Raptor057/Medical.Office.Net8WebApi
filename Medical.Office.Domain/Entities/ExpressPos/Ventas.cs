@@ -6,6 +6,6 @@ public class Ventas
 
     public DateTime? FechaHora { get; set; }
 
-    public decimal Total { get; set; }
+    public double Total { get; set; }
 
 }

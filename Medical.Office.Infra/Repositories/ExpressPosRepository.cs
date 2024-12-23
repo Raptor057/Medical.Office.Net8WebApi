@@ -49,6 +49,7 @@ public class ExpressPosRepository : POSInterfacesRepository.IProductoService, PO
         => await _db.ObtenerProductosConBajoStock(limiteStock).ConfigureAwait(false);
 
     // Implementación de IVentaService
+    /*
     public async Task<int> RegistrarVentaAsync(DateTime fechaHora, double total, IEnumerable<(int ProductoID, int Cantidad)> productos)
     {
         var venta = new Ventas { FechaHora = fechaHora, Total = (decimal)total };
@@ -60,6 +61,34 @@ public class ExpressPosRepository : POSInterfacesRepository.IProductoService, PO
         });
         return await _db.RegistrarVenta(venta, detalles).ConfigureAwait(false);
     }
+*/
+    public async Task<int> RegistrarVentaAsync(DateTime fechaHora, double total, IEnumerable<(int ProductoID, int Cantidad)> productos)
+    {
+        var productoIds = productos.Select(p => p.ProductoID).Distinct().ToList();
+
+        // Validar que los productos existen
+        var productosExistentes = await _db.ObtenerProductosPorIdsAsync(productoIds).ConfigureAwait(false);
+        if (productosExistentes.Count() != productoIds.Count)
+        {
+            throw new Exception("Uno o más productos no existen en la base de datos.");
+        }
+
+        // Crear la venta
+        var venta = new Ventas { FechaHora = fechaHora, Total = (double)total };
+
+        // Crear los detalles de la venta
+        var detalles = productos.Select(p => new DetalleVentas
+        {
+            ProductoID = p.ProductoID,
+            Cantidad = p.Cantidad,
+            Subtotal = p.Cantidad * productosExistentes.First(pe => pe.ProductoID == p.ProductoID).Precio
+        });
+
+        return await _db.RegistrarVenta(venta, detalles).ConfigureAwait(false);
+    }
+
+
+
 
     public async Task EliminarVentaAsync(int ventaId)
     {

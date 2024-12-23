@@ -35,7 +35,7 @@ namespace Medical.Office.App.UseCases.GestionDeVentas.RegistrarVenta
                     request.Total,
                     request.Productos);
 
-                var response = new VentasDto(ventaId, request.FechaHora, (decimal)request.Total);
+                var response = new VentasDto(ventaId, request.FechaHora, (double)request.Total);
                 return new SuccessRegistrarVentaResponse(response);
             }
             catch (Exception ex)
