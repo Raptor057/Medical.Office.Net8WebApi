@@ -1,8 +1,6 @@
-﻿# Directo
-@Medical.Office.Net8WebApi_HostAddress = http://localhost:5038
+﻿@Medical.Office.Net8WebApi_HostAddress = http://localhost:5038
 
-
-PUT {{Medical.Office.Net8WebApi_HostAddress}}/api/actualizarproducto/ActualizarProducto/{ProductoID}
+PUT {{Medical.Office.Net8WebApi_HostAddress}}/api/ActualizarProducto/{ProductoID}
 Content-Type: application/json
 
 {
@@ -11,7 +9,7 @@ Content-Type: application/json
 
 ###
 
-PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/actualizarstock/ActualizarStock/{ProductoID}
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/ActualizarStock/{ProductoID}
 Content-Type: application/json
 
 {
@@ -20,7 +18,7 @@ Content-Type: application/json
 
 ###
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/agregarproducto/AgregarProducto
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/AgregarProducto
 Content-Type: application/json
 
 {
@@ -30,27 +28,31 @@ Content-Type: application/json
 ###
 
 @FileID=0
-DELETE {{Medical.Office.Net8WebApi_HostAddress}}/api/deletepatientfile/DeletePatientFile/{IDPatient}/{{FileID}}
+DELETE {{Medical.Office.Net8WebApi_HostAddress}}/api/DeletePatientFile/{IDPatient}/{{FileID}}
 
 ###
 
-DELETE {{Medical.Office.Net8WebApi_HostAddress}}/api/eliminarcorte/EliminarCorte/{corteID}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getrandomnumber
 
 ###
 
-DELETE {{Medical.Office.Net8WebApi_HostAddress}}/api/eliminarproducto/EliminarProducto/{ProductoID}
+@corteID=0
+DELETE {{Medical.Office.Net8WebApi_HostAddress}}/api/EliminarCorte/{{corteID}}
 
 ###
 
-DELETE {{Medical.Office.Net8WebApi_HostAddress}}/api/eliminarventa/EliminarVenta/{VentaID}
+@ProductoID=0
+DELETE {{Medical.Office.Net8WebApi_HostAddress}}/api/EliminarProducto/{{ProductoID}}
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getactivemedications/{PatientID}
+@VentaID=0
+DELETE {{Medical.Office.Net8WebApi_HostAddress}}/api/EliminarVenta/{{VentaID}}
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getdoctors/GetDoctors/{IDDoctor}
+@PatientID=0
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getactivemedications/{{PatientID}}
 
 ###
 
@@ -58,19 +60,52 @@ GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getallconfigurations
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getmedicalhistorynotes/{PatientID}
+@IDDoctor=0
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetDoctors/{{IDDoctor}}
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetNonPathologicalHistory/{PatientID}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getfamilyhistory/{{PatientID}}
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPathologicalBackground/{PatientID}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getmedicalhistorynotes/{{PatientID}}
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getpatientfile/GetPatientFile/{IDPatient}/{{FileID}}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetNonPathologicalHistory/{{PatientID}}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPathologicalBackground/{{PatientID}}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPatientAllergies/{{PatientID}}
+
+###
+
+@IDPatient=0
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/PatientData/{{IDPatient}}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPatientDataAndAntecedents/{{IDPatient}}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPatientFile/{IDPatient}/{{FileID}}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPsychiatricHistory/{{PatientID}}
+
+###
+
+@id=0
+@usr=string
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/UsersData?id={{id}}&usr={{usr}}
+Authorization: Bearer {{$bearerToken}}
 
 ###
 
@@ -83,7 +118,7 @@ Content-Type: application/json
 
 ###
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertdoctors/InsertDoctor
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertDoctor
 Content-Type: application/json
 
 {
@@ -146,15 +181,6 @@ Content-Type: application/json
 
 ###
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertpatient
-Content-Type: application/json
-
-{
-  //InsertPatientDataRequestBody
-}
-
-###
-
 POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertPatientAllergies
 Content-Type: application/json
 
@@ -164,12 +190,26 @@ Content-Type: application/json
 
 ###
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertpatientfile/UploadPatientFile
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertpatient
+Content-Type: application/json
+
+{
+  //InsertPatientDataRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/UploadPatientFile
 Content-Type: application/json
 
 {
   //InsertPatientFileRequestBody
 }
+
+###
+
+@Position=string
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertposition/{{Position}}
 
 ###
 
@@ -182,6 +222,11 @@ Content-Type: application/json
 
 ###
 
+@Specialtie=string
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertspecialties/{{Specialtie}}
+
+###
+
 POST {{Medical.Office.Net8WebApi_HostAddress}}/api/login
 Content-Type: application/json
 
@@ -191,34 +236,55 @@ Content-Type: application/json
 
 ###
 
-@fechaInicio=2024-12-23T08:27:06.8199889+00:00
-@fechaFin=2024-12-23T08:27:06.8199889+00:00
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/obtenercortesporrango/ObtenerCortesPorRango?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/ObtenerCortePorId/{{corteID}}
+
+###
+
+@fechaInicio=2024-12-23T09:15:22.3404957+00:00
+@fechaFin=2024-12-23T09:15:22.3404957+00:00
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/ObtenerCortesPorRango?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/ObtenerDetalleDeVentas/{{ventaID}}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/ObtenerProductoPorId/{{ProductoID}}
 
 ###
 
 @LimiteStock=0
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/obtenerproductosconbajostock/ObtenerProductosConBajoStock?LimiteStock={{LimiteStock}}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/ObtenerProductosConBajoStock?LimiteStock={{LimiteStock}}
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/obtenerresumendecortespordia/ObtenerResumenDeCortesPorDia?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/ObtenerResumenDeCortesPorDia?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/obtenerventaporid/ObtenerVentaPorId/{VentaID}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/ObtenerTodosLosCortes
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/obtenerventaspordia/ObtenerVentasPorDia?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/ObtenerTodosLosProductos
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/obtenerventasporrango/ObtenerVentasPorRango?FechaInicio={{FechaInicio}}&FechaFin={{FechaFin}}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/ObtenerVentaPorId/{{VentaID}}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/ObtenerVentasPorDia?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/ObtenerVentasPorRango?FechaInicio={{FechaInicio}}&FechaFin={{FechaFin}}
 
 ###
 
 POST {{Medical.Office.Net8WebApi_HostAddress}}/api/registerusers
+Authorization: Bearer {{$bearerToken}}
 Content-Type: application/json
 
 {
@@ -227,7 +293,7 @@ Content-Type: application/json
 
 ###
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/registrarcorte/RegistrarCorte
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/RegistrarCorte
 Content-Type: application/json
 
 {
@@ -236,7 +302,7 @@ Content-Type: application/json
 
 ###
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/registrarventa/RegistrarVenta
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/RegistrarVenta
 Content-Type: application/json
 
 {
@@ -254,7 +320,7 @@ Content-Type: application/json
 
 ###
 
-PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/updatedoctors/UpdateDoctor/{IDDoctor}
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/updateDoctor/{IDDoctor}
 Content-Type: application/json
 
 {
@@ -299,7 +365,7 @@ Content-Type: application/json
 
 ###
 
-PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/updateofficesetup/UpdateOfficeSetup
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateOfficeSetup
 Content-Type: application/json
 
 {
