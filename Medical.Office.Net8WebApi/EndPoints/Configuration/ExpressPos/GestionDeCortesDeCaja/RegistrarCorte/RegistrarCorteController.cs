@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDeCortesDeCaja.RegistrarCorte
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class RegistrarCorteController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
             _viewModel = viewModel;
         }
 
-        [HttpPost("RegistrarCorte")]
+        [HttpPost("/api/RegistrarCorte")]
         public async Task<IActionResult> Execute([FromBody] RegistrarCorteRequestBody requestBody)
         {
             var request = new RegistrarCorteRequest(requestBody.FechaHora, requestBody.TotalVendido, requestBody.TotalVentas);

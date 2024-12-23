@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDeCortesDeCaja.EliminarCorte
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class EliminarCorteController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
             _viewModel = viewModel;
         }
 
-        [HttpDelete("EliminarCorte/{corteID}")]
+        [HttpDelete("/api/EliminarCorte/{corteID}")]
         public async Task<IActionResult> Execute([FromRoute] int corteID)
         {
             var request = new EliminarCorteRequest(corteID);

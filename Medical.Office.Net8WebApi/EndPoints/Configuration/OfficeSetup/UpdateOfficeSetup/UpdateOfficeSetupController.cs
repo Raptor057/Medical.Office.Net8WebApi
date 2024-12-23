@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.OfficeSetup.UpdateOfficeSetup
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UpdateOfficeSetupController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.OfficeSetup.UpdateOf
             _viewModel=viewModel;
         }
 
-        [HttpPatch("UpdateOfficeSetup")]
+        [HttpPatch("/api/UpdateOfficeSetup")]
         public async Task<IActionResult> Execute([FromBody] UpdateOfficeSetupRequestBody requestBody)
         {
             if (!UpdateOfficeSetupRequest.CanInsert((new OfficeSetupDto { NameOfOffice = requestBody.NameOfOffice ?? "", Address = requestBody.Address ?? "" }), out var errors))

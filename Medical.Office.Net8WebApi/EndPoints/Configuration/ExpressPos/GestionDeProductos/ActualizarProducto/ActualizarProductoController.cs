@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDeProductos.ActualizarProducto
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ActualizarProductoController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
             _viewModel = viewModel;
         }
 
-        [HttpPut("ActualizarProducto/{ProductoID}")]
+        [HttpPut("/api/ActualizarProducto/{ProductoID}")]
         public async Task<IActionResult> Execute([FromRoute] int ProductoID, [FromBody] ActualizarProductoRequestBody requestBody)
         {
             var request = new ActualizarProductoRequest(ProductoID, requestBody.Nombre, requestBody.Precio, requestBody.Stock);

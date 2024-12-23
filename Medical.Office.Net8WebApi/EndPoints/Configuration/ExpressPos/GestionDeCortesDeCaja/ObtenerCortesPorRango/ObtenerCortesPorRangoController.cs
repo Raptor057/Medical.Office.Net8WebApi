@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDeCortesDeCaja.ObtenerCortesPorRango
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ObtenerCortesPorRangoController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
             _viewModel = viewModel;
         }
 
-        [HttpGet("ObtenerCortesPorRango")]
+        [HttpGet("/api/ObtenerCortesPorRango")]
         public async Task<IActionResult> Execute([FromQuery] DateTime fechaInicio, [FromQuery] DateTime fechaFin)
         {
             var request = new ObtenerCortesPorRangoRequest(fechaInicio, fechaFin);

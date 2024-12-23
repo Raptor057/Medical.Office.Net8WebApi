@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDeVentas.ObtenerVentasPorRango
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ObtenerVentasPorRangoController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
             _viewModel = viewModel;
         }
 
-        [HttpGet("ObtenerVentasPorRango")]
+        [HttpGet("/api/ObtenerVentasPorRango")]
         public async Task<IActionResult> Execute([FromQuery] DateTime FechaInicio, [FromQuery] DateTime FechaFin)
         {
             var request = new ObtenerVentasPorRangoRequest(FechaInicio, FechaFin);

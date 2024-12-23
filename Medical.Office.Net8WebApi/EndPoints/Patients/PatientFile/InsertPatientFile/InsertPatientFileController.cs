@@ -8,7 +8,7 @@ using System.Runtime;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.PatientFile.InsertPatientFile
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class InsertPatientFileController : ControllerBase
     {
@@ -26,7 +26,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.PatientFile.InsertPatient
         }
 
         #region Original - Archivos con un limite de 1.8 GB de peso, Consume un maximo de 6.9 GB de ram en archivos de 1.8 GB en su pico mas alto, en promedio se mantiene entre 1 y 2 GB de ram.
-        [HttpPost("UploadPatientFile")]
+        [HttpPost("/api/UploadPatientFile")]
         public async Task<IActionResult> Execute([FromBody] InsertPatientFileRequestBody requestBody)
         {
 
@@ -130,7 +130,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.PatientFile.InsertPatient
         /// <param name="requestBody">
         /// </param>
         /// <returns></returns>
-        //[HttpPost("UploadPatientFile")]
+        //[HttpPost("/api/UploadPatientFile")]
         //public async Task<IActionResult> Execute([FromBody] InsertPatientFileRequestBody requestBody)
         //{
         //    if (requestBody == null || string.IsNullOrEmpty(requestBody.FileData))
@@ -228,7 +228,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.PatientFile.InsertPatient
         #endregion
 
         #region Metodo FileStream limite menos de 2.0 GB el menos recomendable hata mas 9 GB de ram
-        //[HttpPost("UploadPatientFile")]
+        //[HttpPost("/api/UploadPatientFile")]
         //public async Task<IActionResult> Execute([FromBody] InsertPatientFileRequestBody requestBody)
         //{
         //    if (requestBody == null || string.IsNullOrEmpty(requestBody.FileData))

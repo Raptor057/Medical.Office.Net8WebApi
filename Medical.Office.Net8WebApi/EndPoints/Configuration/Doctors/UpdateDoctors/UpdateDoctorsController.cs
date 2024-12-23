@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Doctors.UpdateDoctors
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class UpdateDoctorsController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Doctors.UpdateDoctor
             _viewModel=viewModel;
         }
 
-       [HttpPatch("UpdateDoctor/{IDDoctor}")]
+       [HttpPatch("/api/pdateDoctor/{IDDoctor}")]
        public async Task<IActionResult> Execute([FromRoute] long IDDoctor, [FromBody] UpdateDoctorsRequestBody requestBody)
         {
             var DoctorData = new DoctorsDto(IDDoctor, requestBody.FirstName, requestBody.LastName, requestBody.Specialty, requestBody.PhoneNumber, requestBody.Email, DateTime.Now, DateTime.Now);

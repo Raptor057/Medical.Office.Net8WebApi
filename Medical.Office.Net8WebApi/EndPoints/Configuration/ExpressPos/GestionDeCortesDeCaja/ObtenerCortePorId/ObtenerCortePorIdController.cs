@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDeCortesDeCaja.ObtenerCortePorId
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ObtenerCortePorIdController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
             _viewModel = viewModel;
         }
 
-        [HttpGet("ObtenerCortePorId/{corteID}")]
+        [HttpGet("/api/ObtenerCortePorId/{corteID}")]
         public async Task<IActionResult> Execute([FromRoute] int corteID)
         {
             var request = new ObtenerCortePorIdRequest(corteID);

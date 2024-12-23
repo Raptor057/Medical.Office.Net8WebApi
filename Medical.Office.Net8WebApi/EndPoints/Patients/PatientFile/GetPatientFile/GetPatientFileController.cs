@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.PatientFile.GetPatientFile
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class GetPatientFileController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.PatientFile.GetPatientFil
             _viewModel = viewModel;
         }
 
-        [HttpGet("GetPatientFile/{IDPatient}/{FileID}")]
+        [HttpGet("/api/GetPatientFile/{IDPatient}/{FileID}")]
         public async Task<IActionResult> Execute([FromRoute] long IDPatient, long FileID)
         {
             var request = new GetPatientFileRequest(IDPatient, FileID);

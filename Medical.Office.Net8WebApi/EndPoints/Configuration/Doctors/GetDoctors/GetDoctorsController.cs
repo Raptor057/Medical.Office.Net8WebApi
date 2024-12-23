@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Doctors.GetDoctors
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class GetDoctorsController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Doctors.GetDoctors
             _viewModel=viewModel;
         }
 
-        [HttpGet("GetDoctors/{IDDoctor}")]
+        [HttpGet("/api/GetDoctors/{IDDoctor}")]
         public async Task<IActionResult> Execute([FromRoute] long IDDoctor)
         {
             var request = new GetDoctorsRequest(IDDoctor);

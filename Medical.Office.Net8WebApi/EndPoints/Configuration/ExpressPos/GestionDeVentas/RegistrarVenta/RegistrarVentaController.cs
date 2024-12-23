@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDeVentas.RegistrarVenta
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class RegistrarVentaController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
             _viewModel = viewModel;
         }
 
-        [HttpPost("RegistrarVenta")]
+        [HttpPost("/api/RegistrarVenta")]
         public async Task<IActionResult> Execute([FromBody] RegistrarVentaRequestBody requestBody)
         {
             var request = new RegistrarVentaRequest(requestBody.FechaHora, requestBody.Total, requestBody.Productos);

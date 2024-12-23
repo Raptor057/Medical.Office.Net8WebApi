@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GeneracionDeReportes.ObtenerDetalleDeVentas
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ObtenerVentasPorDiaController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.Generacio
             _viewModel = viewModel;
         }
 
-        [HttpGet("ObtenerVentasPorDia")]
+        [HttpGet("/api/ObtenerVentasPorDia")]
         public async Task<IActionResult> Execute([FromQuery] DateTime fechaInicio, [FromQuery] DateTime fechaFin)
         {
             var request = new ObtenerVentasPorDiaRequest(fechaInicio, fechaFin);

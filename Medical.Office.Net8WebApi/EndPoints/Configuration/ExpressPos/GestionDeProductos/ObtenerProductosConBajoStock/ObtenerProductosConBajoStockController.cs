@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDeProductos.ObtenerProductosConBajoStock
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class ObtenerProductosConBajoStockController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
             _viewModel = viewModel;
         }
 
-        [HttpGet("ObtenerProductosConBajoStock")]
+        [HttpGet("/api/ObtenerProductosConBajoStock")]
         public async Task<IActionResult> Execute([FromQuery] int LimiteStock)
         {
             var request = new ObtenerProductosConBajoStockRequest(LimiteStock);

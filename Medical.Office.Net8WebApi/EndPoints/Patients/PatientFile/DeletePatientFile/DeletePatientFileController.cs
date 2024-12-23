@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.PatientFile.DeletePatientFile
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class DeletePatientFileController : ControllerBase
     {
@@ -22,7 +22,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.PatientFile.DeletePatient
         }
 
 
-        [HttpDelete("DeletePatientFile/{IDPatient}/{FileID}")]
+        [HttpDelete("/api/DeletePatientFile/{IDPatient}/{FileID}")]
         public async Task<IActionResult> Execute([FromRoute] long IDPatient, long FileID)
         {
             var request = new DeletePatientFileRequest(IDPatient,FileID);

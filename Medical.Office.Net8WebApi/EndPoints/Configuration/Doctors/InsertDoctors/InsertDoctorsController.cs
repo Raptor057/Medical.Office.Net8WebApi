@@ -6,7 +6,7 @@ using Medical.Office.App.UseCases.Configurations.Doctors.InsertDoctors;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Doctors.InsertDoctors
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class InsertDoctorsController : ControllerBase
     {
@@ -22,7 +22,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Doctors.InsertDoctor
         }
 
         [HttpPost]
-        [Route("InsertDoctor")]
+        [Route("/api/InsertDoctor")]
         public async Task<IActionResult> Execute([FromBody] InsertDoctorsRequestBody requestBody)
         {
             var DoctorData = new DoctorsDto(0, requestBody.FirstName, requestBody.LastName, requestBody.Specialty, requestBody.PhoneNumber, requestBody.Email, DateTime.Now, DateTime.Now);

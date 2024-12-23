@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDeProductos.ActualizarProducto
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class AgregarProductoController : ControllerBase
     {
@@ -22,7 +22,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
             _viewModel = viewModel;
         }
 
-        [HttpPost("AgregarProducto")]
+        [HttpPost("/api/AgregarProducto")]
         public async Task<IActionResult> Execute([FromBody] AgregarProductoRequestBody requestBody)
         {
             var request = new AgregarProductoRequest(requestBody.Nombre, requestBody.Precio, requestBody.Stock);

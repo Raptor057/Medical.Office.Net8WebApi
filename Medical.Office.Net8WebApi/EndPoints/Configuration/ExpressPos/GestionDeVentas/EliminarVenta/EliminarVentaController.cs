@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDeVentas.EliminarVenta
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class EliminarVentaController : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
             _viewModel = viewModel;
         }
 
-        [HttpDelete("EliminarVenta/{VentaID}")]
+        [HttpDelete("/api/EliminarVenta/{VentaID}")]
         public async Task<IActionResult> Execute([FromRoute] int VentaID)
         {
             var request = new EliminarVentaRequest(VentaID);
