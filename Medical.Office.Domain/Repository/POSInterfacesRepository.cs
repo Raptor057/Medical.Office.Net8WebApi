@@ -1,4 +1,5 @@
 using Medical.Office.Domain.Entities.ExpressPos;
+using Medical.Office.Domain.Entities.ExpressPos.Respuestas;
 using Medical.Office.Domain.Entities.ExpressPos.Views;
 
 namespace Medical.Office.Domain.Repository;
@@ -28,7 +29,7 @@ public class POSInterfacesRepository
     public interface IVentaService
     {
         // CRUD
-        Task<int> RegistrarVentaAsync(DateTime fechaHora, double total, IEnumerable<(int ProductoID, int Cantidad)> productos);
+        Task<IDTotalVentas> RegistrarVentaAsync(DateTime fechaHora, IEnumerable<(int ProductoID, int Cantidad)> productos);
         Task EliminarVentaAsync(int ventaId);
         Task<Ventas> ObtenerVentaPorIdAsync(int ventaId);
         Task<IEnumerable<Ventas>> ObtenerVentasAsync();

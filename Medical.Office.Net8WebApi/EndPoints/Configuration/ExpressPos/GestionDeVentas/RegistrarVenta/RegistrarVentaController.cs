@@ -24,7 +24,13 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
         [HttpPost("/api/RegistrarVenta")]
         public async Task<IActionResult> Execute([FromBody] RegistrarVentaRequestBody requestBody)
         {
-            var request = new RegistrarVentaRequest(requestBody.FechaHora, requestBody.Total, requestBody.Productos);
+            _logger.LogInformation($"Request recibido: FechaHora={requestBody.FechaHora}, Productos={string.Join(", ", requestBody.Productos.Select(p => $"ProductoID={p.ProductoID}, Cantidad={p.Cantidad}"))}");
+
+            var request = new RegistrarVentaRequest(
+                requestBody.FechaHora,
+                //0,
+                requestBody.Productos.Select(p => (p.ProductoID, p.Cantidad)));
+
 
             try
             {
@@ -38,5 +44,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
                 return StatusCode(500, _viewModel.Fail(innerEx.Message));
             }
         }
+
+
     }
 }

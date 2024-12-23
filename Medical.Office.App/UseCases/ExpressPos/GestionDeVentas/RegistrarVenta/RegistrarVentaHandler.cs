@@ -20,8 +20,7 @@ namespace Medical.Office.App.UseCases.GestionDeVentas.RegistrarVenta
             _ventaService = ventaService;
         }
 
-        public async Task<RegistrarVentaResponse> Handle(RegistrarVentaRequest request,
-            CancellationToken cancellationToken)
+        public async Task<RegistrarVentaResponse> Handle(RegistrarVentaRequest request, CancellationToken cancellationToken)
         {
             if (request == null || request.Productos == null || !request.Productos.Any())
             {
@@ -30,12 +29,11 @@ namespace Medical.Office.App.UseCases.GestionDeVentas.RegistrarVenta
 
             try
             {
-                var ventaId = await _ventaService.RegistrarVentaAsync(
-                    request.FechaHora,
-                    request.Total,
-                    request.Productos);
+                // Registrar la venta
+                var TotalVentaAndId = await _ventaService.RegistrarVentaAsync(request.FechaHora, request.Productos);
 
-                var response = new VentasDto(ventaId, request.FechaHora, (double)request.Total);
+                // Crear el DTO de respuesta
+                var response = new VentasDto(TotalVentaAndId.VentaID, request.FechaHora, TotalVentaAndId.TotalVenta);
                 return new SuccessRegistrarVentaResponse(response);
             }
             catch (Exception ex)
@@ -44,5 +42,6 @@ namespace Medical.Office.App.UseCases.GestionDeVentas.RegistrarVenta
                 return new FailureRegistrarVentaResponse("Error interno al registrar la venta.");
             }
         }
+
     }
 }

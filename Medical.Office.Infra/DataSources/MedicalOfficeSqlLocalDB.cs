@@ -3,6 +3,7 @@ using Medical.Office.Domain.Entities.ExpressPos.Views;
 using Medical.Office.Domain.Entities.MedicalOffice;
 using Medical.Office.Domain.Entities.MedicalOffice.AntecedentPatient;
 using Medical.Office.Domain.Entities.POS;
+using Microsoft.Extensions.Logging;
 
 namespace Medical.Office.Infra.DataSources
 {
@@ -12,10 +13,12 @@ namespace Medical.Office.Infra.DataSources
     public class MedicalOfficeSqlLocalDB
     {
         private readonly ConfigurationSqlDbConnection<MedicalOfficeSqlLocalDB> _con;
+        private readonly ILogger<MedicalOfficeSqlLocalDB> _logger;
 
-        public MedicalOfficeSqlLocalDB(ConfigurationSqlDbConnection<MedicalOfficeSqlLocalDB> con)
+        public MedicalOfficeSqlLocalDB(ILogger<MedicalOfficeSqlLocalDB> logger,ConfigurationSqlDbConnection<MedicalOfficeSqlLocalDB> con)
         {
             _con = con;
+            _logger=logger;
         }
 
         #region Hosted Services
@@ -1633,10 +1636,14 @@ public async Task<IEnumerable<Productos>> ObtenerProductosConBajoStock(int limit
 
 public async Task<IEnumerable<Productos>> ObtenerProductosPorIdsAsync(IEnumerable<int> productoIds)
 {
-    return await _con.QueryAsync<Productos>(
+    var productos = await _con.QueryAsync<Productos>(
         "SELECT * FROM Productos WHERE ProductoID IN @ProductoIDs",
         new { ProductoIDs = productoIds }).ConfigureAwait(false);
+
+    return productos;
 }
+
+
 
 
 /// <summary>

@@ -1,17 +1,21 @@
 using Medical.Office.Domain.Entities.ExpressPos;
+using Medical.Office.Domain.Entities.ExpressPos.Respuestas;
 using Medical.Office.Domain.Entities.ExpressPos.Views;
 using Medical.Office.Domain.Repository;
 using Medical.Office.Infra.DataSources;
+using Microsoft.Extensions.Logging;
 
 namespace Medical.Office.Infra.Repositories;
 
 public class ExpressPosRepository : POSInterfacesRepository.IProductoService, POSInterfacesRepository.IVentaService, POSInterfacesRepository.ICorteService, POSInterfacesRepository.IReporteService
 {
     private readonly MedicalOfficeSqlLocalDB _db;
+    private readonly ILogger<ExpressPosRepository> _logger;
 
-    public ExpressPosRepository(MedicalOfficeSqlLocalDB db)
+    public ExpressPosRepository(ILogger<ExpressPosRepository> logger,MedicalOfficeSqlLocalDB db)
     {
         _db = db;
+        _logger=logger;
     }
 
     // Implementación de IProductoService
@@ -62,8 +66,10 @@ public class ExpressPosRepository : POSInterfacesRepository.IProductoService, PO
         return await _db.RegistrarVenta(venta, detalles).ConfigureAwait(false);
     }
 */
-    public async Task<int> RegistrarVentaAsync(DateTime fechaHora, double total, IEnumerable<(int ProductoID, int Cantidad)> productos)
+
+    public async Task<IDTotalVentas> RegistrarVentaAsync(DateTime fechaHora, IEnumerable<(int ProductoID, int Cantidad)> productos)
     {
+        // Obtener los IDs únicos de productos
         var productoIds = productos.Select(p => p.ProductoID).Distinct().ToList();
 
         // Validar que los productos existen
@@ -73,8 +79,19 @@ public class ExpressPosRepository : POSInterfacesRepository.IProductoService, PO
             throw new Exception("Uno o más productos no existen en la base de datos.");
         }
 
-        // Crear la venta
-        var venta = new Ventas { FechaHora = fechaHora, Total = (double)total };
+        // Calcular el total
+        var totalCalculado = productos.Sum(p =>
+        {
+            var producto = productosExistentes.First(pe => pe.ProductoID == p.ProductoID);
+            return p.Cantidad * producto.Precio;
+        });
+
+        // Crear la venta con el total calculado
+        var venta = new Ventas
+        {
+            FechaHora = fechaHora,
+            Total = totalCalculado
+        };
 
         // Crear los detalles de la venta
         var detalles = productos.Select(p => new DetalleVentas
@@ -84,9 +101,18 @@ public class ExpressPosRepository : POSInterfacesRepository.IProductoService, PO
             Subtotal = p.Cantidad * productosExistentes.First(pe => pe.ProductoID == p.ProductoID).Precio
         });
 
-        return await _db.RegistrarVenta(venta, detalles).ConfigureAwait(false);
-    }
+        // Registrar la venta en la base de datos
+        var VentaId = await _db.RegistrarVenta(venta, detalles).ConfigureAwait(false);
 
+        var Totalventas = new IDTotalVentas
+        {
+            VentaID = VentaId,
+            TotalVenta = totalCalculado
+
+        };
+
+        return Totalventas;
+    }
 
 
 
