@@ -1,20 +1,183 @@
 ﻿# Directo
 @Medical.Office.Net8WebApi_HostAddress = http://localhost:5038
 
-# IIS Express
-#@Medical.Office.Net8WebApi_HostAddress = http://localhost:14025
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/registerusers
+PUT {{Medical.Office.Net8WebApi_HostAddress}}/api/actualizarproducto/ActualizarProducto/{ProductoID}
 Content-Type: application/json
 
 {
-  "usr": "Doctor",
-  "psswd": "Doctor123*",
-  "name": "Admin",
-  "lastname": "System",
-  "role": "Doctor",
-  "position": "Doctor",
-  "specialtie": "Cirujano"
+  //ActualizarProductoRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/actualizarstock/ActualizarStock/{ProductoID}
+Content-Type: application/json
+
+{
+  //ActualizarStockRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/agregarproducto/AgregarProducto
+Content-Type: application/json
+
+{
+  //AgregarProductoRequestBody
+}
+
+###
+
+@FileID=0
+DELETE {{Medical.Office.Net8WebApi_HostAddress}}/api/deletepatientfile/DeletePatientFile/{IDPatient}/{{FileID}}
+
+###
+
+DELETE {{Medical.Office.Net8WebApi_HostAddress}}/api/eliminarcorte/EliminarCorte/{corteID}
+
+###
+
+DELETE {{Medical.Office.Net8WebApi_HostAddress}}/api/eliminarproducto/EliminarProducto/{ProductoID}
+
+###
+
+DELETE {{Medical.Office.Net8WebApi_HostAddress}}/api/eliminarventa/EliminarVenta/{VentaID}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getactivemedications/{PatientID}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getdoctors/GetDoctors/{IDDoctor}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getallconfigurations
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getmedicalhistorynotes/{PatientID}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetNonPathologicalHistory/{PatientID}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPathologicalBackground/{PatientID}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getpatientfile/GetPatientFile/{IDPatient}/{{FileID}}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertactivemedications
+Content-Type: application/json
+
+{
+  //InsertActiveMedicationsRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertdoctors/InsertDoctor
+Content-Type: application/json
+
+{
+  //InsertDoctorsRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertfamilyhistory
+Content-Type: application/json
+
+{
+  //InsertFamilyHistoryRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertMedicalAppointmentCalendar
+Content-Type: application/json
+
+{
+  //InsertMedicalAppointmentCalendarRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertMedicalHistoryNotes
+Content-Type: application/json
+
+{
+  //InsertMedicalHistoryNotesRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertNonPathologicalHistory
+Content-Type: application/json
+
+{
+  //InsertNonPathologicalHistoryRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertofficesetup
+Content-Type: application/json
+
+{
+  //InsertOfficeSetupRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertPathologicalBackground
+Content-Type: application/json
+
+{
+  //InsertPathologicalBackgroundRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertpatient
+Content-Type: application/json
+
+{
+  //InsertPatientDataRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertPatientAllergies
+Content-Type: application/json
+
+{
+  //InsertPatientAllergiesRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertpatientfile/UploadPatientFile
+Content-Type: application/json
+
+{
+  //InsertPatientFileRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertpsychiatricHistory
+Content-Type: application/json
+
+{
+  //InsertPsychiatricHistoryRequestBody
 }
 
 ###
@@ -23,16 +186,151 @@ POST {{Medical.Office.Net8WebApi_HostAddress}}/api/login
 Content-Type: application/json
 
 {
-  "usr": "Admin",
-  "psswd": "Admin123*"
+  //LoginUsersRequestBody
 }
 
 ###
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertposition/{Administrador}
+@fechaInicio=2024-12-23T08:27:06.8199889+00:00
+@fechaFin=2024-12-23T08:27:06.8199889+00:00
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/obtenercortesporrango/ObtenerCortesPorRango?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
 
 ###
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertspecialties/{Administrador}
+@LimiteStock=0
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/obtenerproductosconbajostock/ObtenerProductosConBajoStock?LimiteStock={{LimiteStock}}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/obtenerresumendecortespordia/ObtenerResumenDeCortesPorDia?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/obtenerventaporid/ObtenerVentaPorId/{VentaID}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/obtenerventaspordia/ObtenerVentasPorDia?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
+
+###
+
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/obtenerventasporrango/ObtenerVentasPorRango?FechaInicio={{FechaInicio}}&FechaFin={{FechaFin}}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/registerusers
+Content-Type: application/json
+
+{
+  //RegisterUsersRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/registrarcorte/RegistrarCorte
+Content-Type: application/json
+
+{
+  //RegistrarCorteRequestBody
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/registrarventa/RegistrarVenta
+Content-Type: application/json
+
+{
+  //RegistrarVentaRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateActiveMedications/{IdPatient}
+Content-Type: application/json
+
+{
+  //UpdateActiveMedicationsRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/updatedoctors/UpdateDoctor/{IDDoctor}
+Content-Type: application/json
+
+{
+  //UpdateDoctorsRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateFamilyHistory/{IdPatient}
+Content-Type: application/json
+
+{
+  //UpdateFamilyHistoryRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateLaboralDays/{Id}
+Content-Type: application/json
+
+{
+  //UpdateLaboralDaysRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateMedicalHistoryNotes/{IdPatient}
+Content-Type: application/json
+
+{
+  //UpdateMedicalHistoryNotesRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateNonPathologicalHistory/{IdPatient}
+Content-Type: application/json
+
+{
+  //UpdateNonPathologicalHistoryRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/updateofficesetup/UpdateOfficeSetup
+Content-Type: application/json
+
+{
+  //UpdateOfficeSetupRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdatePathologicalBackground/{IdPatient}
+Content-Type: application/json
+
+{
+  //UpdatePathologicalBackgroundRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdatePatientAllergies/{IdPatient}
+Content-Type: application/json
+
+{
+  //UpdatePatientAllergiesRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdatePsychiatricHistory/{IdPatient}
+Content-Type: application/json
+
+{
+  //UpdatePsychiatricHistoryRequestBody
+}
 
 ###
