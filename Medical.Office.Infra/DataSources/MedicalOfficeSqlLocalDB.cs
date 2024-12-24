@@ -1689,10 +1689,14 @@ public async Task<IEnumerable<Ventas>> ObtenerVentas()
 
 public async Task<IEnumerable<Ventas>> ObtenerVentasPorRango(DateTime fechaInicio, DateTime fechaFin)
 {
+    _logger.LogDebug($"Fecha Inicio: {fechaInicio}, Fecha Fin: {fechaFin}"); // Para depuración
+
     return await _con.QueryAsync<Ventas>(
         "SELECT * FROM Ventas WHERE FechaHora BETWEEN @FechaInicio AND @FechaFin",
-        new { FechaInicio = fechaInicio, FechaFin = fechaFin }).ConfigureAwait(false);
+        new { FechaInicio = fechaInicio, FechaFin = fechaFin }
+    ).ConfigureAwait(false);
 }
+
 
 public async Task<IEnumerable<DetalleVentas>> ObtenerDetalleDeVenta(int ventaId)
 {

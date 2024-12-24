@@ -22,21 +22,29 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
         }
 
         [HttpGet("/api/ObtenerVentasPorRango")]
-        public async Task<IActionResult> Execute([FromQuery] DateTime FechaInicio, [FromQuery] DateTime FechaFin)
+        public async Task<IActionResult> Execute([FromQuery] string FechaInicio, [FromQuery] string FechaFin)
         {
-            var request = new ObtenerVentasPorRangoRequest(FechaInicio, FechaFin);
-
             try
             {
-                _ = await _mediator.Send(request).ConfigureAwait(false);
-                return _viewModel.IsSuccess ? Ok(_viewModel) : StatusCode(500, _viewModel);
+                var fechaInicioParsed = DateTime.Parse(FechaInicio);
+                var fechaFinParsed = DateTime.Parse(FechaFin);
+
+                var request = new ObtenerVentasPorRangoRequest(fechaInicioParsed, fechaFinParsed);
+
+                var response = await _mediator.Send(request).ConfigureAwait(false);
+                return Ok(response);
+            }
+            catch (FormatException ex)
+            {
+                _logger.LogError(ex, "Formato de fecha inválido.");
+                return BadRequest("Formato de fecha inválido. Use yyyy-MM-ddTHH:mm:ss.");
             }
             catch (Exception ex)
             {
-                var innerEx = ex;
-                while (innerEx.InnerException != null) innerEx = innerEx.InnerException!;
-                return StatusCode(500, _viewModel.Fail(innerEx.Message));
+                _logger.LogError(ex, "Error interno.");
+                return StatusCode(500, "Error interno.");
             }
         }
+
     }
 }

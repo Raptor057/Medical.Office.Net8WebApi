@@ -1,0 +1,10 @@
+{
+  "projectId": "2581365",
+  "authorization": "",
+  "context": "src/services/apifox",
+  "host": "http://api.apifox.cn",
+  "name": "apifox",
+  "alias": {
+    "@/": "src/"
+  }
+}
