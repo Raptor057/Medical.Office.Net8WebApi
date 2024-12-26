@@ -113,7 +113,13 @@ POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertMedicalAppointmentCalen
 Content-Type: application/json
 
 {
-  //InsertMedicalAppointmentCalendarRequestBody
+    "IDPatient": 1,
+    "IDDoctor": 1,
+    "AppointmentDateTime": "2023-12-01T10:00:00Z",
+    "ReasonForVisit": "Routine check-up",
+    "AppointmentStatus": "Scheduled",
+    "Notes": "Patient requested a morning appointment",
+    "TypeOfAppointment": "Consulta"
 }
 
 ###
@@ -150,7 +156,8 @@ POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertofficesetup
 Content-Type: application/json
 
 {
-  //InsertOfficeSetupRequestBody
+    "NameOfOffice": "Main Office",
+    "Address": "123 Main St, Anytown, USA"
 }
 
 ###
@@ -267,7 +274,8 @@ POST {{Medical.Office.Net8WebApi_HostAddress}}/api/login
 Content-Type: application/json
 
 {
-  //LoginUsersRequestBody
+    "Usr": "Admin",
+    "Psswd": "Admin123*"
 }
 
 ###
@@ -276,7 +284,13 @@ Authorization: Bearer {{$bearerToken}}
 Content-Type: application/json
 
 {
-  //RegisterUsersRequestBody
+    "Usr": "johndoe",
+    "Psswd": "securepassword123",
+    "Name": "John",
+    "Lastname": "Doe",
+    "Role": "Admin",
+    "Position": "Manager",
+    "Specialtie": "Cardiology"
 }
 
 ###
@@ -323,7 +337,9 @@ PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateLaboralDays/{Id}
 Content-Type: application/json
 
 {
-  //UpdateLaboralDaysRequestBody
+    "Laboral": true,
+    "OpeningTime": "08:00",
+    "ClosingTime": "17:00"
 }
 
 ###
@@ -341,7 +357,15 @@ PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateNonPathologicalHistory
 Content-Type: application/json
 
 {
-  //UpdateNonPathologicalHistoryRequestBody
+    "PhysicalActivity": true,
+    "Smoking": false,
+    "Alcoholism": false,
+    "SubstanceAbuse": true,
+    "SubstanceAbuseData": "Occasional marijuana use",
+    "RecentVaccination": true,
+    "RecentVaccinationData": "COVID-19 vaccine",
+    "Others": false,
+    "OthersData": null
 }
 
 ###
@@ -350,7 +374,8 @@ PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateOfficeSetup
 Content-Type: application/json
 
 {
-  //UpdateOfficeSetupRequestBody
+    "NameOfOffice": "Updated Office Name",
+    "Address": "456 New Address, Newtown, USA"
 }
 
 ###
@@ -359,7 +384,22 @@ PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdatePathologicalBackground
 Content-Type: application/json
 
 {
-  //UpdatePathologicalBackgroundRequestBody
+    "PreviousHospitalization": true,
+    "PreviousSurgeries": false,
+    "Diabetes": true,
+    "ThyroidDiseases": null,
+    "Hypertension": true,
+    "Cardiopathies": false,
+    "Trauma": false,
+    "Cancer": false,
+    "Tuberculosis": false,
+    "Transfusions": false,
+    "RespiratoryDiseases": true,
+    "GastrointestinalDiseases": false,
+    "STDs": true,
+    "STDsData": "History of chlamydia",
+    "ChronicKidneyDisease": false,
+    "Others": "None"
 }
 
 ###
@@ -405,3 +445,14 @@ Content-Type: application/json
     "Others": true,
     "OthersData": "Family history of asthma"
 }
+
+### 
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertMedicalHistoryNotes
+Content-Type: application/json
+
+{
+    "IDPatient": 1,
+    "MedicalHistoryNotesData": "Patient has a history of hypertension and diabetes."
+}
+
+###
