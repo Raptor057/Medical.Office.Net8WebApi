@@ -28,7 +28,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.U
                 data.ChronicKidneyDisease,
                 data.Others,
                 data.OthersData,
-                DateTime.Now
+                DateTime.UtcNow
             ).ConfigureAwait(false);
 
             var patient = await _patients.GetPatientDataByIDPatientAsync(data.IDPatient).ConfigureAwait(false);

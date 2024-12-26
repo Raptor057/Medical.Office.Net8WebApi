@@ -25,7 +25,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Doctors.InsertDoctor
         [Route("/api/InsertDoctor")]
         public async Task<IActionResult> Execute([FromBody] InsertDoctorsRequestBody requestBody)
         {
-            var DoctorData = new DoctorsDto(0, requestBody.FirstName, requestBody.LastName, requestBody.Specialty, requestBody.PhoneNumber, requestBody.Email, DateTime.Now, DateTime.Now);
+            var DoctorData = new DoctorsDto(0, requestBody.FirstName, requestBody.LastName, requestBody.Specialty, requestBody.PhoneNumber, requestBody.Email, DateTime.UtcNow, DateTime.UtcNow);
 
             if(!InsertDoctorsRequest.CanInsert(DoctorData,out var errors))
             {

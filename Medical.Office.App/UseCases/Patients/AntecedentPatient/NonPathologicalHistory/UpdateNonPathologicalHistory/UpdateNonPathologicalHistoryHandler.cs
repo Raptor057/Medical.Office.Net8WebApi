@@ -31,7 +31,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathological
                 data.RecentVaccinationData ?? string.Empty,
                 data.Others.HasValue ? (data.Others.Value ? 1 : 0) : 0,
                 data.OthersData ?? string.Empty,
-                DateTime.Now
+                DateTime.UtcNow
             ).ConfigureAwait(false);
 
             var patient = await _patients.GetPatientDataByIDPatientAsync(data.IDPatient).ConfigureAwait(false);

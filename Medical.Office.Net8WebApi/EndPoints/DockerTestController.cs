@@ -18,7 +18,10 @@ namespace Medical.Office.Net8WebApi.EndPoints
         public IActionResult GetRandomNumber()
         {
             int randomNumber = _random.Next();
-            return Ok(randomNumber);
+            var response = new Response("Random number generated successfully", randomNumber, DateTime.UtcNow, DateTime.UtcNow);
+            //return Ok(randomNumber);
+            return Ok(response);
         }
     }
+    public record Response(string Message,int RandomNumber, DateTime TimeStamp, DateTime UtcTimeStamp);
 }

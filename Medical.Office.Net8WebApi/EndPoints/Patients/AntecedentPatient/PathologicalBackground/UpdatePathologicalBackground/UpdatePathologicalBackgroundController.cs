@@ -43,7 +43,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.Patholo
                 requestBody.STDsData,
                 requestBody.ChronicKidneyDisease,
                 requestBody.Others,
-                DateTime.Now // Assigning DateTimeSnap in the backend
+                DateTime.UtcNow // Assigning DateTimeSnap in the backend
             ));
 
             try

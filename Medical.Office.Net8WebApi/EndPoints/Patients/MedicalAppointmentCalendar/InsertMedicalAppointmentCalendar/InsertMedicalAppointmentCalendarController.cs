@@ -33,8 +33,8 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.MedicalAppointmentCalenda
                 requestBody.ReasonForVisit,
                 requestBody.AppointmentStatus,
                 requestBody.Notes,
-                DateTime.Now,
-                DateTime.Now,
+                DateTime.UtcNow,
+                DateTime.UtcNow,
                 requestBody.TypeOfAppointment
             );
 

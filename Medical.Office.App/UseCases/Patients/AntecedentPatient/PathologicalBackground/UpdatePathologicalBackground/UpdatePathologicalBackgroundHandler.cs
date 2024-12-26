@@ -38,7 +38,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.PathologicalBac
                 data.STDsData ?? string.Empty,
                 data.ChronicKidneyDisease.HasValue ? (data.ChronicKidneyDisease.Value ? 1 : 0) : 0,
                 data.Others ?? string.Empty,
-                DateTime.Now
+                DateTime.UtcNow
             ).ConfigureAwait(false);
 
             var patient = await _patients.GetPatientDataByIDPatientAsync(data.IDPatient).ConfigureAwait(false);

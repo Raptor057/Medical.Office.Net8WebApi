@@ -23,7 +23,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.MedicalHistoryN
             await _patient.UpdateMedicalHistoryNotesAsync(
                 data.IDPatient,
                 data.MedicalHistoryNotesData,
-                DateTime.Now
+                DateTime.UtcNow
             ).ConfigureAwait(false);
 
             var patient = await _patients.GetPatientDataByIDPatientAsync(data.IDPatient).ConfigureAwait(false);

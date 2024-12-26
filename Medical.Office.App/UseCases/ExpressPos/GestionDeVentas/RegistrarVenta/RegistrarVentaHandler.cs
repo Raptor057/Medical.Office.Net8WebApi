@@ -27,6 +27,7 @@ namespace Medical.Office.App.UseCases.GestionDeVentas.RegistrarVenta
                 return new FailureRegistrarVentaResponse("Datos no válidos para registrar la venta.");
             }
 
+            
             try
             {
                 // Registrar la venta

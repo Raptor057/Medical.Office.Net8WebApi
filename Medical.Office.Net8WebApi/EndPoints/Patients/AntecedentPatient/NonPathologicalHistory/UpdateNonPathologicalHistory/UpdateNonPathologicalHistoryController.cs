@@ -36,7 +36,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.NonPath
                 requestBody.RecentVaccinationData,
                 requestBody.Others,
                 requestBody.OthersData,
-                DateTime.Now // Assigning DateTimeSnap in the backend
+                DateTime.UtcNow // Assigning DateTimeSnap in the backend
             ));
 
             try

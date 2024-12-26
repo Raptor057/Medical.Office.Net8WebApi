@@ -13,11 +13,11 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 
 # Copiar todos los archivos de proyecto
-COPY ["Medical.Office.Net8WebApi/Medical.Office.Net8WebApi.csproj", "Medical.Office.Net8WebApi/"]
-COPY ["Medical.Office.App/Medical.Office.App.csproj", "Medical.Office.App/"]
-COPY ["Medical.Office.Common/Medical.Office.Common.csproj", "Medical.Office.Common/"]
-COPY ["Medical.Office.Domain/Medical.Office.Domain.csproj", "Medical.Office.Domain/"]
-COPY ["Medical.Office.Infra/Medical.Office.Infra.csproj", "Medical.Office.Infra/"]
+COPY ["../Medical.Office.Net8WebApi/Medical.Office.Net8WebApi.csproj", "Medical.Office.Net8WebApi/"]
+COPY ["../Medical.Office.App/Medical.Office.App.csproj", "Medical.Office.App/"]
+COPY ["../Medical.Office.Common/Medical.Office.Common.csproj", "Medical.Office.Common/"]
+COPY ["../Medical.Office.Domain/Medical.Office.Domain.csproj", "Medical.Office.Domain/"]
+COPY ["../Medical.Office.Infra/Medical.Office.Infra.csproj", "Medical.Office.Infra/"]
 
 # Restaurar dependencias de todos los proyectos
 RUN dotnet restore "Medical.Office.Net8WebApi/Medical.Office.Net8WebApi.csproj"

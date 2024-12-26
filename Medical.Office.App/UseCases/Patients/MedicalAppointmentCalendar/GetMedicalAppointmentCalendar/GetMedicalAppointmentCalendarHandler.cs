@@ -42,7 +42,7 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.GetMed
                     m.CreatedAt,
                     UpdatedAt: m.UpdatedAt,
                     m.TypeOfAppointment));
-
+                    
                     return new SuccessGetListMedicalAppointmentCalendarResponse(appointmentsDto);
                 }
 

@@ -34,8 +34,8 @@ namespace Medical.Office.App.UseCases.Configurations.Doctors.GetDoctors
                     return new FailureGetDoctorsResponse($"Doctor con ID #{request.IDDoctor} no encontrado.");
                 }
 
-                var DoctorData = new DoctorsDto(0,Doctor.FirstName, Doctor.LastName, Doctor.Specialty, Doctor.PhoneNumber, Doctor.Email,DateTime.Now,DateTime.Now);
-
+                var DoctorData = new DoctorsDto(0,Doctor.FirstName, Doctor.LastName, Doctor.Specialty, Doctor.PhoneNumber, Doctor.Email,DateTime.UtcNow,DateTime.UtcNow);
+                
                 return new SuccessGetDoctorsResponse(DoctorData);
             }
 

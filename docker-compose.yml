@@ -58,6 +58,7 @@
 #     external:
 #       name: medicalnetwork
 
+#
 
 services:
   seq:
@@ -90,7 +91,7 @@ services:
   medicalofficeapi:
     build:
       context: .
-      dockerfile: "./Medical.Office.Net8WebApi/Dockerfile"
+      dockerfile: './Dockerfile'
     container_name: MedicalOfficeWebApi
     ports:
       - "8080:8080"
@@ -104,7 +105,7 @@ services:
 
   frontend:
     build:
-      context: ../Medical.Office.ReactWebClient
+      context: '../Medical.Office.ReactWebClient/'
       dockerfile: Dockerfile
     container_name: MedicalOfficeWebClient
     ports:

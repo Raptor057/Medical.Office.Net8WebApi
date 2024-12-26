@@ -28,12 +28,11 @@ internal sealed class ObtenerCortesPorRangoHandler : IInteractor<ObtenerCortesPo
         {
             var cortes = await _corteService.ObtenerCortesPorRangoAsync(request.FechaInicio, request.FechaFin);
 
-            if (!cortes.Any())
-            {
-                return new FailureObtenerCortesPorRangoResponse("No se encontraron cortes en el rango especificado.");
-            }
+            // Si no hay cortes, retorna una respuesta de éxito con datos vacíos
+            var response = cortes.Any()
+                ? cortes.Select(c => new CortesDto(c.CorteID, c.FechaHora, c.TotalVendido, c.TotalVentas))
+                : Enumerable.Empty<CortesDto>();
 
-            var response = cortes.Select(c => new CortesDto(c.CorteID, c.FechaHora, c.TotalVendido, c.TotalVentas));
             return new SuccessObtenerCortesPorRangoResponse(response);
         }
         catch (Exception ex)
@@ -42,4 +41,5 @@ internal sealed class ObtenerCortesPorRangoHandler : IInteractor<ObtenerCortesPo
             return new FailureObtenerCortesPorRangoResponse("Error interno al obtener cortes por rango.");
         }
     }
+
 }

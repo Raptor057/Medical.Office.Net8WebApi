@@ -39,7 +39,7 @@ namespace Medical.Office.App.UseCases.Configurations.Doctors.InsertDoctors
 
             await _repository.InsertDoctorAsync(DoctorData.FirstName, DoctorData.LastName, DoctorData.Specialty, DoctorData.PhoneNumber, DoctorData.Email).ConfigureAwait(false);
 
-            var Response = new DoctorsDto(0, DoctorData.FirstName, DoctorData.LastName, DoctorData.Specialty, DoctorData.PhoneNumber, DoctorData.Email,DateTime.Now,DateTime.Now);
+            var Response = new DoctorsDto(0, DoctorData.FirstName, DoctorData.LastName, DoctorData.Specialty, DoctorData.PhoneNumber, DoctorData.Email,DateTime.UtcNow,DateTime.UtcNow);
 
             return new SuccessInsertDoctorsResponse(Response);
         }

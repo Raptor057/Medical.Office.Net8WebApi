@@ -24,27 +24,28 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.ExpressPos.GestionDe
         [HttpPost("/api/RegistrarVenta")]
         public async Task<IActionResult> Execute([FromBody] RegistrarVentaRequestBody requestBody)
         {
-            _logger.LogInformation($"Request recibido: FechaHora={requestBody.FechaHora}, Productos={string.Join(", ", requestBody.Productos.Select(p => $"ProductoID={p.ProductoID}, Cantidad={p.Cantidad}"))}");
+            _logger.LogDebug("Request recibido: {@RequestBody}", requestBody);
 
-            var request = new RegistrarVentaRequest(
-                requestBody.FechaHora,
-                //0,
-                requestBody.Productos.Select(p => (p.ProductoID, p.Cantidad)));
-
+            if (requestBody == null || !requestBody.Productos.Any())
+            {
+                _logger.LogWarning("El cuerpo de la solicitud es inválido.");
+                return BadRequest("El cuerpo de la solicitud es inválido.");
+            }
 
             try
             {
+                var request = new RegistrarVentaRequest(
+                    requestBody.FechaHora,
+                    requestBody.Productos.Select(p => (p.ProductoID, p.Cantidad)));
+
                 _ = await _mediator.Send(request).ConfigureAwait(false);
                 return _viewModel.IsSuccess ? Ok(_viewModel) : StatusCode(500, _viewModel);
             }
             catch (Exception ex)
             {
-                var innerEx = ex;
-                while (innerEx.InnerException != null) innerEx = innerEx.InnerException!;
-                return StatusCode(500, _viewModel.Fail(innerEx.Message));
+                _logger.LogError(ex, "Error al registrar la venta.");
+                return StatusCode(500, _viewModel.Fail("Error interno."));
             }
         }
-
-
     }
 }

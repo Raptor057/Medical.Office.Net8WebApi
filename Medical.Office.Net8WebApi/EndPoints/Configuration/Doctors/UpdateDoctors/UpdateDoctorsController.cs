@@ -24,7 +24,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Doctors.UpdateDoctor
        [HttpPatch("/api/updateDoctor/{IDDoctor}")]
        public async Task<IActionResult> Execute([FromRoute] long IDDoctor, [FromBody] UpdateDoctorsRequestBody requestBody)
         {
-            var DoctorData = new DoctorsDto(IDDoctor, requestBody.FirstName, requestBody.LastName, requestBody.Specialty, requestBody.PhoneNumber, requestBody.Email, DateTime.Now, DateTime.Now);
+            var DoctorData = new DoctorsDto(IDDoctor, requestBody.FirstName, requestBody.LastName, requestBody.Specialty, requestBody.PhoneNumber, requestBody.Email, DateTime.UtcNow, DateTime.UtcNow);
 
             if (!UpdateDoctorsRequest.CanInsert(DoctorData, out var errors))
             {

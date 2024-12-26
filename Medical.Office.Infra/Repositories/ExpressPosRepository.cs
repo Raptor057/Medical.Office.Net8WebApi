@@ -137,7 +137,7 @@ public class ExpressPosRepository : POSInterfacesRepository.IProductoService, PO
     // Implementación de ICorteService
     public async Task RegistrarCorteAsync(double totalVendido, int totalVentas)
     {
-        var corte = new Cortes { FechaHora = DateTime.Now, TotalVendido = totalVendido, TotalVentas = totalVentas };
+        var corte = new Cortes { FechaHora = DateTime.UtcNow, TotalVendido = totalVendido, TotalVentas = totalVentas };
         await _db.RegistrarCorte(corte).ConfigureAwait(false);
     }
 

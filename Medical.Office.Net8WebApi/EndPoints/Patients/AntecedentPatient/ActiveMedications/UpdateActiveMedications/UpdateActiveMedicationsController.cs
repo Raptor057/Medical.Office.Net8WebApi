@@ -23,7 +23,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.ActiveM
         [HttpPatch, Route("/api/UpdateActiveMedications/{IdPatient}")]
         public async Task<IActionResult> Execute([FromRoute] long IdPatient, [FromBody] UpdateActiveMedicationsRequestBody requestBody)
         {
-            var request = new UpdateActiveMedicationsRequest(new ActiveMedicationsDto(0,IdPatient,requestBody.ActiveMedicationsData,DateTime.Now));
+            var request = new UpdateActiveMedicationsRequest(new ActiveMedicationsDto(0,IdPatient,requestBody.ActiveMedicationsData,DateTime.UtcNow));
             
             try
             {

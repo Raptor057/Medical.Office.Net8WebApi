@@ -23,7 +23,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.PatientAllergie
             await _patient.UpdatePatientAllergiesAsync(
                 data.IDPatient,
                 data.Allergies ?? string.Empty,
-                DateTime.Now
+                DateTime.UtcNow
             ).ConfigureAwait(false);
 
             var patient = await _patients.GetPatientDataByIDPatientAsync(data.IDPatient).ConfigureAwait(false);

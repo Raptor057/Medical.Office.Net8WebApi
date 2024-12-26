@@ -28,7 +28,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.Patient
                 0, // Assuming Id is generated elsewhere
                 IdPatient,
                 requestBody.Allergies,
-                DateTime.Now // Assigning DateTimeSnap in the backend
+                DateTime.UtcNow // Assigning DateTimeSnap in the backend
             ));
 
             try

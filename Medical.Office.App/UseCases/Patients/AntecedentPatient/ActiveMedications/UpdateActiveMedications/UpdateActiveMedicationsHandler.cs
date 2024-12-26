@@ -19,7 +19,7 @@ internal sealed class UpdateActiveMedicationsHandler : IInteractor<UpdateActiveM
     {
         var data = request.activeMedications;
 
-        await _patient.UpdateActiveMedicationsAsync(data.IDPatient,data.ActiveMedicationsData,DateTime.Now).ConfigureAwait(false);
+        await _patient.UpdateActiveMedicationsAsync(data.IDPatient,data.ActiveMedicationsData,DateTime.UtcNow).ConfigureAwait(false);
         var patient = await _patients.GetPatientDataByIDPatientAsync(data.IDPatient).ConfigureAwait(false);
         var  Patientdata = new ActiveMedicationsDto
         (

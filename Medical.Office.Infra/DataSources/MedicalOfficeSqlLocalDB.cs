@@ -68,7 +68,12 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="Usr"></param>
         /// <returns></returns>
         public async Task<LoginHistory> GetLoginHistoryByUsr(string Usr)
-            => await _con.QueryFirstAsync<LoginHistory>("SELECT TOP (1) *  FROM [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] WHERE Usr = @Usr ORDER BY DateTimeSnap DESC", new { Usr }).ConfigureAwait(false);
+            => await _con.QueryFirstAsync<LoginHistory>(@"SELECT TOP (1) [Id]
+              ,[Usr]
+              ,[UsrName]
+              ,[UsrToken]
+              ,dbo.ufntolocaltime([DateTimeSnap]) AS [DateTimeSnap]
+          FROM [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] WHERE Usr = @Usr ORDER BY DateTimeSnap DESC", new { Usr }).ConfigureAwait(false);
 
         /// <summary>
         /// 
@@ -82,7 +87,7 @@ namespace Medical.Office.Infra.DataSources
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<LaboralDays>> GetWorkSchedule()
-            => await _con.QueryAsync<LaboralDays>("SELECT *  FROM [Medical.Office.SqlLocalDB].[dbo].[LaboralDays] ORDER BY Id ASC;").ConfigureAwait(false);
+            => await _con.QueryAsync<LaboralDays>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[LaboralDays] ORDER BY Id ASC;").ConfigureAwait(false);
         /// <summary>
         /// 
         /// </summary>
@@ -200,7 +205,17 @@ namespace Medical.Office.Infra.DataSources
                     /// <param name="Id"></param>
                     /// <returns></returns>
                     public async Task<Users> GetDataUserById(long Id) =>
-                        await _con.QuerySingleAsync<Users>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Id = @Id;", new { Id }).ConfigureAwait(false);
+                        await _con.QuerySingleAsync<Users>(@"SELECT [Id]
+                      ,[Usr]
+                      ,[Psswd]
+                      ,[Name]
+                      ,[Lastname]
+                      ,[Role]
+                      ,[Position]
+                      ,[Status]
+                      ,[Specialtie]
+                      ,dbo.ufntolocaltime([TimeSnap]) AS [TimeSnap]
+                  FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Id = @Id;", new { Id }).ConfigureAwait(false);
 
                     /// <summary>
                     ///
@@ -208,7 +223,17 @@ namespace Medical.Office.Infra.DataSources
                     /// <param name="Usr"></param>
                     /// <returns></returns>
                     public async Task<Users> GetDataUserByUsr(string Usr) =>
-                    await _con.QuerySingleAsync<Users>("SELECT top 1 * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr;", new { Usr }).ConfigureAwait(false);
+                    await _con.QuerySingleAsync<Users>(@"SELECT TOP (1) [Id]
+      ,[Usr]
+      ,[Psswd]
+      ,[Name]
+      ,[Lastname]
+      ,[Role]
+      ,[Position]
+      ,[Status]
+      ,[Specialtie]
+      ,dbo.ufntolocaltime([TimeSnap]) AS [TimeSnap]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr;", new { Usr }).ConfigureAwait(false);
 
                     /// <summary>
                     ///
@@ -216,14 +241,33 @@ namespace Medical.Office.Infra.DataSources
                     /// <param name="Usr"></param>
                     /// <returns></returns>
                     public async Task<IEnumerable<Users>> GetDataUserByUsrList(string Usr) =>
-                    await _con.QueryAsync<Users>("SELECT top 1 * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr Like @Usr;", new { Usr = $"%{Usr}%" }).ConfigureAwait(false);
+                    await _con.QueryAsync<Users>(@"SELECT [Id]
+                      ,[Usr]
+                      ,[Name]
+                      ,[Lastname]
+                      ,[Role]
+                      ,[Position]
+                      ,[Status]
+                      ,[Specialtie]
+                      ,dbo.ufntolocaltime([TimeSnap]) AS [TimeSnap]
+                  FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr Like @Usr;", new { Usr = $"%{Usr}%" }).ConfigureAwait(false);
 
                     /// <summary>
                     ///
                     /// </summary>
                     /// <returns></returns>
                     public async Task<IEnumerable<Users>> GetUsers() =>
-                                await _con.QueryAsync<Users>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Users];", new { }).ConfigureAwait(false);
+                                await _con.QueryAsync<Users>(@"SELECT [Id]
+                                  ,[Usr]
+                                  ,[Psswd]
+                                  ,[Name]
+                                  ,[Lastname]
+                                  ,[Role]
+                                  ,[Position]
+                                  ,[Status]
+                                  ,[Specialtie]
+                                  ,dbo.ufntolocaltime([TimeSnap]) AS [TimeSnap]
+                              FROM [Medical.Office.SqlLocalDB].[dbo].[Users]", new { }).ConfigureAwait(false);
 
                     /// <summary>
                     ///
@@ -232,7 +276,18 @@ namespace Medical.Office.Infra.DataSources
                     /// <param name="Psswd"></param>
                     /// <returns></returns>
                     public async Task<Users> LoginUser(string Usr, string Psswd) =>
-                        await _con.QuerySingleAsync<Users>("SELECT TOP (1) * FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr AND Psswd = @Psswd;", new { Usr, Psswd }).ConfigureAwait(false);
+                        await _con.QuerySingleAsync<Users>(@"SELECT TOP (1) 
+                            [Id]
+                          ,[Usr]
+                          ,[Psswd]
+                          ,[Name]
+                          ,[Lastname]
+                          ,[Role]
+                          ,[Position]
+                          ,[Status]
+                          ,[Specialtie]
+                          ,dbo.ufntolocaltime([TimeSnap]) AS [TimeSnap] 
+                            FROM [Medical.Office.SqlLocalDB].[dbo].[Users] WHERE Usr = @Usr AND Psswd = @Psswd;", new { Usr, Psswd }).ConfigureAwait(false);
 
                     /// <summary>
                     ///
@@ -256,7 +311,12 @@ namespace Medical.Office.Infra.DataSources
                     /// </summary>
                     /// <returns></returns>
                     public async Task<IEnumerable<LoginHistory>> GetLoginHistory()
-                        => await _con.QueryAsync<LoginHistory>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] ORDER BY DateTimeSnap DESC;").ConfigureAwait(false);
+                        => await _con.QueryAsync<LoginHistory>(@"SELECT  [Id]
+                          ,[Usr]
+                          ,[UsrName]
+                          ,[UsrToken]
+                          ,dbo.ufntolocaltime([DateTimeSnap]) AS [DateTimeSnap]
+                      FROM [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] ORDER BY DateTimeSnap DESC;").ConfigureAwait(false);
 
                     /// <summary>
                     ///
@@ -266,10 +326,17 @@ namespace Medical.Office.Infra.DataSources
                     /// <param name="EndDate"></param>
                     /// <returns></returns>
                     public async Task<IEnumerable<LoginHistory>> GetLoginHistoryByParams(string Param, DateTime StartDate, DateTime EndDate)
-                        => await _con.QueryAsync<LoginHistory>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] " +
-                            "WHERE (Usr LIKE @Param OR UsrName LIKE @Param) " +
-                            "AND (@StartDate IS NULL OR @EndDate IS NULL OR DateTimeSnap BETWEEN @StartDate AND @EndDate) " +
-                            "ORDER BY DateTimeSnap ASC;", new { Param = $"%{Param}%", StartDate, EndDate }).ConfigureAwait(false);
+                        => await _con.QueryAsync<LoginHistory>(@"
+                        SELECT [Id]
+                        ,[Usr]
+                        ,[UsrName]
+                        ,[UsrToken]
+                        ,dbo.ufntolocaltime([DateTimeSnap]) AS [DateTimeSnap]
+                        FROM [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] 
+                        WHERE (Usr LIKE @Param OR UsrName LIKE @Param) 
+                        AND (@StartDate IS NULL OR @EndDate IS NULL OR DateTimeSnap 
+                        BETWEEN @StartDate AND @EndDate) 
+                        ORDER BY DateTimeSnap ASC;", new { Param = $"%{Param}%", StartDate, EndDate }).ConfigureAwait(false);
 
                     /// <summary>
                     ///
@@ -288,7 +355,16 @@ namespace Medical.Office.Infra.DataSources
                     /// </summary>
                     /// <returns></returns>
                     public async Task<IEnumerable<UsersMovements>> GetUsersMovements()
-                        => await _con.QueryAsync<UsersMovements>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[UsersMovements];").ConfigureAwait(false);
+                        => await _con.QueryAsync<UsersMovements>(@"
+                        SELECT
+                        [Id]
+                        ,[Usr]
+                        ,[UsrName]
+                        ,[UsrRole]
+                        ,[UsrMovement]
+                        ,[UsrToken]
+                        ,dbo.ufntolocaltime([DateTimeSnap]) AS [DateTimeSnap]
+                        FROM [Medical.Office.SqlLocalDB].[dbo].[UsersMovements];").ConfigureAwait(false);
 
                     /// <summary>
                     ///
@@ -298,10 +374,19 @@ namespace Medical.Office.Infra.DataSources
                     /// <param name="EndDate"></param>
                     /// <returns></returns>
                     public async Task<IEnumerable<UsersMovements>> GetUsersMovementsByParams(string Param, DateTime StartDate, DateTime EndDate)
-                        => await _con.QueryAsync<UsersMovements>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[LoginHistory] " +
-                            "WHERE (Usr LIKE @Param OR UsrName LIKE @Param) " +
-                            "AND (@StartDate IS NULL OR @EndDate IS NULL OR DateTimeSnap BETWEEN @StartDate AND @EndDate) " +
-                            "ORDER BY DateTimeSnap ASC", new { Param = $"%{Param}%", StartDate, EndDate }).ConfigureAwait(false);
+                        => await _con.QueryAsync<UsersMovements>(@"SELECT 
+                            [Id]
+                            ,[Usr]
+                            ,[UsrName]
+                            ,[UsrRole]
+                            ,[UsrMovement]
+                            ,[UsrToken]
+                            ,dbo.ufntolocaltime([DateTimeSnap]) AS [DateTimeSnap]
+                            FROM [Medical.Office.SqlLocalDB].[dbo].[UsersMovements]
+                            WHERE (Usr LIKE @Param OR UsrName 
+                            LIKE @Param) AND (@StartDate IS NULL OR @EndDate IS NULL OR DateTimeSnap 
+                            BETWEEN @StartDate AND @EndDate) 
+                            ORDER BY DateTimeSnap ASC", new { Param = $"%{Param}%", StartDate, EndDate }).ConfigureAwait(false);
 
                     /// <summary>
                     ///
@@ -349,10 +434,26 @@ namespace Medical.Office.Infra.DataSources
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<Doctors>> GetDoctors()
-            => await _con.QueryAsync<Doctors>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Doctors]").ConfigureAwait(false);
+            => await _con.QueryAsync<Doctors>(@"SELECT [ID]
+                                                  ,[FirstName]
+                                                  ,[LastName]
+                                                  ,[Specialty]
+                                                  ,[PhoneNumber]
+                                                  ,[Email]
+                                                  ,dbo.ufntolocaltime([CreatedAt]) AS [CreatedAt]
+                                                  ,dbo.ufntolocaltime([UpdatedAt]) AS [UpdatedAt]
+                                              FROM [Medical.Office.SqlLocalDB].[dbo].[Doctors]").ConfigureAwait(false);
 
         public async Task<Doctors> GetDoctor(long IDDoctor)
-            => await _con.QuerySingleAsync<Doctors>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[Doctors] WHERE ID = @IDDoctor", new { IDDoctor }).ConfigureAwait(false);
+            => await _con.QuerySingleAsync<Doctors>(@"SELECT [ID]
+                                                      ,[FirstName]
+                                                      ,[LastName]
+                                                      ,[Specialty]
+                                                      ,[PhoneNumber]
+                                                      ,[Email]
+                                                      ,dbo.ufntolocaltime([CreatedAt]) AS [CreatedAt]
+                                                        ,dbo.ufntolocaltime([UpdatedAt]) AS [UpdatedAt]
+                                                  FROM [Medical.Office.SqlLocalDB].[dbo].[Doctors] WHERE ID = @IDDoctor", new { IDDoctor }).ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -365,6 +466,7 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="Notes"></param>
         /// <param name="TypeOfAppointment"></param>
         /// <returns></returns>
+        /*
         public async Task InsertMedicalAppointmentCalendar(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
         {
             var date = AppointmentDateTime?.Date; // Extrae solo la fecha
@@ -377,9 +479,43 @@ namespace Medical.Office.Infra.DataSources
                 new { IDPatient, IDDoctor, AppointmentDate = date, AppointmentTime = time, ReasonForVisit, AppointmentStatus, Notes, TypeOfAppointment }
             ).ConfigureAwait(false);
         }
+*/
+        public async Task InsertMedicalAppointmentCalendar(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
+        {
+            if (AppointmentDateTime.HasValue)
+            {
+                // Convierte la fecha y hora a UTC
+                var utcDateTime = AppointmentDateTime.Value.ToUniversalTime();
+
+                // Extrae solo la fecha y la hora por separado
+                var date = utcDateTime.Date;
+                var time = utcDateTime.TimeOfDay;
+
+                await _con.ExecuteAsync(
+                    "INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar]" +
+                    "([IDPatient],[IDDoctor],[AppointmentDate],[AppointmentTime],[ReasonForVisit],[AppointmentStatus],[Notes],[TypeOfAppointment])" +
+                    "VALUES(@IDPatient, @IDDoctor, @AppointmentDate, @AppointmentTime, @ReasonForVisit, @AppointmentStatus, @Notes, @TypeOfAppointment)",
+                    new 
+                    { 
+                        IDPatient, 
+                        IDDoctor, 
+                        AppointmentDate = date, 
+                        AppointmentTime = time, 
+                        ReasonForVisit, 
+                        AppointmentStatus, 
+                        Notes, 
+                        TypeOfAppointment 
+                    }
+                ).ConfigureAwait(false);
+            }
+            else
+            {
+                throw new ArgumentNullException(nameof(AppointmentDateTime), "AppointmentDateTime cannot be null.");
+            }
+        }
 
         public async Task UpdateMedicalAppointmentCalendar(MedicalAppointmentCalendar medicalAppointment) 
-            => await _con.ExecuteAsync("UPDATE MedicalAppointmentCalendar SET IDDoctor = '@IDDoctor' , AppointmentDate = @AppointmentDate, AppointmentTime = @AppointmentTime, ReasonForVisit = @ReasonForVisit, AppointmentStatus = @AppointmentStatus, Notes = @Notes, UpdatedAt = GETDATE(), TypeOfAppointment = @TypeOfAppointment WHERE IDPatient = @IDPatient", new {medicalAppointment.IDDoctor , medicalAppointment.AppointmentDate, medicalAppointment .AppointmentTime, medicalAppointment .ReasonForVisit, medicalAppointment .AppointmentStatus, medicalAppointment .Notes, medicalAppointment .TypeOfAppointment, medicalAppointment.IDPatient}).ConfigureAwait(false);
+            => await _con.ExecuteAsync("UPDATE MedicalAppointmentCalendar SET IDDoctor = @IDDoctor , AppointmentDate = @AppointmentDate, AppointmentTime = @AppointmentTime, ReasonForVisit = @ReasonForVisit, AppointmentStatus = @AppointmentStatus, Notes = @Notes, UpdatedAt = GETDATE(), TypeOfAppointment = @TypeOfAppointment WHERE IDPatient = @IDPatient", new {medicalAppointment.IDDoctor , medicalAppointment.AppointmentDate, medicalAppointment .AppointmentTime, medicalAppointment .ReasonForVisit, medicalAppointment .AppointmentStatus, medicalAppointment .Notes, medicalAppointment .TypeOfAppointment, medicalAppointment.IDPatient}).ConfigureAwait(false);
 
         //public async Task InsertMedicalAppointmentCalendar(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
         //    => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar]" +
@@ -458,14 +594,63 @@ namespace Medical.Office.Infra.DataSources
         /// </summary>
         /// <returns></returns>
         public async Task<PatientData> GetLastPatientsData()
-             => await _con.QuerySingleAsync<PatientData>("SELECT TOP 1 * FROM [Medical.Office.SqlLocalDB].[dbo].[PatientData] ORDER BY ID DESC").ConfigureAwait(false);
+             => await _con.QuerySingleAsync<PatientData>(@"SELECT TOP (1) [ID]
+      ,[Name]
+      ,[FathersSurname]
+      ,[MothersSurname]
+      ,[DateOfBirth]
+      ,[Gender]
+      ,[Address]
+      ,[Country]
+      ,[City]
+      ,[State]
+      ,[ZipCode]
+      ,[OutsideNumber]
+      ,[InsideNumber]
+      ,[PhoneNumber]
+      ,[Email]
+      ,[EmergencyContactName]
+      ,[EmergencyContactPhone]
+      ,[InsuranceProvider]
+      ,[PolicyNumber]
+      ,[BloodType]
+      ,dbo.ufntolocaltime([DateCreated]) AS [DateCreated]
+      ,dbo.ufntolocaltime([LastUpdated]) AS [LastUpdated]
+      ,[Photo]
+      ,[InternalNotes]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[PatientData] 
+  ORDER BY ID DESC").ConfigureAwait(false);
 
         /// <summary>
         ///
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<PatientData>> GetPatientsDataList()
-            => await _con.QueryAsync<PatientData>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[PatientData]").ConfigureAwait(false);
+            => await _con.QueryAsync<PatientData>(@"SELECT [ID]
+      ,[Name]
+      ,[FathersSurname]
+      ,[MothersSurname]
+      ,[DateOfBirth]
+      ,[Gender]
+      ,[Address]
+      ,[Country]
+      ,[City]
+      ,[State]
+      ,[ZipCode]
+      ,[OutsideNumber]
+      ,[InsideNumber]
+      ,[PhoneNumber]
+      ,[Email]
+      ,[EmergencyContactName]
+      ,[EmergencyContactPhone]
+      ,[InsuranceProvider]
+      ,[PolicyNumber]
+      ,[BloodType]
+      ,dbo.ufntolocaltime([DateCreated]) AS [DateCreated]
+      ,dbo.ufntolocaltime([LastUpdated]) AS [LastUpdated]
+      ,[Photo]
+      ,[InternalNotes]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[PatientData]").ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -473,7 +658,31 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="ID"></param>
         /// <returns></returns>
         public async Task<PatientData> GetPatientDataByIDPatient(long ID)
-            => await _con.QuerySingleAsync<PatientData>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[PatientData] WHERE ID = @ID", new {ID}).ConfigureAwait(false);
+            => await _con.QuerySingleAsync<PatientData>(@"SELECT [ID]
+      ,[Name]
+      ,[FathersSurname]
+      ,[MothersSurname]
+      ,[DateOfBirth]
+      ,[Gender]
+      ,[Address]
+      ,[Country]
+      ,[City]
+      ,[State]
+      ,[ZipCode]
+      ,[OutsideNumber]
+      ,[InsideNumber]
+      ,[PhoneNumber]
+      ,[Email]
+      ,[EmergencyContactName]
+      ,[EmergencyContactPhone]
+      ,[InsuranceProvider]
+      ,[PolicyNumber]
+      ,[BloodType]
+      ,dbo.ufntolocaltime([DateCreated]) AS [DateCreated]
+      ,dbo.ufntolocaltime([LastUpdated]) AS [LastUpdated]
+      ,[Photo]
+      ,[InternalNotes]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[PatientData] WHERE ID = @ID", new {ID}).ConfigureAwait(false);
 
         #endregion
 
@@ -505,7 +714,14 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="IDPatient"></param>
         /// <returns></returns>
         public async Task<IEnumerable<PatientsFiles>> GetPatientsFilesListByIDPatient(long IDPatient)
-        => await _con.QueryAsync<PatientsFiles>("SELECT [Id], [IDPatient], [FileName], [FileType],[FileExtension],[Description],[DateTimeUploaded] from PatientsFiles WHERE IDPatient = @IDPatient", new {IDPatient}).ConfigureAwait(false);
+        => await _con.QueryAsync<PatientsFiles>(@"SELECT [Id]
+      ,[IDPatient]
+      ,[FileName]
+      ,[FileType]
+      ,[FileExtension]
+      ,[Description]
+      ,dbo.ufntolocaltime([DateTimeUploaded]) AS [DateTimeUploaded]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[PatientsFiles] WHERE IDPatient = @IDPatient", new {IDPatient}).ConfigureAwait(false);
         
         /// <summary>
         /// 
@@ -514,7 +730,15 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="Id"></param>
         /// <returns></returns>
         public async Task<PatientsFiles> GetPatientFileByIDPatient(long IDPatient, long Id)
-            => await _con.QueryFirstAsync<PatientsFiles>("SELECT * from PatientsFiles WHERE IDPatient = @IDPatient AND Id = @Id", new {IDPatient,Id}).ConfigureAwait(false);
+            => await _con.QueryFirstAsync<PatientsFiles>(@"SELECT [Id]
+      ,[IDPatient]
+      ,[FileName]
+      ,[FileType]
+      ,[FileExtension]
+      ,[Description]
+      ,[FileData]
+      ,dbo.ufntolocaltime([DateTimeUploaded]) AS [DateTimeUploaded]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[PatientsFiles] WHERE IDPatient = @IDPatient AND Id = @Id", new {IDPatient,Id}).ConfigureAwait(false);
 
         
         /// <summary>
@@ -535,7 +759,11 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="IDPatient"></param>
         /// <returns></returns>
         public async Task<ActiveMedications> GetActiveMedicationsByIDPatient(long IDPatient)
-            => await _con.QuerySingleAsync<ActiveMedications>("SELECT top 1 * FROM ActiveMedications WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
+            => await _con.QuerySingleAsync<ActiveMedications>(@"SELECT TOP 1 [Id]
+      ,[IDPatient]
+      ,[AactiveMedicationsData]
+      ,dbo.ufntolocaltime([DateTimeSnap]) as [DateTimeSnap]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[ActiveMedications] WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -561,7 +789,17 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="IDPatient"></param>
         /// <returns></returns>
         public async Task<FamilyHistory> GetFamilyHistoryByIDPatient(long IDPatient)
-            => await _con.QuerySingleAsync<FamilyHistory>("SELECT * FROM FamilyHistory WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
+            => await _con.QuerySingleAsync<FamilyHistory>(@"SELECT TOP (1) [Id]
+      ,[IDPatient]
+      ,[Diabetes]
+      ,[Cardiopathies]
+      ,[Hypertension]
+      ,[ThyroidDiseases]
+      ,[ChronicKidneyDisease]
+      ,[Others]
+      ,[OthersData]
+      ,dbo.ufntolocaltime([DateTimeSnap]) AS [DateTimeSnap]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[FamilyHistory] WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -581,7 +819,11 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="IDPatient"></param>
         /// <returns></returns>
         public async Task<MedicalHistoryNotes> GetMedicalHistoryNotesByIDPatient(long IDPatient)
-            => await _con.QuerySingleAsync<MedicalHistoryNotes>("SELECT * FROM MedicalHistoryNotes WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
+            => await _con.QuerySingleAsync<MedicalHistoryNotes>(@"SELECT TOP (1) [Id]
+      ,[IDPatient]
+      ,[MedicalHistoryNotesData]
+      ,dbo.ufntolocaltime([DateTimeSnap]) AS [DateTimeSnap]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalHistoryNotes] WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -609,7 +851,19 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="IDPatient"></param>
         /// <returns></returns>
         public async Task<NonPathologicalHistory> GetNonPathologicalHistoryByIDPatient(long IDPatient)
-            => await _con.QuerySingleAsync<NonPathologicalHistory>("SELECT * FROM NonPathologicalHistory WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
+            => await _con.QuerySingleAsync<NonPathologicalHistory>(@"SELECT TOP (1) [Id]
+      ,[IDPatient]
+      ,[PhysicalActivity]
+      ,[Smoking]
+      ,[Alcoholism]
+      ,[SubstanceAbuse]
+      ,[SubstanceAbuseData]
+      ,[RecentVaccination]
+      ,[RecentVaccinationData]
+      ,[Others]
+      ,[OthersData]
+      ,dbo.[UfnToLocalTime]([DateTimeSnap]) AS [DateTimeSnap]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[NonPathologicalHistory] WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -644,7 +898,26 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="IDPatient"></param>
         /// <returns></returns>
         public async Task<PathologicalBackground> GetPathologicalBackgroundByIDPatient(long IDPatient)
-            => await _con.QuerySingleAsync<PathologicalBackground>("SELECT * FROM PathologicalBackground WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
+            => await _con.QuerySingleAsync<PathologicalBackground>(@"SELECT TOP (1) [Id]
+      ,[IDPatient]
+      ,[PreviousHospitalization]
+      ,[PreviousSurgeries]
+      ,[Diabetes]
+      ,[ThyroidDiseases]
+      ,[Hypertension]
+      ,[Cardiopathies]
+      ,[Trauma]
+      ,[Cancer]
+      ,[Tuberculosis]
+      ,[Transfusions]
+      ,[RespiratoryDiseases]
+      ,[GastrointestinalDiseases]
+      ,[STDs]
+      ,[STDsData]
+      ,[ChronicKidneyDisease]
+      ,[Others]
+      ,dbo.[UfnToLocalTime]([DateTimeSnap]) AS [DateTimeSnap]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[PathologicalBackground] WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -664,7 +937,11 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="IDPatient"></param>
         /// <returns></returns>
         public async Task<PatientAllergies> GetPatientAllergiesByIDPatient(long IDPatient)
-            => await _con.QuerySingleAsync<PatientAllergies>("SELECT * FROM PatientAllergies WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
+            => await _con.QuerySingleAsync<PatientAllergies>(@"SELECT TOP (1) [Id]
+      ,[IDPatient]
+      ,[Allergies]
+      ,dbo.[UfnToLocalTime]([DateTimeSnap]) AS [DateTimeSnap]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[PatientAllergies] WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -693,7 +970,21 @@ namespace Medical.Office.Infra.DataSources
         /// <param name="IDPatient"></param>
         /// <returns></returns>
         public async Task<PsychiatricHistory> GetPsychiatricHistoryByIDPatient(long IDPatient)
-            => await _con.QuerySingleAsync<PsychiatricHistory>("SELECT top 1 * FROM PsychiatricHistory WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
+            => await _con.QuerySingleAsync<PsychiatricHistory>(@"SELECT TOP (1) [id]
+      ,[IDPatient]
+      ,[FamilyHistory]
+      ,[FamilyHistoryData]
+      ,[AffectedAreas]
+      ,[PastAndCurrentTreatments]
+      ,[FamilySocialSupport]
+      ,[FamilySocialSupportData]
+      ,[WorkLifeAspects]
+      ,[SocialLifeAspects]
+      ,[AuthorityRelationship]
+      ,[ImpulseControl]
+      ,[FrustrationManagement]
+      ,dbo.[UfnToLocalTime]([DateTimeSnap]) AS [DateTimeSnap]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[PsychiatricHistory] WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
         #region Update Methods
 
@@ -1652,7 +1943,7 @@ public async Task<IEnumerable<Productos>> ObtenerProductosPorIdsAsync(IEnumerabl
 public async Task<int> RegistrarVenta(Ventas venta, IEnumerable<DetalleVentas> detalles)
 {
     var ventaId = await _con.QuerySingleAsync<int>(
-        "INSERT INTO Ventas (FechaHora, Total) OUTPUT INSERTED.VentaID VALUES (@FechaHora, @Total)",
+        "INSERT INTO Ventas (FechaHora, Total) OUTPUT INSERTED.VentaID VALUES (GETDATE(), @Total)",
         new { venta.FechaHora, venta.Total }).ConfigureAwait(false);
 
     foreach (var detalle in detalles)
@@ -1678,13 +1969,19 @@ public async Task EliminarVenta(Ventas venta)
 public async Task<Ventas> ObtenerVentaPorId(int ventaId)
 {
     return await _con.QuerySingleAsync<Ventas>(
-        "SELECT * FROM Ventas WHERE VentaID = @VentaID",
+        @"SELECT [VentaID]
+      ,dbo.ufntolocaltime([FechaHora]) AS [FechaHora]
+      ,[Total]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[Ventas] WHERE VentaID = @VentaID",
         new { VentaID = ventaId }).ConfigureAwait(false);
 }
 
 public async Task<IEnumerable<Ventas>> ObtenerVentas()
 {
-    return await _con.QueryAsync<Ventas>("SELECT * FROM Ventas").ConfigureAwait(false);
+    return await _con.QueryAsync<Ventas>(@"SELECT [VentaID]
+      ,dbo.ufntolocaltime([FechaHora]) AS [FechaHora]
+      ,[Total]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[Ventas]").ConfigureAwait(false);
 }
 
 public async Task<IEnumerable<Ventas>> ObtenerVentasPorRango(DateTime fechaInicio, DateTime fechaFin)
@@ -1692,7 +1989,10 @@ public async Task<IEnumerable<Ventas>> ObtenerVentasPorRango(DateTime fechaInici
     _logger.LogDebug($"Fecha Inicio: {fechaInicio}, Fecha Fin: {fechaFin}"); // Para depuración
 
     return await _con.QueryAsync<Ventas>(
-        "SELECT * FROM Ventas WHERE FechaHora BETWEEN @FechaInicio AND @FechaFin",
+        @"SELECT [VentaID]
+      ,dbo.ufntolocaltime([FechaHora]) AS [FechaHora]
+      ,[Total]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[Ventas] WHERE FechaHora BETWEEN CONVERT(datetime, @FechaInicio, 120) AND CONVERT(datetime, @FechaFin, 120)",
         new { FechaInicio = fechaInicio, FechaFin = fechaFin }
     ).ConfigureAwait(false);
 }
@@ -1701,7 +2001,12 @@ public async Task<IEnumerable<Ventas>> ObtenerVentasPorRango(DateTime fechaInici
 public async Task<IEnumerable<DetalleVentas>> ObtenerDetalleDeVenta(int ventaId)
 {
     return await _con.QueryAsync<DetalleVentas>(
-        "SELECT * FROM DetalleVentas WHERE VentaID = @VentaID",
+        @"SELECT [VentaID]
+      ,dbo.ufntolocaltime([FechaHora]) AS [FechaHora]
+      ,[Producto]
+      ,[Cantidad]
+      ,[Subtotal]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[DetalleDeVentas] WHERE VentaID = @VentaID",
         new { VentaID = ventaId }).ConfigureAwait(false);
 }
 
@@ -1725,19 +2030,31 @@ public async Task EliminarCorte(Cortes corte)
 public async Task<Cortes> ObtenerCortePorId(int corteId)
 {
     return await _con.QuerySingleAsync<Cortes>(
-        "SELECT * FROM Cortes WHERE CorteID = @CorteID",
+        @"SELECT [CorteID]
+      ,dbo.ufntolocaltime([FechaHora]) AS [FechaHora] AS [FechaHora]
+      ,[TotalVendido]
+      ,[TotalVentas]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[Cortes] WHERE CorteID = @CorteID",
         new { CorteID = corteId }).ConfigureAwait(false);
 }
 
 public async Task<IEnumerable<Cortes>> ObtenerCortes()
 {
-    return await _con.QueryAsync<Cortes>("SELECT * FROM Cortes").ConfigureAwait(false);
+    return await _con.QueryAsync<Cortes>(@"SELECT [CorteID]
+      ,dbo.ufntolocaltime([FechaHora]) AS [FechaHora]
+      ,[TotalVendido]
+      ,[TotalVentas]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[Cortes]").ConfigureAwait(false);
 }
 
 public async Task<IEnumerable<Cortes>> ObtenerCortesPorRango(DateTime fechaInicio, DateTime fechaFin)
 {
     return await _con.QueryAsync<Cortes>(
-        "SELECT * FROM Cortes WHERE FechaHora BETWEEN @FechaInicio AND @FechaFin",
+        @"SELECT [CorteID]
+      ,dbo.ufntolocaltime([FechaHora]) AS [FechaHora]
+      ,[TotalVendido]
+      ,[TotalVentas]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[Cortes] WHERE FechaHora BETWEEN @FechaInicio AND @FechaFin",
         new { FechaInicio = fechaInicio, FechaFin = fechaFin }).ConfigureAwait(false);
 }
 
@@ -1755,18 +2072,20 @@ public async Task<IEnumerable<VentasPorDia>> ObtenerVentasPorDia(DateTime fechaI
 public async Task<IEnumerable<DetalleDeVentas>> ObtenerDetalleDeVentas(int ventaId)
 {
     return await _con.QueryAsync<DetalleDeVentas>(
-        "SELECT dv.VentaID, v.FechaHora, p.Nombre AS Producto, dv.Cantidad, dv.Subtotal " +
-        "FROM DetalleVentas dv " +
-        "JOIN Ventas v ON dv.VentaID = v.VentaID " +
-        "JOIN Productos p ON dv.ProductoID = p.ProductoID " +
-        "WHERE dv.VentaID = @VentaID",
+        @"SELECT dv.VentaID, dbo.ufntolocaltime(v.FechaHora) AS [FechaHora], p.Nombre AS Producto, dv.Cantidad, dv.Subtotal 
+        FROM DetalleVentas dv JOIN Ventas v ON dv.VentaID = v.VentaID JOIN Productos p ON dv.ProductoID = p.ProductoID  
+        WHERE dv.VentaID = @VentaID",
         new { VentaID = ventaId }).ConfigureAwait(false);
 }
 
 public async Task<IEnumerable<Cortes>> ObtenerResumenDeCortesPorDia(DateTime fechaInicio, DateTime fechaFin)
 {
     return await _con.QueryAsync<Cortes>(
-        "SELECT * FROM Cortes WHERE FechaHora BETWEEN @FechaInicio AND @FechaFin",
+        @"SELECT [CorteID]
+      ,dbo.ufntolocaltime([FechaHora]) AS [FechaHora]
+      ,[TotalVendido]
+      ,[TotalVentas]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[Cortes] WHERE FechaHora BETWEEN @FechaInicio AND @FechaFin",
         new { FechaInicio = fechaInicio, FechaFin = fechaFin }).ConfigureAwait(false);
 }
 

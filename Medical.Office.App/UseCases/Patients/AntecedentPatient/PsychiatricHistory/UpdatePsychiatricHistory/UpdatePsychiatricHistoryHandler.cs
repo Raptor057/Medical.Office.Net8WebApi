@@ -33,7 +33,7 @@ namespace Medical.Office.App.UseCases.Patients.AntecedentPatient.PsychiatricHist
                 data.AuthorityRelationship ?? string.Empty,
                 data.ImpulseControl ?? string.Empty,
                 data.FrustrationManagement ?? string.Empty,
-                DateTime.Now
+                DateTime.UtcNow
             ).ConfigureAwait(false);
 
             var patient = await _patients.GetPatientDataByIDPatientAsync(data.IDPatient).ConfigureAwait(false);

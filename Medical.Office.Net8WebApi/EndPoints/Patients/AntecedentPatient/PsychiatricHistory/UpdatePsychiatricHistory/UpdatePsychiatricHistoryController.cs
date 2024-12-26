@@ -38,7 +38,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.Psychia
                 requestBody.AuthorityRelationship,
                 requestBody.ImpulseControl,
                 requestBody.FrustrationManagement,
-                DateTime.Now // Assigning DateTimeSnap in the backend
+                DateTime.UtcNow // Assigning DateTimeSnap in the backend
             ));
 
             try

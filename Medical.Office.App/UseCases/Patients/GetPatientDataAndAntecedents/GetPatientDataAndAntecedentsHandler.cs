@@ -53,8 +53,8 @@ namespace Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents
                 appointment.TypeOfAppointment
                 )).ToList();
 
-            var MedicalAppointmentListActive = MedicalAppointmentList.Where(m => m.AppointmentDateTime >= DateTime.Now).OrderBy(m => m.AppointmentDateTime);
-            var MedicalAppointmentListHistory = MedicalAppointmentList.Where(m => m.AppointmentDateTime < DateTime.Now).OrderByDescending(m => m.AppointmentDateTime);
+            var MedicalAppointmentListActive = MedicalAppointmentList.Where(m => m.AppointmentDateTime >= DateTime.UtcNow).OrderBy(m => m.AppointmentDateTime);
+            var MedicalAppointmentListHistory = MedicalAppointmentList.Where(m => m.AppointmentDateTime < DateTime.UtcNow).OrderByDescending(m => m.AppointmentDateTime);
             
 
             var patientDataAndAntecedents = new PatientDataAndAntecedentsDto(
