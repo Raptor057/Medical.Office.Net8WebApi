@@ -69,6 +69,33 @@ Authorization: Bearer {{$bearerToken}}
 
 ### POST REQUESTS
 
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertfamilyhistory
+Content-Type: application/json
+
+{
+    "IDPatient": 1,
+    "Diabetes": true,
+    "Cardiopathies": false,
+    "Hypertension": true,
+    "ThyroidDiseases": null,
+    "ChronicKidneyDisease": false,
+    "Others": true,
+    "OthersData": "Family history of asthma"
+}
+
+### 
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertMedicalHistoryNotes
+Content-Type: application/json
+
+{
+    "IDPatient": 1,
+    "MedicalHistoryNotesData": "Patient has a history of hypertension and diabetes."
+}
+
+###
+
 POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertactivemedications
 Content-Type: application/json
 
@@ -430,29 +457,3 @@ Content-Type: application/json
     "FrustrationManagement": "Needs improvement"
 }
 
-###
-
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertfamilyhistory
-Content-Type: application/json
-
-{
-    "IDPatient": 1,
-    "Diabetes": true,
-    "Cardiopathies": false,
-    "Hypertension": true,
-    "ThyroidDiseases": null,
-    "ChronicKidneyDisease": false,
-    "Others": true,
-    "OthersData": "Family history of asthma"
-}
-
-### 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertMedicalHistoryNotes
-Content-Type: application/json
-
-{
-    "IDPatient": 1,
-    "MedicalHistoryNotesData": "Patient has a history of hypertension and diabetes."
-}
-
-###
