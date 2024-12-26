@@ -25,7 +25,7 @@ namespace Medical.Office.App.UseCases.Configurations.Doctors.GetDoctors
                 return new FailureGetDoctorsResponse("Datos no recibidos.");
             }
 
-            if(request.IDDoctor > 1)
+            if(request.IDDoctor > 0)
             {
                var Doctor = await _configurations.GetDoctorAsync(request.IDDoctor).ConfigureAwait(false);
 
@@ -34,7 +34,7 @@ namespace Medical.Office.App.UseCases.Configurations.Doctors.GetDoctors
                     return new FailureGetDoctorsResponse($"Doctor con ID #{request.IDDoctor} no encontrado.");
                 }
 
-                var DoctorData = new DoctorsDto(0,Doctor.FirstName, Doctor.LastName, Doctor.Specialty, Doctor.PhoneNumber, Doctor.Email,DateTime.UtcNow,DateTime.UtcNow);
+                var DoctorData = new DoctorsDto(Doctor.ID,Doctor.FirstName, Doctor.LastName, Doctor.Specialty, Doctor.PhoneNumber, Doctor.Email,DateTime.UtcNow,DateTime.UtcNow);
                 
                 return new SuccessGetDoctorsResponse(DoctorData);
             }

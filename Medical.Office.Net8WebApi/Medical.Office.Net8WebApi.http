@@ -1,533 +1,407 @@
 ﻿@Medical.Office.Net8WebApi_HostAddress = http://localhost:5038
 
-### POST Requests
+@IDDoctor=1
+@PatientID=1
+@FileID=0
+@IDPatient=1
+@Position=Cirujano
+@id=0
+@usr=""
+@Specialtie=Quiropractico
 
-### Agregar Producto
-POST http://localhost:5038/api/AgregarProducto
-Content-Type: application/json
+### GETS REQUESTS
 
-{
-  "Nombre": "Cortadora de Césped",
-  "Precio": 150.75,
-  "Stock": 25
-}
-
-###
-
-### Insertar Medicaciones Activas
-POST http://localhost:5038/api/insertactivemedications
-Content-Type: application/json
-
-{
-  "PatientID": 1,
-  "Medications": [
-    {
-      "Name": "Ibuprofeno",
-      "Dosage": "200mg",
-      "Frequency": "Cada 8 horas"
-    }
-  ]
-}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getactivemedications/{{PatientID}}
 
 ###
 
-### Insertar Doctor
-POST http://localhost:5038/api/InsertDoctor
-Content-Type: application/json
-
-{
-  "Nombre": "Dr. Jane Doe",
-  "Especialidad": "Pediatría",
-  "Email": "dr.jane.doe@example.com"
-}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getallconfigurations
 
 ###
 
-### Insertar Historial Familiar
-POST http://localhost:5038/api/insertfamilyhistory
-Content-Type: application/json
 
-{
-  "PatientID": 1,
-  "FamilyHistory": "Antecedentes de diabetes en la familia"
-}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetDoctors/{{IDDoctor}}
 
 ###
 
-### Insertar Calendario de Citas Médicas
-POST http://localhost:5038/api/InsertMedicalAppointmentCalendar
-Content-Type: application/json
-
-{
-  "DoctorID": 1,
-  "FechaHora": "2023-10-10T10:00:00",
-  "PacienteID": 1
-}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getfamilyhistory/{{PatientID}}
 
 ###
 
-### Insertar Notas de Historial Médico
-POST http://localhost:5038/api/InsertMedicalHistoryNotes
-Content-Type: application/json
-
-{
-  "PatientID": 1,
-  "Notes": "Paciente presenta síntomas de resfriado común"
-}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getmedicalhistorynotes/{{PatientID}}
 
 ###
 
-### Insertar Historial No Patológico
-POST http://localhost:5038/api/InsertNonPathologicalHistory
-Content-Type: application/json
-
-{
-  "PatientID": 1,
-  "NonPathologicalHistory": "No fuma, no consume alcohol"
-}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetNonPathologicalHistory/{{PatientID}}
 
 ###
 
-### Insertar Configuración de Oficina
-POST http://localhost:5038/api/insertofficesetup
-Content-Type: application/json
-
-{
-  "OfficeName": "Consultorio Central",
-  "Address": "123 Calle Principal",
-  "Phone": "555-1234"
-}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPathologicalBackground/{{PatientID}}
 
 ###
 
-### Insertar Antecedentes Patológicos
-POST http://localhost:5038/api/InsertPathologicalBackground
-Content-Type: application/json
-
-{
-  "PatientID": 1,
-  "PathologicalBackground": "Antecedentes de hipertensión"
-}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPatientAllergies/{{PatientID}}
 
 ###
 
-### Insertar Alergias del Paciente
-POST http://localhost:5038/api/InsertPatientAllergies
-Content-Type: application/json
 
-{
-  "PatientID": 1,
-  "Allergies": [
-    {
-      "Allergy": "Polen",
-      "Severity": "Alta"
-    }
-  ]
-}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/PatientData/{{IDPatient}}
 
 ###
 
-### Insertar Paciente
-POST http://localhost:5038/api/insertpatient
-Content-Type: application/json
-
-{
-  "Nombre": "Maria Lopez",
-  "Edad": 30,
-  "Genero": "Femenino",
-  "HistorialMedico": "Alergia a la penicilina"
-}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPatientDataAndAntecedents/{{IDPatient}}
 
 ###
 
-### Subir Archivo de Paciente
-POST http://localhost:5038/api/UploadPatientFile
-Content-Type: application/json
-
-{
-  "PatientID": 1,
-  "FileName": "historial_medico.pdf",
-  "FileContent": "base64encodedstring"
-}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPatientFile/{IDPatient}/{{FileID}}
 
 ###
 
-### Insertar Historial Psiquiátrico
-POST http://localhost:5038/api/insertpsychiatricHistory
-Content-Type: application/json
-
-{
-  "PatientID": 1,
-  "PsychiatricHistory": "Diagnóstico de ansiedad"
-}
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPsychiatricHistory/{{PatientID}}
 
 ###
 
-### Iniciar Sesión
-POST http://localhost:5038/api/login
-Content-Type: application/json
 
-{
-  "Username": "jdoe",
-  "Password": "password123"
-}
-
-###
-
-### Registrar Usuario
-POST http://localhost:5038/api/registerusers
-Authorization: Bearer {{$bearerToken}}
-Content-Type: application/json
-
-{
-  "NombreUsuario": "jdoe",
-  "Contrasena": "password123",
-  "Email": "jdoe@example.com"
-}
-
-###
-
-### Registrar Corte
-POST http://localhost:5038/api/RegistrarCorte
-Content-Type: application/json
-
-{
-  "Nombre": "Corte de Cabello",
-  "Precio": 20.00,
-  "Duracion": 30
-}
-
-###
-
-### Registrar Venta
-POST http://localhost:5038/api/registrarventa/RegistrarVenta
-Content-Type: application/json
-
-{
-  "FechaHora": "2024-12-22T10:30:00",
-  "Total": 300.75,
-  "Productos": [
-    { "ProductoID": 1, "Cantidad": 2 },
-    { "ProductoID": 1, "Cantidad": 1 }
-  ]
-}
-
-###
-
-### GET Requests
-
-### Obtener Número Aleatorio
-GET http://localhost:5038/api/getrandomnumber
-
-###
-
-### Obtener Medicaciones Activas
-GET http://localhost:5038/api/getactivemedications/1
-
-###
-
-### Obtener Todas las Configuraciones
-GET http://localhost:5038/api/getallconfigurations
-
-###
-
-### Obtener Doctor por ID
-GET http://localhost:5038/api/GetDoctors/1
-
-###
-
-### Obtener Historial Familiar
-GET http://localhost:5038/api/getfamilyhistory/1
-
-###
-
-### Obtener Notas de Historial Médico
-GET http://localhost:5038/api/getmedicalhistorynotes/1
-
-###
-
-### Obtener Historial No Patológico
-GET http://localhost:5038/api/GetNonPathologicalHistory/1
-
-###
-
-### Obtener Antecedentes Patológicos
-GET http://localhost:5038/api/GetPathologicalBackground/1
-
-###
-
-### Obtener Alergias del Paciente
-GET http://localhost:5038/api/GetPatientAllergies/1
-
-###
-
-### Obtener Datos del Paciente
-GET http://localhost:5038/api/PatientData/1
-
-###
-
-### Obtener Datos y Antecedentes del Paciente
-GET http://localhost:5038/api/GetPatientDataAndAntecedents/1
-
-###
-
-### Obtener Archivo de Paciente
-GET http://localhost:5038/api/GetPatientFile/1/1
-
-###
-
-### Obtener Historial Psiquiátrico
-GET http://localhost:5038/api/GetPsychiatricHistory/1
-
-###
-
-### Obtener Datos de Usuario
-GET http://localhost:5038/api/UsersData?id=0&usr=0
+GET {{Medical.Office.Net8WebApi_HostAddress}}/api/UsersData?id={{id}}&usr={{usr}}
 Authorization: Bearer {{$bearerToken}}
 
 ###
 
-### Obtener Corte por ID
-GET http://localhost:5038/api/ObtenerCortePorId/1
+### POST REQUESTS
 
-###
-
-### Obtener Cortes por Rango de Fechas
-@fechaInicio=2024-12-23
-@fechaFin=2024-12-23
-GET http://localhost:5038/api/ObtenerCortesPorRango?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
-
-###
-
-### Obtener Detalle de Ventas
-GET http://localhost:5038/api/ObtenerDetalleDeVentas/1
-
-###
-
-### Obtener Producto por ID
-GET http://localhost:5038/api/ObtenerProductoPorId/1
-
-###
-
-### Obtener Productos con Bajo Stock
-@LimiteStock=0
-GET http://localhost:5038/api/ObtenerProductosConBajoStock?LimiteStock=10
-
-###
-
-### Obtener Resumen de Cortes por Día
-GET http://localhost:5038/api/ObtenerResumenDeCortesPorDia?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
-
-###
-
-### Obtener Todos los Cortes
-GET http://localhost:5038/api/ObtenerTodosLosCortes
-
-###
-
-### Obtener Todos los Productos
-GET http://localhost:5038/api/ObtenerTodosLosProductos
-
-###
-
-### Obtener Venta por ID
-GET http://localhost:5038/api/ObtenerVentaPorId/1
-
-###
-
-### Obtener Ventas por Día
-GET http://localhost:5038/api/ObtenerVentasPorDia?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
-
-###
-
-### Obtener Ventas por Rango
-GET http://localhost:5038/api/ObtenerVentasPorRango?FechaInicio={{FechaInicio}}&FechaFin={{FechaFin}}
-
-###
-
-### PATCH Requests
-
-### Actualizar Stock
-PATCH http://localhost:5038/api/ActualizarStock/1
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertactivemedications
 Content-Type: application/json
 
 {
-  "Stock": 50
+    "IDPatient": 1,
+    "ActiveMedicationsData": "Medication details here"
 }
 
 ###
 
-### Actualizar Medicaciones Activas
-PATCH http://localhost:5038/api/UpdateActiveMedications/1
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertDoctor
 Content-Type: application/json
 
 {
-  "Medications": [
-    {
-      "Name": "Ibuprofeno",
-      "Dosage": "200mg",
-      "Frequency": "Cada 8 horas"
-    }
-  ]
+ 
+  "FirstName": "John",
+  "LastName": "Doe",
+  "Specialty": "Cirujano",
+  "PhoneNumber": "123-456-7890",
+  "Email": "john.doe@example.com"
 }
 
 ###
 
-### Actualizar Doctor
-PATCH http://localhost:5038/api/updateDoctor/1
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertfamilyhistory
 Content-Type: application/json
 
 {
-  "Nombre": "Dr. John Smith",
-  "Especialidad": "Cardiología",
-  "Email": "dr.john.smith@example.com"
+    "IDPatient": 1,
+    "Diabetes": true,
+    "Cardiopathies": false,
+    "Hypertension": true,
+    "ThyroidDiseases": null,
+    "ChronicKidneyDisease": false,
+    "Others": true,
+    "OthersData": "Family history of asthma"
 }
 
 ###
 
-### Actualizar Historial Familiar
-PATCH http://localhost:5038/api/UpdateFamilyHistory/1
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertMedicalAppointmentCalendar
 Content-Type: application/json
 
 {
-  "FamilyHistory": "Antecedentes de diabetes en la familia"
+  //InsertMedicalAppointmentCalendarRequestBody
 }
 
 ###
 
-### Actualizar Días Laborales
-PATCH http://localhost:5038/api/UpdateLaboralDays/1
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertMedicalHistoryNotes
 Content-Type: application/json
 
 {
-  "DiasLaborales": [
-    "Lunes",
-    "Martes",
-    "Miércoles"
-  ]
+    "IDPatient": 1,
+    "MedicalHistoryNotesData": "Patient has a history of hypertension and diabetes."
 }
 
 ###
 
-### Actualizar Notas de Historial Médico
-PATCH http://localhost:5038/api/UpdateMedicalHistoryNotes/1
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertNonPathologicalHistory
 Content-Type: application/json
 
 {
-  "Notes": "Paciente presenta síntomas de resfriado común"
+    "IDPatient": 1,
+    "PhysicalActivity": true,
+    "Smoking": false,
+    "Alcoholism": false,
+    "SubstanceAbuse": true,
+    "SubstanceAbuseData": "Occasional marijuana use",
+    "RecentVaccination": true,
+    "RecentVaccinationData": "COVID-19 vaccine",
+    "Others": false,
+    "OthersData": null
 }
 
 ###
 
-### Actualizar Historial No Patológico
-PATCH http://localhost:5038/api/UpdateNonPathologicalHistory/1
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertofficesetup
 Content-Type: application/json
 
 {
-  "NonPathologicalHistory": "No fuma, no consume alcohol"
+  //InsertOfficeSetupRequestBody
 }
 
 ###
 
-### Actualizar Configuración de Oficina
-PATCH http://localhost:5038/api/UpdateOfficeSetup
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertPathologicalBackground
 Content-Type: application/json
 
 {
-  "OfficeName": "Consultorio Central",
-  "Address": "123 Calle Principal",
-  "Phone": "555-1234"
+    "IDPatient": 1,
+    "PreviousHospitalization": true,
+    "PreviousSurgeries": false,
+    "Diabetes": true,
+    "ThyroidDiseases": null,
+    "Hypertension": true,
+    "Cardiopathies": false,
+    "Trauma": false,
+    "Cancer": false,
+    "Tuberculosis": false,
+    "Transfusions": false,
+    "RespiratoryDiseases": true,
+    "GastrointestinalDiseases": false,
+    "STDs": true,
+    "STDsData": "History of chlamydia"
 }
 
 ###
 
-### Actualizar Antecedentes Patológicos
-PATCH http://localhost:5038/api/UpdatePathologicalBackground/1
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertPatientAllergies
 Content-Type: application/json
 
 {
-  "PathologicalBackground": "Antecedentes de hipertensión"
+    "IDPatient": 1,
+    "Allergies": "Peanuts, Penicillin"
 }
 
 ###
 
-### Actualizar Alergias del Paciente
-PATCH http://localhost:5038/api/UpdatePatientAllergies/1
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertpatient
 Content-Type: application/json
 
 {
-  "Allergies": [
-    {
-      "Allergy": "Polen",
-      "Severity": "Alta"
-    }
-  ]
+    "Name": "John",
+    "FathersSurname": "Doe",
+    "MothersSurname": "Smith",
+    "DateOfBirth": "1980-01-01T00:00:00Z",
+    "Gender": "Male",
+    "Address": "123 Main St",
+    "Country": "USA",
+    "City": "Anytown",
+    "State": "CA",
+    "ZipCode": "12345",
+    "OutsideNumber": "123",
+    "InsideNumber": "Apt 4",
+    "PhoneNumber": "555-1234",
+    "Email": "john.doe@example.com",
+    "EmergencyContactName": "Jane Doe",
+    "EmergencyContactPhone": "555-5678",
+    "InsuranceProvider": "HealthCare Inc.",
+    "PolicyNumber": "HC123456",
+    "BloodType": "O+",
+    "Photo": "",
+    "InternalNotes": "Patient has a history of hypertension."
 }
 
 ###
 
-### Actualizar Historial Psiquiátrico
-PATCH http://localhost:5038/api/UpdatePsychiatricHistory/1
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/UploadPatientFile
 Content-Type: application/json
 
 {
-  "PsychiatricHistory": "Diagnóstico de ansiedad"
+    "IDPatient": 1,
+    "FileName": "medical_report.pdf",
+    "FileType": "application/pdf",
+    "FileExtension": ".pdf",
+    "Description": "Annual medical report",
+    "FileData": "",
+    "ChunkIndex": 1,
+    "TotalChunks": 1
 }
 
 ###
 
-### PUT Requests
 
-### Actualizar Producto
-PUT http://localhost:5038/api/ActualizarProducto/1
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertposition/{{Position}}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertpsychiatricHistory
 Content-Type: application/json
 
 {
-  "Nombre": "Cortadora de Césped Actualizada",
-  "Precio": 175.50,
-  "Stock": 30
+    "IDPatient": 1,
+    "FamilyHistory": true,
+    "FamilyHistoryData": "History of bipolar disorder in the family",
+    "AffectedAreas": "Mood, behavior",
+    "PastAndCurrentTreatments": "Cognitive behavioral therapy, medication",
+    "FamilySocialSupport": true,
+    "FamilySocialSupportData": "Strong support from immediate family",
+    "WorkLifeAspects": "Occasional stress at work",
+    "SocialLifeAspects": "Active social life",
+    "AuthorityRelationship": "Good relationship with authority figures",
+    "ImpulseControl": "Moderate",
+    "FrustrationManagement": "Needs improvement"
 }
 
 ###
 
-### DELETE Requests
 
-### Eliminar Archivo de Paciente
-@FileID=1
-DELETE http://localhost:5038/api/DeletePatientFile/1/1
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertspecialties/{{Specialtie}}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/login
 Content-Type: application/json
 
 {
-  "PatientID": 1,
-  "FileID": 1
+  //LoginUsersRequestBody
+}
+
+###
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/registerusers
+Authorization: Bearer {{$bearerToken}}
+Content-Type: application/json
+
+{
+  //RegisterUsersRequestBody
 }
 
 ###
 
-### Eliminar Corte
-DELETE http://localhost:5038/api/EliminarCorte/1
+### PATCH REQUESTS
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateActiveMedications/{{IdPatient}}
 Content-Type: application/json
 
 {
-  "CorteID": 1
+    "ActiveMedicationsData": "Updated medication details here"
 }
 
 ###
 
-### Eliminar Producto
-DELETE http://localhost:5038/api/EliminarProducto/1
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/updateDoctor/{IDDoctor}
 Content-Type: application/json
-
 {
-  "ProductoID": 1
+    "FirstName": "Jane",
+    "LastName": "Smith",
+    "Specialty": "Dermatology",
+    "PhoneNumber": "987-654-3210",
+    "Email": "jane.smith@example.com"
 }
 
 ###
 
-### Eliminar Venta
-DELETE http://localhost:5038/api/EliminarVenta/1
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateFamilyHistory/{{IdPatient}}
 Content-Type: application/json
 
 {
-  "VentaID": 1
+    "Diabetes": true,
+    "Cardiopathies": false,
+    "Hypertension": true,
+    "ThyroidDiseases": null,
+    "ChronicKidneyDisease": false,
+    "Others": true,
+    "OthersData": "Family history of asthma"
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateLaboralDays/{Id}
+Content-Type: application/json
+
+{
+  //UpdateLaboralDaysRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateMedicalHistoryNotes/{{IdPatient}}
+Content-Type: application/json
+
+{
+    "Notes": "Updated medical history notes here"
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateNonPathologicalHistory/{{IdPatient}}
+Content-Type: application/json
+
+{
+  //UpdateNonPathologicalHistoryRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateOfficeSetup
+Content-Type: application/json
+
+{
+  //UpdateOfficeSetupRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdatePathologicalBackground/{{IdPatient}}
+Content-Type: application/json
+
+{
+  //UpdatePathologicalBackgroundRequestBody
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdatePatientAllergies/{{IdPatient}}
+Content-Type: application/json
+
+{
+    "Allergies": "Peanuts, Penicillin, N/A"
+}
+
+###
+
+PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdatePsychiatricHistory/{{IdPatient}}
+Content-Type: application/json
+
+{
+    "FamilyHistory": true,
+    "FamilyHistoryData": "History of bipolar disorder in the family",
+    "AffectedAreas": "Mood, behavior",
+    "PastAndCurrentTreatments": "Cognitive behavioral therapy, medication",
+    "FamilySocialSupport": true,
+    "FamilySocialSupportData": "Strong support from immediate family",
+    "WorkLifeAspects": "Occasional stress at work",
+    "SocialLifeAspects": "Active social life",
+    "AuthorityRelationship": "Good relationship with authority figures",
+    "ImpulseControl": "Moderate",
+    "FrustrationManagement": "Needs improvement"
+}
+
+###
+
+POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertfamilyhistory
+Content-Type: application/json
+
+{
+    "IDPatient": 1,
+    "Diabetes": true,
+    "Cardiopathies": false,
+    "Hypertension": true,
+    "ThyroidDiseases": null,
+    "ChronicKidneyDisease": false,
+    "Others": true,
+    "OthersData": "Family history of asthma"
 }

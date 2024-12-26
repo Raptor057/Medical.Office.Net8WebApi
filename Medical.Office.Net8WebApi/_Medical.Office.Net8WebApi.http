@@ -1,0 +1,533 @@
+﻿@Medical.Office.Net8WebApi_HostAddress = http://localhost:5038
+
+### POST Requests
+
+### Agregar Producto
+POST http://localhost:5038/api/AgregarProducto
+Content-Type: application/json
+
+{
+  "Nombre": "Cortadora de Césped",
+  "Precio": 150.75,
+  "Stock": 25
+}
+
+###
+
+### Insertar Medicaciones Activas
+POST http://localhost:5038/api/insertactivemedications
+Content-Type: application/json
+
+{
+  "PatientID": 1,
+  "Medications": [
+    {
+      "Name": "Ibuprofeno",
+      "Dosage": "200mg",
+      "Frequency": "Cada 8 horas"
+    }
+  ]
+}
+
+###
+
+### Insertar Doctor
+POST http://localhost:5038/api/InsertDoctor
+Content-Type: application/json
+
+{
+  "Nombre": "Dr. Jane Doe",
+  "Especialidad": "Pediatría",
+  "Email": "dr.jane.doe@example.com"
+}
+
+###
+
+### Insertar Historial Familiar
+POST http://localhost:5038/api/insertfamilyhistory
+Content-Type: application/json
+
+{
+  "PatientID": 1,
+  "FamilyHistory": "Antecedentes de diabetes en la familia"
+}
+
+###
+
+### Insertar Calendario de Citas Médicas
+POST http://localhost:5038/api/InsertMedicalAppointmentCalendar
+Content-Type: application/json
+
+{
+  "DoctorID": 1,
+  "FechaHora": "2023-10-10T10:00:00",
+  "PacienteID": 1
+}
+
+###
+
+### Insertar Notas de Historial Médico
+POST http://localhost:5038/api/InsertMedicalHistoryNotes
+Content-Type: application/json
+
+{
+  "PatientID": 1,
+  "Notes": "Paciente presenta síntomas de resfriado común"
+}
+
+###
+
+### Insertar Historial No Patológico
+POST http://localhost:5038/api/InsertNonPathologicalHistory
+Content-Type: application/json
+
+{
+  "PatientID": 1,
+  "NonPathologicalHistory": "No fuma, no consume alcohol"
+}
+
+###
+
+### Insertar Configuración de Oficina
+POST http://localhost:5038/api/insertofficesetup
+Content-Type: application/json
+
+{
+  "OfficeName": "Consultorio Central",
+  "Address": "123 Calle Principal",
+  "Phone": "555-1234"
+}
+
+###
+
+### Insertar Antecedentes Patológicos
+POST http://localhost:5038/api/InsertPathologicalBackground
+Content-Type: application/json
+
+{
+  "PatientID": 1,
+  "PathologicalBackground": "Antecedentes de hipertensión"
+}
+
+###
+
+### Insertar Alergias del Paciente
+POST http://localhost:5038/api/InsertPatientAllergies
+Content-Type: application/json
+
+{
+  "PatientID": 1,
+  "Allergies": [
+    {
+      "Allergy": "Polen",
+      "Severity": "Alta"
+    }
+  ]
+}
+
+###
+
+### Insertar Paciente
+POST http://localhost:5038/api/insertpatient
+Content-Type: application/json
+
+{
+  "Nombre": "Maria Lopez",
+  "Edad": 30,
+  "Genero": "Femenino",
+  "HistorialMedico": "Alergia a la penicilina"
+}
+
+###
+
+### Subir Archivo de Paciente
+POST http://localhost:5038/api/UploadPatientFile
+Content-Type: application/json
+
+{
+  "PatientID": 1,
+  "FileName": "historial_medico.pdf",
+  "FileContent": "base64encodedstring"
+}
+
+###
+
+### Insertar Historial Psiquiátrico
+POST http://localhost:5038/api/insertpsychiatricHistory
+Content-Type: application/json
+
+{
+  "PatientID": 1,
+  "PsychiatricHistory": "Diagnóstico de ansiedad"
+}
+
+###
+
+### Iniciar Sesión
+POST http://localhost:5038/api/login
+Content-Type: application/json
+
+{
+  "Username": "jdoe",
+  "Password": "password123"
+}
+
+###
+
+### Registrar Usuario
+POST http://localhost:5038/api/registerusers
+Authorization: Bearer {{$bearerToken}}
+Content-Type: application/json
+
+{
+  "NombreUsuario": "jdoe",
+  "Contrasena": "password123",
+  "Email": "jdoe@example.com"
+}
+
+###
+
+### Registrar Corte
+POST http://localhost:5038/api/RegistrarCorte
+Content-Type: application/json
+
+{
+  "Nombre": "Corte de Cabello",
+  "Precio": 20.00,
+  "Duracion": 30
+}
+
+###
+
+### Registrar Venta
+POST http://localhost:5038/api/registrarventa/RegistrarVenta
+Content-Type: application/json
+
+{
+  "FechaHora": "2024-12-22T10:30:00",
+  "Total": 300.75,
+  "Productos": [
+    { "ProductoID": 1, "Cantidad": 2 },
+    { "ProductoID": 1, "Cantidad": 1 }
+  ]
+}
+
+###
+
+### GET Requests
+
+### Obtener Número Aleatorio
+GET http://localhost:5038/api/getrandomnumber
+
+###
+
+### Obtener Medicaciones Activas
+GET http://localhost:5038/api/getactivemedications/1
+
+###
+
+### Obtener Todas las Configuraciones
+GET http://localhost:5038/api/getallconfigurations
+
+###
+
+### Obtener Doctor por ID
+GET http://localhost:5038/api/GetDoctors/1
+
+###
+
+### Obtener Historial Familiar
+GET http://localhost:5038/api/getfamilyhistory/1
+
+###
+
+### Obtener Notas de Historial Médico
+GET http://localhost:5038/api/getmedicalhistorynotes/1
+
+###
+
+### Obtener Historial No Patológico
+GET http://localhost:5038/api/GetNonPathologicalHistory/1
+
+###
+
+### Obtener Antecedentes Patológicos
+GET http://localhost:5038/api/GetPathologicalBackground/1
+
+###
+
+### Obtener Alergias del Paciente
+GET http://localhost:5038/api/GetPatientAllergies/1
+
+###
+
+### Obtener Datos del Paciente
+GET http://localhost:5038/api/PatientData/1
+
+###
+
+### Obtener Datos y Antecedentes del Paciente
+GET http://localhost:5038/api/GetPatientDataAndAntecedents/1
+
+###
+
+### Obtener Archivo de Paciente
+GET http://localhost:5038/api/GetPatientFile/1/1
+
+###
+
+### Obtener Historial Psiquiátrico
+GET http://localhost:5038/api/GetPsychiatricHistory/1
+
+###
+
+### Obtener Datos de Usuario
+GET http://localhost:5038/api/UsersData?id=0&usr=0
+Authorization: Bearer {{$bearerToken}}
+
+###
+
+### Obtener Corte por ID
+GET http://localhost:5038/api/ObtenerCortePorId/1
+
+###
+
+### Obtener Cortes por Rango de Fechas
+@fechaInicio=2024-12-23
+@fechaFin=2024-12-23
+GET http://localhost:5038/api/ObtenerCortesPorRango?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
+
+###
+
+### Obtener Detalle de Ventas
+GET http://localhost:5038/api/ObtenerDetalleDeVentas/1
+
+###
+
+### Obtener Producto por ID
+GET http://localhost:5038/api/ObtenerProductoPorId/1
+
+###
+
+### Obtener Productos con Bajo Stock
+@LimiteStock=0
+GET http://localhost:5038/api/ObtenerProductosConBajoStock?LimiteStock=10
+
+###
+
+### Obtener Resumen de Cortes por Día
+GET http://localhost:5038/api/ObtenerResumenDeCortesPorDia?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
+
+###
+
+### Obtener Todos los Cortes
+GET http://localhost:5038/api/ObtenerTodosLosCortes
+
+###
+
+### Obtener Todos los Productos
+GET http://localhost:5038/api/ObtenerTodosLosProductos
+
+###
+
+### Obtener Venta por ID
+GET http://localhost:5038/api/ObtenerVentaPorId/1
+
+###
+
+### Obtener Ventas por Día
+GET http://localhost:5038/api/ObtenerVentasPorDia?fechaInicio={{fechaInicio}}&fechaFin={{fechaFin}}
+
+###
+
+### Obtener Ventas por Rango
+GET http://localhost:5038/api/ObtenerVentasPorRango?FechaInicio={{FechaInicio}}&FechaFin={{FechaFin}}
+
+###
+
+### PATCH Requests
+
+### Actualizar Stock
+PATCH http://localhost:5038/api/ActualizarStock/1
+Content-Type: application/json
+
+{
+  "Stock": 50
+}
+
+###
+
+### Actualizar Medicaciones Activas
+PATCH http://localhost:5038/api/UpdateActiveMedications/1
+Content-Type: application/json
+
+{
+  "Medications": [
+    {
+      "Name": "Ibuprofeno",
+      "Dosage": "200mg",
+      "Frequency": "Cada 8 horas"
+    }
+  ]
+}
+
+###
+
+### Actualizar Doctor
+PATCH http://localhost:5038/api/updateDoctor/1
+Content-Type: application/json
+
+{
+  "Nombre": "Dr. John Smith",
+  "Especialidad": "Cardiología",
+  "Email": "dr.john.smith@example.com"
+}
+
+###
+
+### Actualizar Historial Familiar
+PATCH http://localhost:5038/api/UpdateFamilyHistory/1
+Content-Type: application/json
+
+{
+  "FamilyHistory": "Antecedentes de diabetes en la familia"
+}
+
+###
+
+### Actualizar Días Laborales
+PATCH http://localhost:5038/api/UpdateLaboralDays/1
+Content-Type: application/json
+
+{
+  "DiasLaborales": [
+    "Lunes",
+    "Martes",
+    "Miércoles"
+  ]
+}
+
+###
+
+### Actualizar Notas de Historial Médico
+PATCH http://localhost:5038/api/UpdateMedicalHistoryNotes/1
+Content-Type: application/json
+
+{
+  "Notes": "Paciente presenta síntomas de resfriado común"
+}
+
+###
+
+### Actualizar Historial No Patológico
+PATCH http://localhost:5038/api/UpdateNonPathologicalHistory/1
+Content-Type: application/json
+
+{
+  "NonPathologicalHistory": "No fuma, no consume alcohol"
+}
+
+###
+
+### Actualizar Configuración de Oficina
+PATCH http://localhost:5038/api/UpdateOfficeSetup
+Content-Type: application/json
+
+{
+  "OfficeName": "Consultorio Central",
+  "Address": "123 Calle Principal",
+  "Phone": "555-1234"
+}
+
+###
+
+### Actualizar Antecedentes Patológicos
+PATCH http://localhost:5038/api/UpdatePathologicalBackground/1
+Content-Type: application/json
+
+{
+  "PathologicalBackground": "Antecedentes de hipertensión"
+}
+
+###
+
+### Actualizar Alergias del Paciente
+PATCH http://localhost:5038/api/UpdatePatientAllergies/1
+Content-Type: application/json
+
+{
+  "Allergies": [
+    {
+      "Allergy": "Polen",
+      "Severity": "Alta"
+    }
+  ]
+}
+
+###
+
+### Actualizar Historial Psiquiátrico
+PATCH http://localhost:5038/api/UpdatePsychiatricHistory/1
+Content-Type: application/json
+
+{
+  "PsychiatricHistory": "Diagnóstico de ansiedad"
+}
+
+###
+
+### PUT Requests
+
+### Actualizar Producto
+PUT http://localhost:5038/api/ActualizarProducto/1
+Content-Type: application/json
+
+{
+  "Nombre": "Cortadora de Césped Actualizada",
+  "Precio": 175.50,
+  "Stock": 30
+}
+
+###
+
+### DELETE Requests
+
+### Eliminar Archivo de Paciente
+@FileID=1
+DELETE http://localhost:5038/api/DeletePatientFile/1/1
+Content-Type: application/json
+
+{
+  "PatientID": 1,
+  "FileID": 1
+}
+
+###
+
+### Eliminar Corte
+DELETE http://localhost:5038/api/EliminarCorte/1
+Content-Type: application/json
+
+{
+  "CorteID": 1
+}
+
+###
+
+### Eliminar Producto
+DELETE http://localhost:5038/api/EliminarProducto/1
+Content-Type: application/json
+
+{
+  "ProductoID": 1
+}
+
+###
+
+### Eliminar Venta
+DELETE http://localhost:5038/api/EliminarVenta/1
+Content-Type: application/json
+
+{
+  "VentaID": 1
+}
