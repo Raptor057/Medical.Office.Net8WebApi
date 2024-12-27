@@ -25,6 +25,7 @@ namespace Medical.Office.Infra.DataSources
         public async Task UpdateAppointmentStatus()
             => await _con.ExecuteAsync("UPDATE MedicalAppointmentCalendar set AppointmentStatus = 'Inactiva' WHERE AppointmentDate <= CONVERT (date, GETDATE()) AND AppointmentTime <= CONVERT (TIME, GETDATE()) AND AppointmentStatus != 'Inactiva'").ConfigureAwait(false);
         #endregion
+
         #region Configuracion
 
         /// <summary>
@@ -198,13 +199,17 @@ namespace Medical.Office.Infra.DataSources
         /// <returns></returns>
         public async Task InsertSpecialties(string specialtie)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[Specialties] (Specialty) VALUES (@specialtie);", new { specialtie }).ConfigureAwait(false);
-                    #region Users
-                    /// <summary>
-                    ///
-                    /// </summary>
-                    /// <param name="Id"></param>
-                    /// <returns></returns>
-                    public async Task<Users> GetDataUserById(long Id) =>
+
+        public async Task<IEnumerable<TypeOfAppointment>> GetTypeOfAppointment()
+            => await _con.QueryAsync<TypeOfAppointment>("SELECT * FROM [Medical.Office.SqlLocalDB].[dbo].[TypeOfAppointment]").ConfigureAwait(false);
+
+        #region Users
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        public async Task<Users> GetDataUserById(long Id) =>
                         await _con.QuerySingleAsync<Users>(@"SELECT [Id]
                       ,[Usr]
                       ,[Psswd]

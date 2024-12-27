@@ -9,7 +9,13 @@ namespace Medical.Office.Domain.Repository
         /// </summary>
         /// <returns></returns>
         Task<IEnumerable<TypeOfAppointment>> GetTypeOfAppointmentsListAsync();
-        
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        Task<IEnumerable<TypeOfAppointment>> GetTypeOfAppointmentAsync();
+
         /// <summary>
         /// 
         /// </summary>

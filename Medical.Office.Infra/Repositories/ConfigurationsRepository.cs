@@ -214,5 +214,8 @@ namespace Medical.Office.Infra.Repositories
             }
             await _db.UpdateDoctor(doctors).ConfigureAwait(false);
         }
+
+        public async Task<IEnumerable<TypeOfAppointment>> GetTypeOfAppointmentAsync()
+            => await _db.GetTypeOfAppointment().ConfigureAwait(false);
     }
 }
