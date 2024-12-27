@@ -201,10 +201,11 @@ namespace Medical.Office.Infra.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task UpdateDoctorAsync(string FirstName, string LastName, string Specialty, string PhoneNumber, string Email)
+        public async Task UpdateDoctorAsync(long Id, string FirstName, string LastName, string Specialty, string PhoneNumber, string Email)
         {
             Doctors doctors = new();
             {
+                doctors.ID = Id;
                 doctors.FirstName = FirstName;
                 doctors.LastName = LastName;
                 doctors.Specialty = Specialty;

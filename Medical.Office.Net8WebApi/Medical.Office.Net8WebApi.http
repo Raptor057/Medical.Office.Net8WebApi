@@ -11,67 +11,67 @@
 
 ### GETS REQUESTS
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getactivemedications/{{PatientID}}
+GET http://localhost:5038/api/getactivemedications/1
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getallconfigurations
-
-###
-
-
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetDoctors/{{IDDoctor}}
-
-###
-
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getfamilyhistory/{{PatientID}}
-
-###
-
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/getmedicalhistorynotes/{{PatientID}}
-
-###
-
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetNonPathologicalHistory/{{PatientID}}
-
-###
-
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPathologicalBackground/{{PatientID}}
-
-###
-
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPatientAllergies/{{PatientID}}
+GET http://localhost:5038/api/getallconfigurations
 
 ###
 
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/PatientData/{{IDPatient}}
+GET http://localhost:5038/api/GetDoctors/1
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPatientDataAndAntecedents/{{IDPatient}}
+GET http://localhost:5038/api/getfamilyhistory/1
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPatientFile/{IDPatient}/{{FileID}}
+GET http://localhost:5038/api/getmedicalhistorynotes/1
 
 ###
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/GetPsychiatricHistory/{{PatientID}}
+GET http://localhost:5038/api/GetNonPathologicalHistory/1
+
+###
+
+GET http://localhost:5038/api/GetPathologicalBackground/1
+
+###
+
+GET http://localhost:5038/api/GetPatientAllergies/1
 
 ###
 
 
-GET {{Medical.Office.Net8WebApi_HostAddress}}/api/UsersData?id={{id}}&usr={{usr}}
+GET http://localhost:5038/api/PatientData/1
+
+###
+
+GET http://localhost:5038/api/GetPatientDataAndAntecedents/1
+
+###
+
+GET http://localhost:5038/api/GetPatientFile/1/0
+
+###
+
+GET http://localhost:5038/api/GetPsychiatricHistory/1
+
+###
+
+
+GET http://localhost:5038/api/UsersData?id={{id}}&usr={{usr}}
 Authorization: Bearer {{$bearerToken}}
 
 ###
 
 ### POST REQUESTS
 
-###
+### Insertar historial familiar
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertfamilyhistory
+POST http://localhost:5038/api/insertfamilyhistory
 Content-Type: application/json
 
 {
@@ -85,8 +85,8 @@ Content-Type: application/json
     "OthersData": "Family history of asthma"
 }
 
-### 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertMedicalHistoryNotes
+### Insertar Notas de historial medico
+POST http://localhost:5038/api/InsertMedicalHistoryNotes
 Content-Type: application/json
 
 {
@@ -94,9 +94,9 @@ Content-Type: application/json
     "MedicalHistoryNotesData": "Patient has a history of hypertension and diabetes."
 }
 
-###
+### Insertar medicamentos activos
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertactivemedications
+POST http://localhost:5038/api/insertactivemedications
 Content-Type: application/json
 
 {
@@ -104,9 +104,9 @@ Content-Type: application/json
     "ActiveMedicationsData": "Medication details here"
 }
 
-###
+### Insertar Doctor
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertDoctor
+POST http://localhost:5038/api/InsertDoctor
 Content-Type: application/json
 
 {
@@ -118,9 +118,9 @@ Content-Type: application/json
   "Email": "john.doe@example.com"
 }
 
-###
+### Insertar Historial familiar
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertfamilyhistory
+POST http://localhost:5038/api/insertfamilyhistory
 Content-Type: application/json
 
 {
@@ -134,9 +134,9 @@ Content-Type: application/json
     "OthersData": "Family history of asthma"
 }
 
-###
+### Insertar Cita medica
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertMedicalAppointmentCalendar
+POST http://localhost:5038/api/InsertMedicalAppointmentCalendar
 Content-Type: application/json
 
 {
@@ -149,9 +149,9 @@ Content-Type: application/json
     "TypeOfAppointment": "Consulta"
 }
 
-###
+### Insertar Notas de la Historia Médica
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertMedicalHistoryNotes
+POST http://localhost:5038/api/InsertMedicalHistoryNotes
 Content-Type: application/json
 
 {
@@ -159,9 +159,9 @@ Content-Type: application/json
     "MedicalHistoryNotesData": "Patient has a history of hypertension and diabetes."
 }
 
-###
+### Insertar Historial no patológico
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertNonPathologicalHistory
+POST http://localhost:5038/api/InsertNonPathologicalHistory
 Content-Type: application/json
 
 {
@@ -177,9 +177,9 @@ Content-Type: application/json
     "OthersData": null
 }
 
-###
+### Insertat Datos de la Oficina
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertofficesetup
+POST http://localhost:5038/api/insertofficesetup
 Content-Type: application/json
 
 {
@@ -187,9 +187,9 @@ Content-Type: application/json
     "Address": "123 Main St, Anytown, USA"
 }
 
-###
+### Insertar Antecedentes Patológicos
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertPathologicalBackground
+POST http://localhost:5038/api/InsertPathologicalBackground
 Content-Type: application/json
 
 {
@@ -210,9 +210,9 @@ Content-Type: application/json
     "STDsData": "History of chlamydia"
 }
 
-###
+### Insertar Alergias
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/InsertPatientAllergies
+POST http://localhost:5038/api/InsertPatientAllergies
 Content-Type: application/json
 
 {
@@ -220,9 +220,9 @@ Content-Type: application/json
     "Allergies": "Peanuts, Penicillin"
 }
 
-###
+### Insertar paciente
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertpatient
+POST http://localhost:5038/api/insertpatient
 Content-Type: application/json
 
 {
@@ -251,7 +251,7 @@ Content-Type: application/json
 
 ###
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/UploadPatientFile
+POST http://localhost:5038/api/UploadPatientFile
 Content-Type: application/json
 
 {
@@ -268,11 +268,11 @@ Content-Type: application/json
 ###
 
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertposition/{{Position}}
+POST http://localhost:5038/api/insertposition/{{Position}}
 
-###
+### Insertar historial psiquiatrico
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertpsychiatricHistory
+POST http://localhost:5038/api/insertpsychiatricHistory
 Content-Type: application/json
 
 {
@@ -293,11 +293,11 @@ Content-Type: application/json
 ###
 
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/insertspecialties/{{Specialtie}}
+POST http://localhost:5038/api/insertspecialties/{{Specialtie}}
 
 ###
 
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/login
+POST http://localhost:5038/api/login
 Content-Type: application/json
 
 {
@@ -306,7 +306,7 @@ Content-Type: application/json
 }
 
 ###
-POST {{Medical.Office.Net8WebApi_HostAddress}}/api/registerusers
+POST http://localhost:5038/api/registerusers
 Authorization: Bearer {{$bearerToken}}
 Content-Type: application/json
 
@@ -324,7 +324,7 @@ Content-Type: application/json
 
 ### PATCH REQUESTS
 
-PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateActiveMedications/{{IdPatient}}
+PATCH http://localhost:5038/api/UpdateActiveMedications/1
 Content-Type: application/json
 
 {
@@ -333,7 +333,7 @@ Content-Type: application/json
 
 ###
 
-PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/updateDoctor/{IDDoctor}
+PATCH http://localhost:5038/api/updateDoctor/1
 Content-Type: application/json
 {
     "FirstName": "Jane",
@@ -345,7 +345,7 @@ Content-Type: application/json
 
 ###
 
-PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateFamilyHistory/{{IdPatient}}
+PATCH http://localhost:5038/api/UpdateFamilyHistory/1
 Content-Type: application/json
 
 {
@@ -360,7 +360,7 @@ Content-Type: application/json
 
 ###
 
-PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateLaboralDays/{Id}
+PATCH http://localhost:5038/api/UpdateLaboralDays/{Id}
 Content-Type: application/json
 
 {
@@ -371,7 +371,7 @@ Content-Type: application/json
 
 ###
 
-PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateMedicalHistoryNotes/{{IdPatient}}
+PATCH http://localhost:5038/api/UpdateMedicalHistoryNotes/1
 Content-Type: application/json
 
 {
@@ -380,7 +380,7 @@ Content-Type: application/json
 
 ###
 
-PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateNonPathologicalHistory/{{IdPatient}}
+PATCH http://localhost:5038/api/UpdateNonPathologicalHistory/1
 Content-Type: application/json
 
 {
@@ -397,7 +397,7 @@ Content-Type: application/json
 
 ###
 
-PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdateOfficeSetup
+PATCH http://localhost:5038/api/UpdateOfficeSetup
 Content-Type: application/json
 
 {
@@ -407,7 +407,7 @@ Content-Type: application/json
 
 ###
 
-PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdatePathologicalBackground/{{IdPatient}}
+PATCH http://localhost:5038/api/UpdatePathologicalBackground/1
 Content-Type: application/json
 
 {
@@ -431,16 +431,16 @@ Content-Type: application/json
 
 ###
 
-PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdatePatientAllergies/{{IdPatient}}
+PATCH http://localhost:5038/api/UpdatePatientAllergies/1
 Content-Type: application/json
 
 {
     "Allergies": "Peanuts, Penicillin, N/A"
 }
 
-###
+### actualizar 
 
-PATCH {{Medical.Office.Net8WebApi_HostAddress}}/api/UpdatePsychiatricHistory/{{IdPatient}}
+PATCH http://localhost:5038/api/UpdatePsychiatricHistory/1
 Content-Type: application/json
 
 {

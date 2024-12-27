@@ -426,7 +426,7 @@ namespace Medical.Office.Infra.DataSources
             new { FirstName, LastName, Specialty, PhoneNumber, Email }).ConfigureAwait(false);
 
         public async Task UpdateDoctor(Doctors doctor)
-            => await _con.ExecuteAsync("Update Doctors SET FirstName = @FirstName, LastName = @LastName, Specialty = @Specialty, PhoneNumber = @PhoneNumber, Email = @Email, UpdatedAt = GETUTCDATE()", new {doctor.FirstName, doctor.LastName, doctor.Specialty, doctor .PhoneNumber, doctor.Email}).ConfigureAwait(false);
+            => await _con.ExecuteAsync(@"Update Doctors SET FirstName = @FirstName, LastName = @LastName, Specialty = @Specialty, PhoneNumber = @PhoneNumber, Email = @Email, UpdatedAt = GETUTCDATE() WHERE ID = @ID;", new {doctor.FirstName, doctor.LastName, doctor.Specialty, doctor .PhoneNumber, doctor.Email,doctor.ID}).ConfigureAwait(false);
 
 
         /// <summary>
@@ -745,13 +745,13 @@ namespace Medical.Office.Infra.DataSources
         ///
         /// </summary>
         /// <param name="IDPatient"></param>
-        /// <param name="AactiveMedicationsData"></param>
+        /// <param name="ActiveMedicationsData"></param>
         /// <returns></returns>
-        public async Task InsertActiveMedications(long IDPatient, string AactiveMedicationsData)
+        public async Task InsertActiveMedications(long IDPatient, string ActiveMedicationsData)
             => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[ActiveMedications] " +
-                "([IDPatient],[AactiveMedicationsData]) " +
-                "VALUES (@IDPatient,@AactiveMedicationsData)",
-                new {IDPatient, AactiveMedicationsData }).ConfigureAwait(false);
+                "([IDPatient],[ActiveMedicationsData]) " +
+                "VALUES (@IDPatient,@ActiveMedicationsData)",
+                new {IDPatient, ActiveMedicationsData }).ConfigureAwait(false);
 
         /// <summary>
         ///
@@ -761,7 +761,7 @@ namespace Medical.Office.Infra.DataSources
         public async Task<ActiveMedications> GetActiveMedicationsByIDPatient(long IDPatient)
             => await _con.QuerySingleAsync<ActiveMedications>(@"SELECT TOP 1 [Id]
       ,[IDPatient]
-      ,[AactiveMedicationsData]
+      ,[ActiveMedicationsData]
       ,dbo.ufntolocaltime([DateTimeSnap]) as [DateTimeSnap]
   FROM [Medical.Office.SqlLocalDB].[dbo].[ActiveMedications] WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
@@ -992,16 +992,16 @@ namespace Medical.Office.Infra.DataSources
         /// Actualiza la información de los medicamentos activos de un paciente.
         /// </summary>
         /// <param name="IDPatient"></param>
-        /// <param name="AactiveMedicationsData"></param>
+        /// <param name="ActiveMedicationsData"></param>
         /// <param name="DateTimeSnap"></param>
         /// <returns></returns>
-        public async Task UpdateActiveMedications(long IDPatient, string AactiveMedicationsData, DateTime? DateTimeSnap)
+        public async Task UpdateActiveMedications(long IDPatient, string ActiveMedicationsData, DateTime? DateTimeSnap)
         {
             await _con.ExecuteAsync(@"UPDATE [dbo].[ActiveMedications]
-                            SET AactiveMedicationsData = @AactiveMedicationsData,
+                            SET ActiveMedicationsData = @ActiveMedicationsData,
                                 DateTimeSnap = @DateTimeSnap
                             WHERE IDPatient = @IDPatient;",
-                                    new { IDPatient, AactiveMedicationsData, DateTimeSnap }).ConfigureAwait(false);
+                                    new { IDPatient, ActiveMedicationsData, DateTimeSnap }).ConfigureAwait(false);
         }
 
         /// <summary>

@@ -168,7 +168,7 @@ namespace Medical.Office.Domain.Repository
 
         Task InsertDoctorAsync(string FirstName ,string LastName ,string Specialty ,string PhoneNumber ,string Email);
         Task DeleteDoctorAsync(long IDDoctor);
-        Task UpdateDoctorAsync(string FirstName, string LastName, string Specialty, string PhoneNumber, string Email);
+        Task UpdateDoctorAsync(long id, string FirstName, string LastName, string Specialty, string PhoneNumber, string Email);
 
         /// <summary>
         /// 

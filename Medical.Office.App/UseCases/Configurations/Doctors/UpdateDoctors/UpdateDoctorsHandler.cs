@@ -26,7 +26,7 @@ namespace Medical.Office.App.UseCases.Configurations.Doctors.UpdateDoctors
                 return new FailureUpdateDoctorsResponse("No se recibieron datos");
             }
             var DataDoctor = request.Doctor;
-            await _repository.UpdateDoctorAsync(DataDoctor.FirstName, DataDoctor.LastName, DataDoctor.Specialty, DataDoctor.PhoneNumber, DataDoctor.Email);
+            await _repository.UpdateDoctorAsync(DataDoctor.ID,DataDoctor.FirstName, DataDoctor.LastName, DataDoctor.Specialty, DataDoctor.PhoneNumber, DataDoctor.Email);
 
             var Doctors = await _repository.GetDoctorsAsync();
             var LastDoctor = Doctors.OrderByDescending(D => D.UpdatedAt).FirstOrDefault();
