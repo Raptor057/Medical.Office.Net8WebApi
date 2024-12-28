@@ -2,11 +2,12 @@
 using MediatR;
 using Medical.Office.App.Dtos.Configurations;
 using Medical.Office.App.UseCases.Configurations.Positions.InsertPositions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Positions.InsertPositions
 {
-
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class InsertPositionsController : ControllerBase

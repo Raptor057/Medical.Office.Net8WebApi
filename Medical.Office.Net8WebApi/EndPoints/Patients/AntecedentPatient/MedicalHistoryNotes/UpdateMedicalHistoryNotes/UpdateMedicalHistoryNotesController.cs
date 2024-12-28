@@ -2,10 +2,12 @@ using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.Dtos.Patients.AntecedentPatient.MedicalHistoryNotes;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.MedicalHistoryNotes.UpdateMedicalHistoryNotes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.MedicalHistoryNotes.UpdateMedicalHistoryNotes
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UpdateMedicalHistoryNotesController : ControllerBase

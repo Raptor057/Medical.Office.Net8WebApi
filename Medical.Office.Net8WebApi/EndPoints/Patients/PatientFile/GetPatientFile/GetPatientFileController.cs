@@ -2,10 +2,12 @@
 using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.UseCases.Patients.FilesPatients.GetPatientFile;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.PatientFile.GetPatientFile
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class GetPatientFileController : ControllerBase

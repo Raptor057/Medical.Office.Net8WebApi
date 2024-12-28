@@ -2,10 +2,13 @@
 using MediatR;
 using Medical.Office.App.Dtos.Configurations;
 using Medical.Office.App.UseCases.Configurations.Doctors.UpdateDoctors;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Doctors.UpdateDoctors
 {
+    [Authorize]
+
     [Route("[controller]")]
     [ApiController]
     public class UpdateDoctorsController : ControllerBase

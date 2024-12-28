@@ -5,9 +5,11 @@ using Medical.Office.App.Dtos.Patients;
 using Medical.Office.App.UseCases.Patients.FilesPatients.InsertPatientFile;
 using System.Diagnostics;
 using System.Runtime;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.PatientFile.InsertPatientFile
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class InsertPatientFileController : ControllerBase

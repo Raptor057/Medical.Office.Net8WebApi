@@ -7,9 +7,14 @@ namespace Medical.Office.Net8WebApi
     {
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
+            // Detectar el entorno desde las variables de entorno
+            var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+
             var config = new ConfigurationBuilder()
-                    .AddJsonFile("appsettings.json", false, true)
-                    .Build();
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true) // Cargar configuración específica del entorno
+                .AddEnvironmentVariables() // Permitir configuración desde variables de entorno
+                .Build();
 
             return services
                 .AddSingleton(config)

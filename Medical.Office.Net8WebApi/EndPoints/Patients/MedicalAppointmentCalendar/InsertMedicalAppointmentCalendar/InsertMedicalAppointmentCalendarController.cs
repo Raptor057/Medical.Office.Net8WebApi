@@ -2,10 +2,12 @@
 using MediatR;
 using Medical.Office.App.Dtos.Patients;
 using Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.InsertMedicalAppointmentCalendar;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.MedicalAppointmentCalendar.InsertMedicalAppointmentCalendar
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class InsertMedicalAppointmentCalendarController : ControllerBase

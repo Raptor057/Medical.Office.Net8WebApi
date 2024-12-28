@@ -2,10 +2,12 @@
 using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.PathologicalBackground.GetPathologicalBackground;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.PathologicalBackground.GetPathologicalBackground
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class GetPathologicalBackgroundController : ControllerBase

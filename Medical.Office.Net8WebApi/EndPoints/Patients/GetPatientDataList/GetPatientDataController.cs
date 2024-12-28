@@ -3,11 +3,12 @@ using MediatR;
 using Medical.Office.App.UseCases.Patients.GetPatientDataList;
 using Medical.Office.App.UseCases.Patients.InsertPatientData;
 using Medical.Office.Net8WebApi.EndPoints.Patients.InsertPatientData;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.GetPatientDataList
 {
-
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class GetPatientDataController : ControllerBase

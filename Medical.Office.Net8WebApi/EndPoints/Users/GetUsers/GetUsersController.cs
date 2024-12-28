@@ -11,6 +11,7 @@ namespace Medical.Office.Net8WebApi.EndPoints.Users.GetUsers
 {
 
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class GetUsersController : ControllerBase
     {

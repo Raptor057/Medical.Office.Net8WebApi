@@ -3,10 +3,12 @@ using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.PathologicalBackground.InsertPathologicalBackground;
 using Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.NonPathologicalHistory.InsertNonPathologicalHistory;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.PathologicalBackground.InsertPathologicalBackground
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class InsertPathologicalBackgroundController : ControllerBase

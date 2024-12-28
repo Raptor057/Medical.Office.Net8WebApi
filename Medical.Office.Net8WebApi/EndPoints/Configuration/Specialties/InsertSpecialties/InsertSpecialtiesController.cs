@@ -2,10 +2,12 @@
 using MediatR;
 using Medical.Office.App.Dtos.Configurations;
 using Medical.Office.App.UseCases.Configurations.Specialties.InsertSpecialties;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Specialties.InsertSpecialties
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class InsertSpecialtiesController : ControllerBase

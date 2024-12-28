@@ -2,11 +2,13 @@
 using MediatR;
 using Medical.Office.App.UseCases.Configurations.GetAllConfigurations;
 using Medical.Office.Net8WebApi.EndPoints.Users.UsersLogin;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.GetAllConfigurations
 {
 
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public sealed class GetAllConfigurationsController : ControllerBase

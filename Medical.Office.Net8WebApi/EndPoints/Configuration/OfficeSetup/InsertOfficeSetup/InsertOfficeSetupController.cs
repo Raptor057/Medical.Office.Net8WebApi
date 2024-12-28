@@ -4,11 +4,13 @@ using MediatR;
 using Medical.Office.App.Dtos.Configurations;
 using Medical.Office.App.UseCases.Configurations.OfficeSetup.InsertOfficeSetup;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedications.InsertActiveMedications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.OfficeSetup.InsertOfficeSetup
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class InsertOfficeSetupController : ControllerBase

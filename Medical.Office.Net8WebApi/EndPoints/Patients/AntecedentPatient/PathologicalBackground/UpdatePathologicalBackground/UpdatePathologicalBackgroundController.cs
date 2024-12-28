@@ -2,10 +2,12 @@ using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.Dtos.Patients.AntecedentPatient.PathologicalBackground;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.PathologicalBackground.UpdatePathologicalBackground;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.PathologicalBackground.UpdatePathologicalBackground
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UpdatePathologicalBackgroundController : ControllerBase

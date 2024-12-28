@@ -9,6 +9,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Medical.Office.Net8WebApi.EndPoints.Users.RegisterUsers
 {
     [ApiController]
+    [Authorize]
     [Route("[controller]")]
     public class RegisterUsersController : ControllerBase
     {

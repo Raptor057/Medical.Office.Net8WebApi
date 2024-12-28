@@ -1,4 +1,4 @@
-##See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+## See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
 
 # Etapa base para el contenedor
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
@@ -6,6 +6,9 @@ USER app
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
+
+# Agregar la variable de entorno para el entorno de ejecución
+ENV ASPNETCORE_ENVIRONMENT=Production
 
 # Etapa de build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -22,10 +25,10 @@ COPY ["Medical.Office.Infra/Medical.Office.Infra.csproj", "Medical.Office.Infra/
 # Restaurar dependencias de todos los proyectos
 RUN dotnet restore "Medical.Office.Net8WebApi/Medical.Office.Net8WebApi.csproj"
 
-# Copiar todo el codigo fuente de la solucion
+# Copiar todo el código fuente de la solución
 COPY . .
 
-# Build del proyecto principal con configuracion de build
+# Build del proyecto principal con configuración de build
 WORKDIR "/src/Medical.Office.Net8WebApi"
 RUN dotnet build "Medical.Office.Net8WebApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
@@ -37,5 +40,11 @@ RUN dotnet publish "Medical.Office.Net8WebApi.csproj" -c $BUILD_CONFIGURATION -o
 # Imagen final
 FROM base AS final
 WORKDIR /app
+
+# Copiar los archivos publicados desde la etapa de publish
 COPY --from=publish /app/publish .
+
+# Establecer la variable de entorno para la etapa final (producción)
+ENV ASPNETCORE_ENVIRONMENT=Production
+
 ENTRYPOINT ["dotnet", "Medical.Office.Net8WebApi.dll"]

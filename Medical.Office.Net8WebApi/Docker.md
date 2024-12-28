@@ -48,8 +48,8 @@ Modificado
 ## 1) Crear una Red
 Usa el comando docker network create para definir una red con un rango de IP específico.
 
-	`docker network rm medicalnetwork
-	docker network create --driver bridge --subnet=192.168.1.0/24 --attachable medicalnetwork`
+	docker network rm medicalnetwork
+	docker network create --driver bridge --subnet=192.168.1.0/24 --attachable medicalnetwork
 
 --driver bridge: Especifica que sea una red tipo bridge.
 --subnet=192.168.1.0/24: Define el rango de direcciones IP disponibles (192.168.1.1 - 192.168.1.254).

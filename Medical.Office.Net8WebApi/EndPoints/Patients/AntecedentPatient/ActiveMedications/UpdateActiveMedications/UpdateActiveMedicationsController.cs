@@ -2,10 +2,12 @@ using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.Dtos.Patients.AntecedentPatient.ActiveMedications;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedications.UpdateActiveMedications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.ActiveMedications.UpdateActiveMedications
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UpdateActiveMedicationsController : ControllerBase

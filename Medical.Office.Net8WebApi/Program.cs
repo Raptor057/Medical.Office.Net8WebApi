@@ -1,4 +1,7 @@
-﻿// using Medical.Office.Net8WebApi;
+﻿#region 1.0
+// Version 1.0
+
+// using Medical.Office.Net8WebApi;
 // using Microsoft.AspNetCore.Authentication.JwtBearer;
 // using Microsoft.AspNetCore.Cors.Infrastructure;
 // using Microsoft.IdentityModel.Tokens;
@@ -133,6 +136,10 @@
 //     logger.LogError(ex, "Unhandled exception occurred.");
 //     throw;
 // }
+#endregion
+
+#region 2.0
+//Version 2.0
 
 using Medical.Office.Net8WebApi;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -164,7 +171,7 @@ GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.Compa
         {
             options.AddPolicy("AllowFrontend", policy =>
             {
-                policy.WithOrigins("http://localhost:3000", "http://MedicalOfficeWebClient:3000") // Cambia según el dominio o IP del frontend
+                policy.WithOrigins("http://localhost:3000", "http://MedicalOfficeWebClient:3000","http://MedicalOfficeWebClient", "http://192.168.1.103") // Cambia según el dominio o IP del frontend
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
@@ -291,3 +298,5 @@ catch (Exception ex)
     logger.LogError(ex, "Unhandled exception occurred.");
     throw;
 }
+
+#endregion

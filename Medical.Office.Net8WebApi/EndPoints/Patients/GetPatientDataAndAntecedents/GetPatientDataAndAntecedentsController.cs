@@ -1,10 +1,12 @@
 ﻿using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.GetPatientDataAndAntecedents
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class GetPatientDataAndAntecedentsController : ControllerBase

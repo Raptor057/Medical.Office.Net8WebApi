@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "Medical.Office.Net8WebApi": {
+    "Medical.Office.Net8WebApi - Development": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -10,7 +10,17 @@
       "dotnetRunMessages": true,
       "applicationUrl": "http://localhost:5038"
     },
-    "https-Medical.Office.Net8WebApi": {
+    "Medical.Office.Net8WebApi - Production": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "http://localhost:5038"
+    },
+    "https-Medical.Office.Net8WebApi - Development": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -20,11 +30,28 @@
       "dotnetRunMessages": true,
       "applicationUrl": "https://localhost:7052;http://localhost:5038"
     },
-    "IIS Express": {
+    "https-Medical.Office.Net8WebApi - Production": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7052;http://localhost:5038"
+    },
+    "IIS Express - Development": {
       "commandName": "IISExpress",
       "launchBrowser": false,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IIS Express - Production": {
+      "commandName": "IISExpress",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
     "Container (Dockerfile)": {
@@ -32,6 +59,7 @@
       "launchBrowser": false,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
       "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HTTPS_PORTS": "8081",
         "ASPNETCORE_HTTP_PORTS": "8080"
       },

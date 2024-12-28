@@ -1,10 +1,12 @@
 ﻿using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.NonPathologicalHistory.GetNonPathologicalHistory;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.NonPathologicalHistory.GetNonPathologicalHistory
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class GetNonPathologicalHistoryController : ControllerBase

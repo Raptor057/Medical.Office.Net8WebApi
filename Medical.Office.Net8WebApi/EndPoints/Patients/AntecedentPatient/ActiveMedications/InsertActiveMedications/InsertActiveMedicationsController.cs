@@ -2,10 +2,12 @@
 using MediatR;
 using Medical.Office.App.Dtos.Patients.AntecedentPatient.ActiveMedications;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.ActiveMedications.InsertActiveMedications;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.ActiveMedications.InsertActiveMedications
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class InsertActiveMedicationsController : ControllerBase

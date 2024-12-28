@@ -2,11 +2,13 @@
 using Common.Common.CleanArch;
 using MediatR;
 using Medical.Office.App.UseCases.Patients.AntecedentPatient.FamilyHistory.GetFamilyHistory;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Patients.AntecedentPatient.FamilyHistory.GetFamilyHistory
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class GetFamilyHistoryController : ControllerBase

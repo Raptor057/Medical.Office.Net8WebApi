@@ -3,9 +3,11 @@ using Common.Common.CleanArch;
 using Microsoft.AspNetCore.Mvc;
 using Medical.Office.App.Dtos.Configurations;
 using Medical.Office.App.UseCases.Configurations.Doctors.InsertDoctors;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Medical.Office.Net8WebApi.EndPoints.Configuration.Doctors.InsertDoctors
 {
+    [Authorize]
     [Route("[controller]")]
     [ApiController]
     public class InsertDoctorsController : ControllerBase
