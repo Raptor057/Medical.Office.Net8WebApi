@@ -171,7 +171,7 @@ GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.Compa
         {
             options.AddPolicy("AllowFrontend", policy =>
             {
-                policy.WithOrigins("http://localhost:3000", "http://MedicalOfficeWebClient:3000","http://MedicalOfficeWebClient", "http://192.168.1.103") // Cambia según el dominio o IP del frontend
+                policy.WithOrigins("http://localhost:3000", "http://MedicalOfficeWebClient:3000","http://MedicalOfficeWebClient", "http://192.168.1.103","http://77.37.74.202:3000") // Cambia según el dominio o IP del frontend
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
