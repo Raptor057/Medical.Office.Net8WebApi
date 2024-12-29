@@ -2,20 +2,21 @@
 {
     public class UserLoginResponseDto
     {
-        //public Domain.DataSources.Entities.MedicalOffice.Users User { get; set; }
         public LoginDataUserDto User { get; set; }
         public string Role { get; set; }
         
         public string Token { get; set; }
-
-        //public byte[] Token { get; set; }
+        
+        public string? WelcomeMessageIsSuccess { get; set; }
+        
 
         // Constructor
-        public UserLoginResponseDto(LoginDataUserDto user, string role, string token)//byte[] token
+        public UserLoginResponseDto(LoginDataUserDto user, string role, string token, string? welcomeMessageIsSuccess)
         {
             User = user;
             Role = role;
             Token = token;
+            WelcomeMessageIsSuccess = welcomeMessageIsSuccess;
         }
     }
 }

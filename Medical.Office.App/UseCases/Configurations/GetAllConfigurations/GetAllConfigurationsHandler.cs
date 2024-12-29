@@ -2,7 +2,6 @@
 using Medical.Office.App.Dtos.Configurations;
 using Medical.Office.App.UseCases.Configurations.GetAllConfigurations.Responses;
 using Medical.Office.Domain.Repository;
-using System.ComponentModel.DataAnnotations;
 
 
 namespace Medical.Office.App.UseCases.Configurations.GetAllConfigurations
