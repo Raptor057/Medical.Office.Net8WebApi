@@ -36,7 +36,8 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.Update
                    MedicalAppointmentData.Notes,
                    MedicalAppointmentData.TypeOfAppointment).ConfigureAwait(false);
 
-                var MedicalAppointment = await _patients.GetMedicalAppointmentCalendarListByIDPatientAsync(MedicalAppointmentData.IDPatient).ConfigureAwait(false);
+                //var MedicalAppointment = await _patients.GetMedicalAppointmentCalendarListByIDPatientAsync(MedicalAppointmentData.IDPatient).ConfigureAwait(false);
+                var MedicalAppointment = await _patients.GetAllsMedicalAppointmentCalendarAsync().ConfigureAwait(false);
                 
                 // Verificar si hay registros y mapear al DTO, luego ordenar y obtener el último basado en AppointmentDateTime
                 var lastMedicalAppointment = MedicalAppointment

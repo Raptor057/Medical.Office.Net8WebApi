@@ -11,7 +11,6 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.MedicalAppointmentCalenda
 
         public InsertMedicalAppointmentCalendarPresenter(GenericViewModel<InsertMedicalAppointmentCalendarController> viewModel)
         {
-            
             _viewModel=viewModel;
         }
         public async Task Handle(InsertMedicalAppointmentCalendarResponse notification, CancellationToken cancellationToken)

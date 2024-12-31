@@ -36,7 +36,7 @@ namespace Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents
             var PatientAllergies = await _antecedent.GetPatientAllergiesByPatientIdAsync(request.IdPatient).ConfigureAwait(false);
             var PsychiatricHistory = await _antecedent.GetPsychiatricHistoryByPatientIdAsync(request.IdPatient).ConfigureAwait(false);
             var PatientFiles = await _patientsData.GetPatientsFilesListAsync(request.IdPatient).ConfigureAwait(false);
-            var MedicalAppointmentCalendar = await _patientsData.GetListMedicalAppointmentCalendarByIDPatientAsync(request.IdPatient).ConfigureAwait(false);
+            var MedicalAppointmentCalendar = await _patientsData.GetMedicalAppointmentCalendarListByIDPatientAsync(request.IdPatient).ConfigureAwait(false);
 
             var PatientFilesList = PatientFiles.Select(F => new PatientsFilesDto(F.Id,F.IDPatient, F.FileName, F.FileType, F.FileExtension, F.Description, F.FileData, F.DateTimeUploaded)).OrderByDescending(F => F.DateTimeUploaded).ToList();
 
@@ -44,17 +44,18 @@ namespace Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents
                 appointment.Id,
                 appointment.IDPatient,
                 appointment.IDDoctor,
-                appointment.AppointmentDate + appointment.AppointmentTime,
+                appointment.AppointmentDateTime,
                 appointment.ReasonForVisit,
                 appointment.AppointmentStatus,
                 appointment.Notes,
+                appointment.EndOfAppointmentDateTime,
                 appointment.CreatedAt,
                 appointment.UpdatedAt,
                 appointment.TypeOfAppointment
                 )).ToList();
 
-            var MedicalAppointmentListActive = MedicalAppointmentList.Where(m => m.AppointmentDateTime >= DateTime.UtcNow).OrderBy(m => m.AppointmentDateTime);
-            var MedicalAppointmentListHistory = MedicalAppointmentList.Where(m => m.AppointmentDateTime < DateTime.UtcNow).OrderByDescending(m => m.AppointmentDateTime);
+            var MedicalAppointmentListActive = MedicalAppointmentList.Where(m => m.AppointmentStatus == "Activa").OrderBy(m => m.AppointmentDateTime);
+            var MedicalAppointmentListHistory = MedicalAppointmentList.Where(m => m.AppointmentStatus == "Inactiva").OrderByDescending(m => m.AppointmentDateTime);
             
 
             var patientDataAndAntecedents = new PatientDataAndAntecedentsDto(
@@ -169,8 +170,7 @@ namespace Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents
                 MedicalAppointmentListActive,
                 MedicalAppointmentListHistory
             );
-
-
+            
             return new SuccessGetPatientDataAndAntecedentsResponse(patientDataAndAntecedents);
 
         }

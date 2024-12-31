@@ -49,7 +49,7 @@ namespace Medical.Office.Infra.DataSources
                 AppointmentDateTime = dbo.UfnToUniversalTime(@AppointmentDateTime), 
                 ReasonForVisit = @ReasonForVisit, 
                 AppointmentStatus = 'Activa', 
-                EndOfAppointmentDateTime = (SELECT TOP 1 MedicalConsultationMinutesForPatients  FROM ConsultingTime), dbo.UfnToUniversalTime(@AppointmentDateTime))), 
+                EndOfAppointmentDateTime = (SELECT DATEADD(MINUTE, (SELECT TOP 1 MedicalConsultationMinutesForPatients  FROM ConsultingTime), dbo.UfnToUniversalTime(@AppointmentDateTime))), 
                 UpdatedAt = GETUTCDATE(), 
                 TypeOfAppointment = @TypeOfAppointment 
             WHERE Id = @Id;", new

@@ -33,10 +33,11 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.MedicalAppointmentCalenda
                 requestBody.IDDoctor,
                 requestBody.AppointmentDateTime,
                 requestBody.ReasonForVisit,
-                requestBody.AppointmentStatus,
+                "", // No se envía el estado de la cita
                 requestBody.Notes,
-                DateTime.UtcNow,
-                DateTime.UtcNow,
+                DateTime.Now,// No se envía el estado de la cita
+                DateTime.Now,// No se envía el estado de la cita
+                DateTime.Now,// No se envía el estado de la cita
                 requestBody.TypeOfAppointment
             );
 
