@@ -64,7 +64,7 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.Insert
         // Propiedades
         public long IDPatient { get; }
         public long IDDoctor { get; }
-        public DateTime? AppointmentDateTime { get; }
+        public DateTime AppointmentDateTime { get; }
         public string? ReasonForVisit { get; }
         public string? AppointmentStatus { get; }
         public string? Notes { get; }

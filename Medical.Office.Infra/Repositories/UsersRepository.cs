@@ -63,7 +63,25 @@ namespace Medical.Office.Infra.Repositories
         }
             //=> await _db.GetUsers().ConfigureAwait(false);
 
-        /// <summary>
+            public async Task UpdateUsersAsync(long Id, string Psswd, string Name, string Lastname, string Role,
+                string Position, string Status,
+                string Specialtie)
+            {
+                var UserData = new Users
+                {
+                    Id = Id,
+                    Psswd = Psswd,
+                    Name = Name,
+                    Lastname = Lastname,
+                    Role = Role,
+                    Position = Position,
+                    Status = Status,
+                    Specialtie = Specialtie
+                }; 
+                await _db.UpdateUsers(UserData).ConfigureAwait(false);
+            }
+
+            /// <summary>
         /// 
         /// </summary>
         /// <param name="Usr"></param>

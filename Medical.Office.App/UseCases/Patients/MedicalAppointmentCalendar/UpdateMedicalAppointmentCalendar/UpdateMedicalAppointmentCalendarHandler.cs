@@ -1,5 +1,6 @@
 ﻿
 using Common.Common.CleanArch;
+using Medical.Office.App.Dtos.Patients;
 using Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.UpdateMedicalAppointmentCalendar.Response;
 using Medical.Office.Domain.Repository;
 using Microsoft.Extensions.Logging;
@@ -27,11 +28,34 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.Update
                     return new FailureUpdateMedicalAppointmentCalendarResponse("No se recibieron datos de consulta.");
                 }
 
-               await _patients.UpdateMedicalAppointmentCalendarAsync(MedicalAppointmentData.IDPatient, MedicalAppointmentData.IDDoctor, MedicalAppointmentData.AppointmentDateTime, MedicalAppointmentData.ReasonForVisit, MedicalAppointmentData.AppointmentStatus, MedicalAppointmentData.Notes, MedicalAppointmentData.TypeOfAppointment).ConfigureAwait(false);
+                await _patients.UpdateMedicalAppointmentCalendarAsync(MedicalAppointmentData.Id,
+                   MedicalAppointmentData.IDPatient,
+                   MedicalAppointmentData.IDDoctor,
+                   MedicalAppointmentData.AppointmentDateTime,
+                   MedicalAppointmentData.ReasonForVisit,
+                   MedicalAppointmentData.Notes,
+                   MedicalAppointmentData.TypeOfAppointment).ConfigureAwait(false);
 
-                var MedicalAppointment = _patients.GetLastMedicalAppointmentCalendarByIDPatientAsync(MedicalAppointmentData.IDPatient).ConfigureAwait(false);
-
-                return new SuccessUpdateMedicalAppointmentCalendarResponse(MedicalAppointmentData);
+                var MedicalAppointment = await _patients.GetMedicalAppointmentCalendarListByIDPatientAsync(MedicalAppointmentData.IDPatient).ConfigureAwait(false);
+                
+                // Verificar si hay registros y mapear al DTO, luego ordenar y obtener el último basado en AppointmentDateTime
+                var lastMedicalAppointment = MedicalAppointment
+                    ?.Select(m => new MedicalAppointmentCalendarDto(
+                        m.Id,
+                        m.IDPatient,
+                        m.IDDoctor,
+                        m.AppointmentDateTime,
+                        m.ReasonForVisit,
+                        m.AppointmentStatus,
+                        m.Notes,
+                        m.EndOfAppointmentDateTime,
+                        m.CreatedAt,
+                        m.UpdatedAt,
+                        m.TypeOfAppointment))
+                    .OrderByDescending(m => m.UpdatedAt)
+                    .FirstOrDefault();
+                
+                return new SuccessUpdateMedicalAppointmentCalendarResponse(lastMedicalAppointment);
             }
             catch (Exception ex) 
             {

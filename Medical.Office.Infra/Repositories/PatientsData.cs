@@ -12,21 +12,7 @@ namespace Medical.Office.Infra.Repositories
         {
             _db=db;
         }
-
-        public async Task<MedicalAppointmentCalendar> GetLastMedicalAppointmentCalendarByIDPatientAsync(long IDPatient)
-            => await _db.GetLastMedicalAppointmentCalendarByIDPatient(IDPatient).ConfigureAwait(false);
-        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetListMedicalAppointmentCalendarAsync()
-            => await _db.GetListMedicalAppointmentCalendar().ConfigureAwait(false);
-
-        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetListMedicalAppointmentCalendarByIDPatientAsync(long IDPatient)
-            => await _db.GetMedicalAppointmentCalendarByIDPatient(IDPatient).ConfigureAwait(false);
-
-        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetListMedicalAppointmentCalendarByParamsAsync(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
-            => await _db.GetMedicalAppointmentCalendarByParams(IDPatient, IDDoctor, AppointmentDateTime, ReasonForVisit, AppointmentStatus, Notes, TypeOfAppointment).ConfigureAwait(false);
-
-        public async Task InsertMedicalAppointmentCalendarAsync(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
-            => await _db.InsertMedicalAppointmentCalendar(IDPatient, IDDoctor, AppointmentDateTime, ReasonForVisit, AppointmentStatus, Notes, TypeOfAppointment).ConfigureAwait(false);
-
+        
         /// <summary>
         /// 
         /// </summary>
@@ -68,94 +54,56 @@ namespace Medical.Office.Infra.Repositories
 
             await _db.InsertPatientFiles(PatientFile);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="Name"></param>
-        /// <param name="FathersSurname"></param>
-        /// <param name="MothersSurname"></param>
-        /// <param name="DateOfBirth"></param>
-        /// <param name="Gender"></param>
-        /// <param name="Address"></param>
-        /// <param name="Country"></param>
-        /// <param name="City"></param>
-        /// <param name="State"></param>
-        /// <param name="ZipCode"></param>
-        /// <param name="OutsideNumber"></param>
-        /// <param name="InsideNumber"></param>
-        /// <param name="PhoneNumber"></param>
-        /// <param name="Email"></param>
-        /// <param name="EmergencyContactName"></param>
-        /// <param name="EmergencyContactPhone"></param>
-        /// <param name="InsuranceProvider"></param>
-        /// <param name="PolicyNumber"></param>
-        /// <param name="BloodType"></param>
-        /// <param name="Photo"></param>
-        /// <param name="InternalNotes"></param>
-        /// <returns></returns>
+        
         public async Task InsertPatientDataAsync(string Name, string FathersSurname, string MothersSurname,
             DateTime? DateOfBirth, string Gender, string Address, string Country, string City, string State, string ZipCode, string OutsideNumber, string InsideNumber, string PhoneNumber, string Email, string EmergencyContactName, string EmergencyContactPhone, string InsuranceProvider, string PolicyNumber, string BloodType, byte[] Photo, string InternalNotes)
             => await _db.InsertPatientData(Name, FathersSurname, MothersSurname, DateOfBirth, Gender, Address, Country, City, State, ZipCode, OutsideNumber, InsideNumber, PhoneNumber, Email,EmergencyContactName, EmergencyContactPhone, InsuranceProvider, PolicyNumber, BloodType, Photo, InternalNotes).ConfigureAwait(false);
 
-        /*
-        public async Task UpdateMedicalAppointmentCalendarAsync(long IDPatient,long IDDoctor, DateTime? AppointmentDateTime, string ReasonForVisit, string AppointmentStatus, string Notes, string TypeOfAppointment)
-        {
-            var date = AppointmentDateTime?.Date; // Extrae solo la fecha
-            var time = AppointmentDateTime?.TimeOfDay; // Extrae solo la hora
-
-            var medicalAppointment = new MedicalAppointmentCalendar
-            {
-                IDPatient = IDPatient,
-                IDDoctor = IDDoctor,
-                AppointmentDate = date,
-                AppointmentTime = time,
-                ReasonForVisit = ReasonForVisit,
-                AppointmentStatus = AppointmentStatus,
-                Notes = Notes,
-                UpdatedAt = DateTime.UtcNow,
-                TypeOfAppointment = TypeOfAppointment
-            };
-
-            await _db.UpdateMedicalAppointmentCalendar(medicalAppointment).ConfigureAwait(false);
-        }
-        */
-        public async Task UpdateMedicalAppointmentCalendarAsync(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string ReasonForVisit, string AppointmentStatus, string Notes, string TypeOfAppointment)
-        {
-            if (AppointmentDateTime.HasValue)
-            {
-                // Convierte la fecha y hora a UTC
-                var utcDateTime = AppointmentDateTime.Value.ToUniversalTime();
-
-                // Extrae solo la fecha y la hora por separado
-                var date = utcDateTime.Date;
-                var time = utcDateTime.TimeOfDay;
-
-                // Crea el objeto con la información actualizada
-                var medicalAppointment = new MedicalAppointmentCalendar
-                {
-                    IDPatient = IDPatient,
-                    IDDoctor = IDDoctor,
-                    AppointmentDate = date,
-                    AppointmentTime = time,
-                    ReasonForVisit = ReasonForVisit,
-                    AppointmentStatus = AppointmentStatus,
-                    Notes = Notes,
-                    UpdatedAt = DateTime.UtcNow, // Marca la fecha de actualización en UTC
-                    TypeOfAppointment = TypeOfAppointment
-                };
-
-                // Actualiza la cita en la base de datos
-                await _db.UpdateMedicalAppointmentCalendar(medicalAppointment).ConfigureAwait(false);
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(AppointmentDateTime), "AppointmentDateTime cannot be null.");
-            }
-        }
-
+        #region MedicalAppointmentCalendar
 
         public Task UpdateAppointmentStatusAsync()
             => _db.UpdateAppointmentStatus();
+
+        public async Task InsertMedicalAppointmentCalendarAsync(long IDPatient ,long IDDoctor ,DateTime AppointmentDateTime ,string ReasonForVisit ,string Notes ,string TypeOfAppointment)
+        {
+            var MedicalAppointmentCalendar = new MedicalAppointmentCalendar
+            {
+                IDPatient = IDPatient,
+                IDDoctor = IDDoctor,
+                AppointmentDateTime = AppointmentDateTime,
+                ReasonForVisit = ReasonForVisit,
+                Notes = Notes,
+                TypeOfAppointment = TypeOfAppointment
+            };
+            await _db.InsertMedicalAppointmentCalendar(MedicalAppointmentCalendar).ConfigureAwait(false);
+        }
+
+        public async Task UpdateMedicalAppointmentCalendarAsync(long Id ,long IDPatient ,long IDDoctor ,DateTime AppointmentDateTime ,string ReasonForVisit ,string Notes ,string TypeOfAppointment)
+        {
+            var MedicalAppointmentCalendar = new MedicalAppointmentCalendar
+            {
+                Id = Id,
+                IDPatient = IDPatient,
+                IDDoctor = IDDoctor,
+                AppointmentDateTime = AppointmentDateTime,
+                ReasonForVisit = ReasonForVisit,
+                Notes = Notes,
+                TypeOfAppointment = TypeOfAppointment
+            };
+            await _db.UpdateMedicalAppointmentCalendar(MedicalAppointmentCalendar).ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarListByIDPatientAsync(
+            long IdPatient)
+            => await _db.GetMedicalAppointmentCalendarListByIDPatient(IdPatient).ConfigureAwait(false);
+
+        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarListByIDDoctorAsync(
+            long IdDoctor)
+            => await _db.GetMedicalAppointmentCalendarListByIDDoctor(IdDoctor).ConfigureAwait(false);
+
+        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetAllsMedicalAppointmentCalendarAsync()
+            => await _db.GetAllsMedicalAppointmentCalendar().ConfigureAwait(false);
+
+        #endregion
     }
 }

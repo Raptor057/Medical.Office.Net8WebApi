@@ -23,84 +23,77 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.GetMed
         {
             try
             {
-                // Caso 1: Solicita la lista completa (sin filtros)
-                if (request.IDPatient == 0 && request.IDDoctor == 0 &&
-                    !request.AppointmentDateTime.HasValue && string.IsNullOrEmpty(request.ReasonForVisit) &&
-                    string.IsNullOrEmpty(request.AppointmentStatus) && string.IsNullOrEmpty(request.Notes) &&
-                    string.IsNullOrEmpty(request.TypeOfAppointment))
+                if (request.IDPatient > 0 && request.IDDoctor <= 0)
                 {
-                    var appointments = await _patients.GetListMedicalAppointmentCalendarAsync();
-
-                    var appointmentsDto = appointments.Select(m => new MedicalAppointmentCalendarDto(
-                    m.Id , // Ajusta a un valor predeterminado si es necesario
-                    m.IDPatient,
-                    IDDoctor: m.IDDoctor,
-                    m.AppointmentDate + m.AppointmentTime,
-                    ReasonForVisit: m.ReasonForVisit,
-                    m.AppointmentStatus,
-                    Notes: m.Notes,
-                    m.CreatedAt,
-                    UpdatedAt: m.UpdatedAt,
-                    m.TypeOfAppointment));
+                    var MedicalAppointment = await _patients.GetMedicalAppointmentCalendarListByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
+                    if (MedicalAppointment == null)
+                    {
+                        return new FailureGetMedicalAppointmentCalendarResponse($"No se encontraron citas para el paciente #{request.IDPatient}");
+                    }
                     
-                    return new SuccessGetListMedicalAppointmentCalendarResponse(appointmentsDto);
-                }
-
-                //Caso 2: Filtro por IDPatient
-                if (request.IDPatient > 0 && request.IDDoctor > 0 &&
-                    !request.AppointmentDateTime.HasValue && string.IsNullOrEmpty(request.ReasonForVisit) &&
-                    string.IsNullOrEmpty(request.AppointmentStatus) && string.IsNullOrEmpty(request.Notes) &&
-                    string.IsNullOrEmpty(request.TypeOfAppointment))
-                {
-                    var appointments = await _patients.GetListMedicalAppointmentCalendarByIDPatientAsync(request.IDPatient);
-
-                    var appointmentsDto = appointments.Select(m => new MedicalAppointmentCalendarDto(
-                    m.Id, // Ajusta a un valor predeterminado si es necesario
-                    m.IDPatient,
-                    IDDoctor: m.IDDoctor,
-                    m.AppointmentDate+m.AppointmentTime,
-                    m.ReasonForVisit,
-                    AppointmentStatus: m.AppointmentStatus,
-                    m.Notes,
-                    CreatedAt: m.CreatedAt,
-                    m.UpdatedAt,
-                    TypeOfAppointment: m.TypeOfAppointment));
-                    return new SuccessGetListMedicalAppointmentCalendarByIDPatientResponse(appointmentsDto);
-                }
-
-                //Caso 3: Última cita de un paciente
-                if (request.IDPatient > 0 && request.IDDoctor > 0)
-                {
-                    var appointment = await _patients.GetLastMedicalAppointmentCalendarByIDPatientAsync(request.IDPatient);
-
-                    var appointmentDto = new MedicalAppointmentCalendarDto(appointment.Id,appointment.IDPatient,appointment.IDDoctor,appointment.AppointmentDate+ appointment.AppointmentTime, appointment.ReasonForVisit,appointment.AppointmentStatus,appointment.Notes,appointment.CreatedAt,appointment.UpdatedAt,appointment.TypeOfAppointment);
+                    var MedicalAppointmentList = MedicalAppointment.Select(m => new MedicalAppointmentCalendarDto(
+                        m.Id,
+                        m.IDPatient,
+                        m.IDDoctor,
+                        m.AppointmentDateTime,
+                        m.ReasonForVisit,
+                        m.AppointmentStatus,
+                        m.Notes,
+                        m.EndOfAppointmentDateTime,
+                        m.CreatedAt,
+                        m.UpdatedAt,
+                        m.TypeOfAppointment)).ToList();
                     
-                    return new SuccessGetLastMedicalAppointmentCalendarByIDPatientResponse(appointmentDto);
+                    return new SuccessGetListMedicalAppointmentCalendarResponse(MedicalAppointmentList);
                 }
-
-                // Caso 4: Filtro avanzado con todos los parámetros
-                var filteredAppointments = await _patients.GetListMedicalAppointmentCalendarByParamsAsync(
-                    request.IDPatient,
-                    request.IDDoctor,
-                    request.AppointmentDateTime ?? DateTime.MinValue,
-                    request.ReasonForVisit ?? string.Empty,
-                    request.AppointmentStatus ?? string.Empty,
-                    request.Notes,
-                    request.TypeOfAppointment ?? string.Empty);
-
-                var filteredAppointmentsDto = filteredAppointments.Select(m => new MedicalAppointmentCalendarDto(
-                    m.Id, // Ajusta a un valor predeterminado si es necesario
-                    m.IDPatient,
-                    m.IDDoctor,
-                    m.AppointmentDate+m.AppointmentTime,
-                    m.ReasonForVisit,
-                    m.AppointmentStatus,
-                    m.Notes,
-                    m.CreatedAt,
-                    m.UpdatedAt,
-                    m.TypeOfAppointment));
-
-                return new SuccessGetListMedicalAppointmentCalendarByParamsResponse(filteredAppointmentsDto);
+                else if (request.IDPatient <= 0 && request.IDDoctor > 0)
+                {
+                    var MedicalAppointment = await _patients.GetMedicalAppointmentCalendarListByIDDoctorAsync(request.IDDoctor).ConfigureAwait(false);
+                    if (MedicalAppointment == null)
+                    {
+                        return new FailureGetMedicalAppointmentCalendarResponse($"No se encontraron citas para el doctor #{request.IDDoctor}");
+                    }
+                    var MedicalAppointmentList = MedicalAppointment.Select(m => new MedicalAppointmentCalendarDto(
+                        m.Id,
+                        m.IDPatient,
+                        m.IDDoctor,
+                        m.AppointmentDateTime,
+                        m.ReasonForVisit,
+                        m.AppointmentStatus,
+                        m.Notes,
+                        m.EndOfAppointmentDateTime,
+                        m.CreatedAt,
+                        m.UpdatedAt,
+                        m.TypeOfAppointment)).ToList();
+                    
+                    return new SuccessGetListMedicalAppointmentCalendarResponse(MedicalAppointmentList);
+                }
+                else if (request.IDPatient <= 0 && request.IDDoctor <= 0)
+                {
+                    var MedicalAppointment = await _patients.GetAllsMedicalAppointmentCalendarAsync().ConfigureAwait(false);
+                    if (MedicalAppointment == null)
+                    {
+                        return new FailureGetMedicalAppointmentCalendarResponse("No se encontraron citas");
+                    }
+                    var MedicalAppointmentList = MedicalAppointment.Select(m => new MedicalAppointmentCalendarDto(
+                        m.Id,
+                        m.IDPatient,
+                        m.IDDoctor,
+                        m.AppointmentDateTime,
+                        m.ReasonForVisit,
+                        m.AppointmentStatus,
+                        m.Notes,
+                        m.EndOfAppointmentDateTime,
+                        m.CreatedAt,
+                        m.UpdatedAt,
+                        m.TypeOfAppointment)).ToList();
+                    
+                    return new SuccessGetListMedicalAppointmentCalendarResponse(MedicalAppointmentList);
+                }
+                else
+                {
+                    return new FailureGetMedicalAppointmentCalendarResponse("No se recibieron datos de consulta.");
+                }
             }
             catch (Exception ex)
             {

@@ -23,7 +23,93 @@ namespace Medical.Office.Infra.DataSources
 
         #region Hosted Services
         public async Task UpdateAppointmentStatus()
-            => await _con.ExecuteAsync("UPDATE MedicalAppointmentCalendar set AppointmentStatus = 'Inactiva' WHERE AppointmentDate <= CONVERT (date, GETDATE()) AND AppointmentTime <= CONVERT (TIME, GETDATE()) AND AppointmentStatus != 'Inactiva'").ConfigureAwait(false);
+            => await _con.ExecuteAsync(@"UPDATE MedicalAppointmentCalendar SET AppointmentStatus = 'Inactiva' WHERE EndOfAppointmentDateTime <= GETUTCDATE() AND AppointmentStatus = 'Activa';").ConfigureAwait(false);
+        #endregion
+        
+        #region MedicalAppointmentCalendar
+
+        public async Task InsertMedicalAppointmentCalendar(MedicalAppointmentCalendar medicalAppointmentCalendar)
+            => await _con.ExecuteAsync(@"INSERT INTO MedicalAppointmentCalendar 
+                (IDPatient,IDDoctor,AppointmentDateTime,ReasonForVisit,Notes,EndOfAppointmentDateTime,TypeOfAppointment) 
+                VALUES(@IDPatient,@IDDoctor,dbo.UfnToUniversalTime(@AppointmentDateTime),@ReasonForVisit,@Notes,(SELECT DATEADD(MINUTE, (SELECT TOP 1 MedicalConsultationMinutesForPatients  FROM ConsultingTime), dbo.UfnToUniversalTime(@AppointmentDateTime))),@TypeOfAppointment)", 
+                new
+                {
+                    medicalAppointmentCalendar.IDPatient,
+                    medicalAppointmentCalendar.IDDoctor,
+                    medicalAppointmentCalendar.AppointmentDateTime,
+                    medicalAppointmentCalendar.ReasonForVisit,
+                    medicalAppointmentCalendar.Notes,
+                    medicalAppointmentCalendar.TypeOfAppointment
+                }).ConfigureAwait(false);
+
+        public async Task UpdateMedicalAppointmentCalendar(MedicalAppointmentCalendar medicalAppointmentCalendar)
+            => await _con.ExecuteAsync(@"UPDATE MedicalAppointmentCalendar 
+                SET 
+                IDDoctor = @IDDoctor, 
+                AppointmentDateTime = dbo.UfnToUniversalTime(@AppointmentDateTime), 
+                ReasonForVisit = @ReasonForVisit, 
+                AppointmentStatus = 'Activa', 
+                EndOfAppointmentDateTime = (SELECT TOP 1 MedicalConsultationMinutesForPatients  FROM ConsultingTime), dbo.UfnToUniversalTime(@AppointmentDateTime))), 
+                UpdatedAt = GETUTCDATE(), 
+                TypeOfAppointment = @TypeOfAppointment 
+            WHERE Id = @Id;", new
+            {
+                medicalAppointmentCalendar.IDDoctor,
+                medicalAppointmentCalendar.AppointmentDateTime,
+                medicalAppointmentCalendar.ReasonForVisit,
+                medicalAppointmentCalendar.TypeOfAppointment,
+                medicalAppointmentCalendar.Id
+            }).ConfigureAwait(false);
+        
+        public async Task <IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarListByIDPatient(long IdPatient)
+            => await _con.QueryAsync<MedicalAppointmentCalendar>(@"
+            SELECT [Id]
+                  ,[IDPatient]
+                  ,[IDDoctor]
+                  ,dbo.[UfnToLocalTime]([AppointmentDateTime]) AS [AppointmentDateTime]
+                  ,[ReasonForVisit]
+                  ,[AppointmentStatus]
+                  ,[Notes]
+                  ,dbo.[UfnToLocalTime]([EndOfAppointmentDateTime]) AS [EndOfAppointmentDateTime]
+                  ,dbo.[UfnToLocalTime]([CreatedAt]) AS [CreatedAt]
+                  ,dbo.[UfnToLocalTime]([UpdatedAt]) AS [UpdatedAt]
+                  ,[TypeOfAppointment]
+              FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] 
+              WHERE IDPatient = @IdPatient ORDER BY AppointmentDateTime DESC", new { IdPatient }).ConfigureAwait(false);
+
+        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarListByIDDoctor(long IdDoctor)
+            => await _con.QueryAsync<MedicalAppointmentCalendar>(@"
+        SELECT [Id]
+      ,[IDPatient]
+      ,[IDDoctor]
+      ,dbo.[UfnToLocalTime]([AppointmentDateTime]) AS [AppointmentDateTime]
+      ,[ReasonForVisit]
+      ,[AppointmentStatus]
+      ,[Notes]
+      ,dbo.[UfnToLocalTime]([EndOfAppointmentDateTime]) AS [EndOfAppointmentDateTime]
+      ,dbo.[UfnToLocalTime]([CreatedAt]) AS [CreatedAt]
+      ,dbo.[UfnToLocalTime]([UpdatedAt]) AS [UpdatedAt]
+      ,[TypeOfAppointment]
+        FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] 
+        WHERE IDDoctor = @IdDoctor AND AppointmentStatus = 'Activa' ORDER BY AppointmentDateTime DESC", new { IdDoctor }).ConfigureAwait(false);
+
+        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetAllsMedicalAppointmentCalendar()
+            => await _con.QueryAsync<MedicalAppointmentCalendar>(@"
+        SELECT 
+        [Id]
+      ,[IDPatient]
+      ,[IDDoctor]
+      ,dbo.[UfnToLocalTime]([AppointmentDateTime]) AS [AppointmentDateTime]
+      ,[ReasonForVisit]
+      ,[AppointmentStatus]
+      ,[Notes]
+      ,dbo.[UfnToLocalTime]([EndOfAppointmentDateTime]) AS [EndOfAppointmentDateTime]
+      ,dbo.[UfnToLocalTime]([CreatedAt]) AS [CreatedAt]
+      ,dbo.[UfnToLocalTime]([UpdatedAt]) AS [UpdatedAt]
+      ,[TypeOfAppointment]
+  FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] 
+  ORDER BY AppointmentDateTime DESC", new { }).ConfigureAwait(false);
+        
         #endregion
 
         #region Configuracion
@@ -311,6 +397,11 @@ namespace Medical.Office.Infra.DataSources
                             "([Usr], [Psswd] ,[Name] ,[Lastname] ,[Role] ,[Position],[Specialtie]) " +
                             "VALUES(@Usr, @Psswd, @Name, @Lastname, @Role, @Position, @Specialtie);", new { Usr, Psswd, Name, Lastname, Role, Position, Specialtie }).ConfigureAwait(false);
 
+                    public async Task UpdateUsers(Users users)
+                        => await _con.ExecuteAsync(@"UPDATE [Medical.Office.SqlLocalDB].[dbo].[Users] 
+                        SET Psswd = @Psswd, [Name] = @Name, [Role] = @Role, [Position] = @Position, [Status] = @Status, Specialtie = @Specialtie, TimeSnap = GETUTCDATE() 
+                        WHERE Id = @Id", new {users.Psswd,users.Name,users.Role,users.Position,users.Status,users.Specialtie }).ConfigureAwait(false);
+
                     /// <summary>
                     ///
                     /// </summary>
@@ -459,106 +550,14 @@ namespace Medical.Office.Infra.DataSources
                                                       ,dbo.ufntolocaltime([CreatedAt]) AS [CreatedAt]
                                                         ,dbo.ufntolocaltime([UpdatedAt]) AS [UpdatedAt]
                                                   FROM [Medical.Office.SqlLocalDB].[dbo].[Doctors] WHERE ID = @IDDoctor", new { IDDoctor }).ConfigureAwait(false);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="IDPatient"></param>
-        /// <param name="IDDoctor"></param>
-        /// <param name="AppointmentDateTime"></param>
-        /// <param name="ReasonForVisit"></param>
-        /// <param name="AppointmentStatus"></param>
-        /// <param name="Notes"></param>
-        /// <param name="TypeOfAppointment"></param>
-        /// <returns></returns>
-        /*
-        public async Task InsertMedicalAppointmentCalendar(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
-        {
-            var date = AppointmentDateTime?.Date; // Extrae solo la fecha
-            var time = AppointmentDateTime?.TimeOfDay; // Extrae solo la hora
-
-            await _con.ExecuteAsync(
-                "INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar]" +
-                "([IDPatient],[IDDoctor],[AppointmentDate],[AppointmentTime],[ReasonForVisit],[AppointmentStatus],[Notes],[TypeOfAppointment])" +
-                "VALUES(@IDPatient, @IDDoctor, @AppointmentDate, @AppointmentTime, @ReasonForVisit, @AppointmentStatus, @Notes, @TypeOfAppointment)",
-                new { IDPatient, IDDoctor, AppointmentDate = date, AppointmentTime = time, ReasonForVisit, AppointmentStatus, Notes, TypeOfAppointment }
-            ).ConfigureAwait(false);
-        }
-*/
-        public async Task InsertMedicalAppointmentCalendar(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
-        {
-            if (AppointmentDateTime.HasValue)
-            {
-                // Convierte la fecha y hora a UTC
-                var utcDateTime = AppointmentDateTime.Value.ToUniversalTime();
-
-                // Extrae solo la fecha y la hora por separado
-                var date = utcDateTime.Date;
-                var time = utcDateTime.TimeOfDay;
-
-                await _con.ExecuteAsync(
-                    "INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar]" +
-                    "([IDPatient],[IDDoctor],[AppointmentDate],[AppointmentTime],[ReasonForVisit],[AppointmentStatus],[Notes],[TypeOfAppointment])" +
-                    "VALUES(@IDPatient, @IDDoctor, @AppointmentDate, @AppointmentTime, @ReasonForVisit, @AppointmentStatus, @Notes, @TypeOfAppointment)",
-                    new 
-                    { 
-                        IDPatient, 
-                        IDDoctor, 
-                        AppointmentDate = date, 
-                        AppointmentTime = time, 
-                        ReasonForVisit, 
-                        AppointmentStatus, 
-                        Notes, 
-                        TypeOfAppointment 
-                    }
-                ).ConfigureAwait(false);
-            }
-            else
-            {
-                throw new ArgumentNullException(nameof(AppointmentDateTime), "AppointmentDateTime cannot be null.");
-            }
-        }
-
-        public async Task UpdateMedicalAppointmentCalendar(MedicalAppointmentCalendar medicalAppointment) 
-            => await _con.ExecuteAsync("UPDATE MedicalAppointmentCalendar SET IDDoctor = @IDDoctor , AppointmentDate = @AppointmentDate, AppointmentTime = @AppointmentTime, ReasonForVisit = @ReasonForVisit, AppointmentStatus = @AppointmentStatus, Notes = @Notes, UpdatedAt = GETDATE(), TypeOfAppointment = @TypeOfAppointment WHERE IDPatient = @IDPatient", new {medicalAppointment.IDDoctor , medicalAppointment.AppointmentDate, medicalAppointment .AppointmentTime, medicalAppointment .ReasonForVisit, medicalAppointment .AppointmentStatus, medicalAppointment .Notes, medicalAppointment .TypeOfAppointment, medicalAppointment.IDPatient}).ConfigureAwait(false);
-
-        //public async Task InsertMedicalAppointmentCalendar(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
-        //    => await _con.ExecuteAsync("INSERT INTO [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar]" +
-        //        "([IDPatient],[IDDoctor],[AppointmentDateTime],[ReasonForVisit],[AppointmentStatus],[Notes],[TypeOfAppointment])" +
-        //        "VALUES(@IDPatient, @IDDoctor, @AppointmentDateTime, @ReasonForVisit, @AppointmentStatus, @Notes, @TypeOfAppointment)", 
-        //        new { IDPatient, IDDoctor, AppointmentDateTime, ReasonForVisit, AppointmentStatus, Notes, TypeOfAppointment }).ConfigureAwait(false);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetListMedicalAppointmentCalendar()
-            => await _con.QueryAsync<MedicalAppointmentCalendar>("SELECT * FROM MedicalAppointmentCalendar ").ConfigureAwait(false);
-
-        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarByParams(long IDPatient, long IDDoctor, DateTime? AppointmentDateTime, string? ReasonForVisit, string? AppointmentStatus, string? Notes, string? TypeOfAppointment)
-            => await _con.QueryAsync<MedicalAppointmentCalendar>(@"SELECT *
-            FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] WHERE 
-            (IDPatient IS NULL OR IDPatient = @IDPatient) -- Considera que los ID podrían ser nulos o 0
-            OR (IDDoctor IS NULL OR IDDoctor = @IDDoctor) -- Considera que los ID podrían ser nulos o 0
-            OR (AppointmentDateTime IS NULL OR AppointmentDateTime = @AppointmentDateTime) -- Para fechas nulas
-            OR (AppointmentStatus IS NULL OR AppointmentStatus = @AppointmentStatus)
-            OR (Notes IS NULL OR Notes = @Notes)
-            OR (TypeOfAppointment IS NULL OR TypeOfAppointment = @TypeOfAppointment)", new { IDPatient, IDDoctor, AppointmentDateTime, ReasonForVisit, AppointmentStatus, Notes, TypeOfAppointment }).ConfigureAwait(false);
-
-        //public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarByIDPatient(long IDPatient)
-        //    => await _con.QueryAsync<MedicalAppointmentCalendar>(@"SELECT *  FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] WHERE IDPatient = @IDPatient)", new { IDPatient}).ConfigureAwait(false);
-
-
+        
+      
         /// <summary>
         ///
         /// </summary>
         /// <param name="IDPatient"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarByIDPatient(long IDPatient)
-            => await _con.QueryAsync<MedicalAppointmentCalendar>("SELECT * FROM MedicalAppointmentCalendar WHERE IDPatient = @IDPatient", new { IDPatient }).ConfigureAwait(false);
 
-        public async Task<MedicalAppointmentCalendar> GetLastMedicalAppointmentCalendarByIDPatient(long IDPatient)
-    => await _con.QuerySingleAsync<MedicalAppointmentCalendar>("SELECT TOP 1 * FROM MedicalAppointmentCalendar WHERE IDPatient = @IDPatient ORDER BY CreatedAt DESC", new { IDPatient }).ConfigureAwait(false);
 
         /// <summary>
         ///

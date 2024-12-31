@@ -46,13 +46,34 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.Insert
                     );
                 }
 
-                await _patients.InsertMedicalAppointmentCalendarAsync(request.IDPatient, request.IDDoctor, request.AppointmentDateTime, request.ReasonForVisit, request.AppointmentStatus, request.Notes, request.TypeOfAppointment).ConfigureAwait(false);
+                await _patients.InsertMedicalAppointmentCalendarAsync(
+                    request.IDPatient,
+                    request.IDDoctor,
+                    request.AppointmentDateTime,
+                    request.ReasonForVisit,
+                    request.Notes,
+                    request.TypeOfAppointment).ConfigureAwait(false);
 
-                var LastMedicalAppointmentCalendar = await _patients.GetLastMedicalAppointmentCalendarByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
-
-                var MedicalAppointmentCalendar = new MedicalAppointmentCalendarDto(LastMedicalAppointmentCalendar.Id, LastMedicalAppointmentCalendar.IDPatient, LastMedicalAppointmentCalendar.IDDoctor, LastMedicalAppointmentCalendar.AppointmentDate + LastMedicalAppointmentCalendar.AppointmentTime, LastMedicalAppointmentCalendar.ReasonForVisit, LastMedicalAppointmentCalendar.AppointmentStatus, LastMedicalAppointmentCalendar.Notes, LastMedicalAppointmentCalendar.CreatedAt, LastMedicalAppointmentCalendar.UpdatedAt, LastMedicalAppointmentCalendar.TypeOfAppointment);
-
-                return new SuccessInsertMedicalAppointmentCalendarResponse(MedicalAppointmentCalendar);
+                var MedicalAppointment = await _patients.GetMedicalAppointmentCalendarListByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
+                
+                // Verificar si hay registros y mapear al DTO, luego ordenar y obtener el último basado en AppointmentDateTime
+                var lastMedicalAppointment = MedicalAppointment
+                    ?.Select(m => new MedicalAppointmentCalendarDto(
+                        m.Id,
+                        m.IDPatient,
+                        m.IDDoctor,
+                        m.AppointmentDateTime,
+                        m.ReasonForVisit,
+                        m.AppointmentStatus,
+                        m.Notes,
+                        m.EndOfAppointmentDateTime,
+                        m.CreatedAt,
+                        m.UpdatedAt,
+                        m.TypeOfAppointment))
+                    .OrderByDescending(m => m.UpdatedAt)
+                    .FirstOrDefault();
+                
+                return new SuccessInsertMedicalAppointmentCalendarResponse(lastMedicalAppointment);
             }
             catch (Exception ex)
             {

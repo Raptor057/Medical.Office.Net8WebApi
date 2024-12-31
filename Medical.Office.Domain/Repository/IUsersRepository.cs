@@ -18,6 +18,8 @@ namespace Medical.Office.Domain.Repository
         /// <param name="Specialtie"></param>
         /// <returns></returns>
         Task RegisterUsersAsync(string Usr, string Psswd, string Name, string Lastname, string Role, string Position, string Specialtie);
+        
+        Task UpdateUsersAsync(long Id, string Psswd, string Name, string Lastname, string Role, string Position, string Status, string Specialtie);
 
         /// <summary>
         /// 
