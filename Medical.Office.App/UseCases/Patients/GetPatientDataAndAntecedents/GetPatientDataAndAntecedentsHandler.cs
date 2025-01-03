@@ -43,7 +43,9 @@ namespace Medical.Office.App.UseCases.Patients.GetPatientDataAndAntecedents
             var MedicalAppointmentList = MedicalAppointmentCalendar.Select(appointment => new MedicalAppointmentCalendarDto(
                 appointment.Id,
                 appointment.IDPatient,
+                appointment.patientName,
                 appointment.IDDoctor,
+                appointment.doctorName,
                 appointment.AppointmentDateTime,
                 appointment.ReasonForVisit,
                 appointment.AppointmentStatus,

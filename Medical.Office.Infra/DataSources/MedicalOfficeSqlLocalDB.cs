@@ -86,6 +86,31 @@ namespace Medical.Office.Infra.DataSources
         
         public async Task <IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarListByIDPatient(long IdPatient)
             => await _con.QueryAsync<MedicalAppointmentCalendar>(@"
+            SELECT 
+            Mac.[Id]
+            ,Mac.[IDPatient]
+            ,CONCAT(Pd.Name,' ',Pd.FathersSurname,' ',Pd.MothersSurname) AS [patientName]
+            ,Mac.[IDDoctor]
+            ,CONCAT(Doc.FirstName,' ',Doc.LastName) AS [doctorName]
+            ,dbo.[UfnToLocalTime](Mac.[AppointmentDateTime]) AS [AppointmentDateTime]
+            ,Mac.[ReasonForVisit]
+            ,Mac.[AppointmentStatus]
+            ,Mac.[Notes]
+            ,dbo.[UfnToLocalTime](Mac.[EndOfAppointmentDateTime]) AS [EndOfAppointmentDateTime]
+            ,dbo.[UfnToLocalTime](Mac.[CreatedAt]) AS [CreatedAt]
+            ,dbo.[UfnToLocalTime](Mac.[UpdatedAt]) AS [UpdatedAt]
+            ,Mac.[TypeOfAppointment]
+            FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] Mac
+            INNER JOIN PatientData Pd
+            ON Mac.IDPatient = [Pd].ID
+            INNER JOIN Doctors Doc
+            ON Mac.IDDoctor = Doc.ID
+            WHERE Mac.IDPatient = @IdPatient 
+            ORDER BY Mac.AppointmentDateTime DESC",
+            new { IdPatient }).ConfigureAwait(false);
+        /*
+        public async Task <IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarListByIDPatient(long IdPatient)
+            => await _con.QueryAsync<MedicalAppointmentCalendar>(@"
             SELECT [Id]
                   ,[IDPatient]
                   ,[IDDoctor]
@@ -99,7 +124,33 @@ namespace Medical.Office.Infra.DataSources
                   ,[TypeOfAppointment]
               FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] 
               WHERE IDPatient = @IdPatient ORDER BY AppointmentDateTime DESC", new { IdPatient }).ConfigureAwait(false);
-
+*/
+        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarListByIDDoctor(long IdDoctor)
+            => await _con.QueryAsync<MedicalAppointmentCalendar>(@"
+            SELECT 
+            Mac.[Id]
+            ,Mac.[IDPatient]
+            ,CONCAT(Pd.Name,' ',Pd.FathersSurname,' ',Pd.MothersSurname) AS [patientName]
+            ,Mac.[IDDoctor]
+            ,CONCAT(Doc.FirstName,' ',Doc.LastName) AS [doctorName]
+            ,dbo.[UfnToLocalTime](Mac.[AppointmentDateTime]) AS [AppointmentDateTime]
+            ,Mac.[ReasonForVisit]
+            ,Mac.[AppointmentStatus]
+            ,Mac.[Notes]
+            ,dbo.[UfnToLocalTime](Mac.[EndOfAppointmentDateTime]) AS [EndOfAppointmentDateTime]
+            ,dbo.[UfnToLocalTime](Mac.[CreatedAt]) AS [CreatedAt]
+            ,dbo.[UfnToLocalTime](Mac.[UpdatedAt]) AS [UpdatedAt]
+            ,Mac.[TypeOfAppointment]
+            FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] Mac
+            INNER JOIN PatientData Pd
+            ON Mac.IDPatient = [Pd].ID
+            INNER JOIN Doctors Doc
+            ON Mac.IDDoctor = Doc.ID
+            WHERE Mac.IDDoctor = @IdDoctor AND Mac.AppointmentStatus = 'Activa' 
+            ORDER BY Mac.AppointmentDateTime DESC",
+            new { IdDoctor }).ConfigureAwait(false);
+        
+        /*
         public async Task<IEnumerable<MedicalAppointmentCalendar>> GetMedicalAppointmentCalendarListByIDDoctor(long IdDoctor)
             => await _con.QueryAsync<MedicalAppointmentCalendar>(@"
         SELECT [Id]
@@ -114,8 +165,33 @@ namespace Medical.Office.Infra.DataSources
       ,dbo.[UfnToLocalTime]([UpdatedAt]) AS [UpdatedAt]
       ,[TypeOfAppointment]
         FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] 
-        WHERE IDDoctor = @IdDoctor AND AppointmentStatus = 'Activa' ORDER BY AppointmentDateTime DESC", new { IdDoctor }).ConfigureAwait(false);
+        WHERE IDDoctor = @IdDoctor AND AppointmentStatus = 'Activa' 
+        ORDER BY AppointmentDateTime DESC", new { IdDoctor }).ConfigureAwait(false);
+*/
+        public async Task<IEnumerable<MedicalAppointmentCalendar>> GetAllsMedicalAppointmentCalendar()
+            => await _con.QueryAsync<MedicalAppointmentCalendar>(@"
+            SELECT Mac.[Id]
+            ,Mac.[IDPatient]
+            ,CONCAT(Pd.Name,' ',Pd.FathersSurname,' ',Pd.MothersSurname) AS [patientName]
+            ,Mac.[IDDoctor]
+            ,CONCAT(Doc.FirstName,' ',Doc.LastName) AS [doctorName]
+            ,dbo.[UfnToLocalTime](Mac.[AppointmentDateTime]) AS [AppointmentDateTime]
+            ,Mac.[ReasonForVisit]
+            ,Mac.[AppointmentStatus]
+            ,Mac.[Notes]
+            ,dbo.[UfnToLocalTime]([EndOfAppointmentDateTime]) AS [EndOfAppointmentDateTime]
+            ,dbo.[UfnToLocalTime](Mac.[CreatedAt]) AS [CreatedAt]
+            ,dbo.[UfnToLocalTime](Mac.[UpdatedAt]) AS [UpdatedAt]
+            ,Mac.[TypeOfAppointment]
+            FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] Mac
+            INNER JOIN PatientData Pd
+            ON Mac.IDPatient = [Pd].ID
+            INNER JOIN Doctors Doc
+            ON Mac.IDDoctor = Doc.ID
+            ORDER BY Mac.AppointmentDateTime DESC",
+            new { }).ConfigureAwait(false);
 
+        /*
         public async Task<IEnumerable<MedicalAppointmentCalendar>> GetAllsMedicalAppointmentCalendar()
             => await _con.QueryAsync<MedicalAppointmentCalendar>(@"
         SELECT 
@@ -132,7 +208,7 @@ namespace Medical.Office.Infra.DataSources
       ,[TypeOfAppointment]
   FROM [Medical.Office.SqlLocalDB].[dbo].[MedicalAppointmentCalendar] 
   ORDER BY AppointmentDateTime DESC", new { }).ConfigureAwait(false);
-        
+        */
         #endregion
 
         #region Configuracion

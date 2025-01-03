@@ -34,7 +34,9 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.GetMed
                     var MedicalAppointmentList = MedicalAppointment.Select(m => new MedicalAppointmentCalendarDto(
                         m.Id,
                         m.IDPatient,
+                        m.patientName,
                         m.IDDoctor,
+                        m.doctorName,
                         m.AppointmentDateTime,
                         m.ReasonForVisit,
                         m.AppointmentStatus,
@@ -56,7 +58,9 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.GetMed
                     var MedicalAppointmentList = MedicalAppointment.Select(m => new MedicalAppointmentCalendarDto(
                         m.Id,
                         m.IDPatient,
+                        m.patientName,
                         m.IDDoctor,
+                        m.doctorName,
                         m.AppointmentDateTime,
                         m.ReasonForVisit,
                         m.AppointmentStatus,
@@ -78,7 +82,9 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.GetMed
                     var MedicalAppointmentList = MedicalAppointment.Select(m => new MedicalAppointmentCalendarDto(
                         m.Id,
                         m.IDPatient,
+                        m.patientName,
                         m.IDDoctor,
+                        m.doctorName,
                         m.AppointmentDateTime,
                         m.ReasonForVisit,
                         m.AppointmentStatus,

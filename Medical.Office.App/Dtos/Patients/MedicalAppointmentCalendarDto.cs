@@ -5,7 +5,9 @@ namespace Medical.Office.App.Dtos.Patients
 
         long Id,
         long IDPatient,
+        string patientName,
         long IDDoctor,
+        string doctorName,
         DateTime AppointmentDateTime,
         string ReasonForVisit,
         string AppointmentStatus,

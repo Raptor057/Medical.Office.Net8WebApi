@@ -69,7 +69,9 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.Insert
                     ?.Select(m => new MedicalAppointmentCalendarDto(
                         m.Id,
                         m.IDPatient,
+                        m.patientName,
                         m.IDDoctor,
+                        m.doctorName,
                         m.AppointmentDateTime,
                         m.ReasonForVisit,
                         m.AppointmentStatus,

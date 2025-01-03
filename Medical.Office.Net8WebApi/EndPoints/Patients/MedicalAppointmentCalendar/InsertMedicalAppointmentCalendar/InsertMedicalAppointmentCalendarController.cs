@@ -30,7 +30,9 @@ namespace Medical.Office.Net8WebApi.EndPoints.Patients.MedicalAppointmentCalenda
             var calendarDto = new MedicalAppointmentCalendarDto(
                 0,
                 requestBody.IDPatient,
+                "", // No se envía el nombre del paciente
                 requestBody.IDDoctor,
+                "", // No se envía el nombre del doctor
                 requestBody.AppointmentDateTime,
                 requestBody.ReasonForVisit,
                 "", // No se envía el estado de la cita

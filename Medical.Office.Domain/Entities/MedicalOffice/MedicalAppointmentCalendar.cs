@@ -5,9 +5,12 @@
         public long Id { get; set; }
 
         public long IDPatient { get; set; }
+        
+        public string patientName { get; set; }
 
         public long IDDoctor { get; set; }
-
+        
+        public string doctorName { get; set; }
         public DateTime AppointmentDateTime { get; set; }
 
         public string ReasonForVisit { get; set; }
