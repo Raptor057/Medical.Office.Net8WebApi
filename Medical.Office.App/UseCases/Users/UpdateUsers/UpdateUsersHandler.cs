@@ -49,8 +49,8 @@ public class UpdateUsersHandler : IInteractor<UpdateUsersRequest,UpdateUsersResp
                     "La especialidad del nuevo usuario no se encuentra en la lista de especialidades");
             }
 
-            await _users.UpdateUsersAsync(request.Id, request.User, request.Passwd, request.Name, request.Lastname,
-                request.Role, request.Position, request.Specialtie);
+            await _users.UpdateUsersAsync(request.Id, request.Passwd, request.Name, request.Lastname,
+                request.Role, request.Position, request.Status,request.Specialtie);
 
             var UpdateUsersDto = new UpdateUsersDto
             {
@@ -61,6 +61,7 @@ public class UpdateUsersHandler : IInteractor<UpdateUsersRequest,UpdateUsersResp
                 Lastname = request.Lastname,
                 Role = request.Role,
                 Position = request.Position,
+                Status = request.Status,
                 Specialtie = request.Specialtie
             };
 
@@ -72,7 +73,8 @@ public class UpdateUsersHandler : IInteractor<UpdateUsersRequest,UpdateUsersResp
                 Lastname = UpdateUsersDto.Lastname,
                 Role = UpdateUsersDto.Role,
                 Position = UpdateUsersDto.Position,
-                Specialtie = UpdateUsersDto.Specialtie
+                Specialtie = UpdateUsersDto.Specialtie,
+                Status = UpdateUsersDto.Status
             };
             return new SuccessUpdateUsersResponse(successUpdateUsers);
         }

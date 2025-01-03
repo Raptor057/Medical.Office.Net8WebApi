@@ -1,7 +1,8 @@
-﻿using Medical.Office.App.Dtos.Users;
+﻿using Common.Common;
+using Medical.Office.App.Dtos.Users;
 
 namespace Medical.Office.App.UseCases.Users.RegisterUsers.Responses
 {
 
-    public record SuccessRegisterUsersResponse(SuccessRegisterUsersDto SuccessRegisterUsersDto):RegisterUsersResponse;
+    public record SuccessRegisterUsersResponse(SuccessRegisterUsersDto SuccessRegisterUsersDto):RegisterUsersResponse,ISuccess;
 }

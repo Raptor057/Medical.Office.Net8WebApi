@@ -16,7 +16,8 @@ namespace Medical.Office.Domain.Repository
         Task InsertPatientFileAsync(long IDPatient, string FileName, string FileType, string FileExtension, string Description ,byte[] FileData, DateTime DateTimeUploaded);
 
         #region AppoimentCalendar
-
+        
+        Task<int> MedicalAppointmentCalendarIsOverlappingAsync(long IDDoctor, DateTime AppointmentDateTime);
         Task UpdateAppointmentStatusAsync();
         Task InsertMedicalAppointmentCalendarAsync(long IDPatient ,long IDDoctor ,DateTime AppointmentDateTime ,string ReasonForVisit ,string Notes ,string TypeOfAppointment);
         Task UpdateMedicalAppointmentCalendarAsync(long Id ,long IDPatient ,long IDDoctor ,DateTime AppointmentDateTime ,string ReasonForVisit ,string Notes ,string TypeOfAppointment);

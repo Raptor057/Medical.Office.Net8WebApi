@@ -23,10 +23,18 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.Update
             var MedicalAppointmentData = request.MedicalAppointment;
             try
             {
+                bool IsOverlapping = await _patients.MedicalAppointmentCalendarIsOverlappingAsync(MedicalAppointmentData.IDDoctor, MedicalAppointmentData.AppointmentDateTime).ConfigureAwait(false) > 0;
+                
                 if (MedicalAppointmentData == null)
                 {
                     return new FailureUpdateMedicalAppointmentCalendarResponse("No se recibieron datos de consulta.");
                 }
+                if (IsOverlapping)
+                {
+                    return new FailureUpdateMedicalAppointmentCalendarResponse(
+                        $"No se puede modificar esta cita al paciente #{MedicalAppointmentData.IDPatient} debido a que se superpone con otra cita."
+                    );
+                }   
 
                 await _patients.UpdateMedicalAppointmentCalendarAsync(MedicalAppointmentData.Id,
                    MedicalAppointmentData.IDPatient,

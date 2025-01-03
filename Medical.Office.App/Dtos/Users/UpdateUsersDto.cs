@@ -17,4 +17,6 @@ public class UpdateUsersDto
     public string Position { get; set; }
 
     public string Specialtie { get; set; }
+    
+    public string Status { get; set; }
 }

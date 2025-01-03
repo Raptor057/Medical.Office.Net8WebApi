@@ -54,7 +54,10 @@ namespace Medical.Office.Infra.Repositories
 
             await _db.InsertPatientFiles(PatientFile);
         }
-        
+
+        public Task<int> MedicalAppointmentCalendarIsOverlappingAsync(long IDDoctor, DateTime AppointmentDateTime)
+        => _db.MedicalAppointmentCalendarIsOverlapping(IDDoctor, AppointmentDateTime);
+
         public async Task InsertPatientDataAsync(string Name, string FathersSurname, string MothersSurname,
             DateTime? DateOfBirth, string Gender, string Address, string Country, string City, string State, string ZipCode, string OutsideNumber, string InsideNumber, string PhoneNumber, string Email, string EmergencyContactName, string EmergencyContactPhone, string InsuranceProvider, string PolicyNumber, string BloodType, byte[] Photo, string InternalNotes)
             => await _db.InsertPatientData(Name, FathersSurname, MothersSurname, DateOfBirth, Gender, Address, Country, City, State, ZipCode, OutsideNumber, InsideNumber, PhoneNumber, Email,EmergencyContactName, EmergencyContactPhone, InsuranceProvider, PolicyNumber, BloodType, Photo, InternalNotes).ConfigureAwait(false);

@@ -31,6 +31,7 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.Insert
                 var Patient = await _patients.GetPatientDataByIDPatientAsync(request.IDPatient).ConfigureAwait(false);
                 var Doctor = await _configurations.GetDoctorAsync(request.IDDoctor).ConfigureAwait(false);
                 var TypeOfAppointment = await _configurations.GetTypeOfAppointmentsListAsync();
+                bool IsOverlapping = await _patients.MedicalAppointmentCalendarIsOverlappingAsync(request.IDDoctor, request.AppointmentDateTime).ConfigureAwait(false) > 0;
                 if (Patient == null)
                 {
                     return new FailureInsertMedicalAppointmentCalendarResponse($"No se puede agregar esta cita al paciente #{request.IDPatient} debido a que no se encontro registro del paciente");
@@ -45,6 +46,13 @@ namespace Medical.Office.App.UseCases.Patients.MedicalAppointmentCalendar.Insert
                         $"No se puede agregar esta cita al paciente #{request.IDPatient} debido a que no se encontró un tipo de cita válido."
                     );
                 }
+                if (IsOverlapping)
+                {
+                    return new FailureInsertMedicalAppointmentCalendarResponse(
+                        $"No se puede agregar esta cita al paciente #{request.IDPatient} debido a que se superpone con otra cita."
+                    );
+                }   
+                
 
                 await _patients.InsertMedicalAppointmentCalendarAsync(
                     request.IDPatient,

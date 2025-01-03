@@ -20,12 +20,13 @@ public sealed class UpdateUsersRequest : IRequest<UpdateUsersResponse>
         {
             errors = new();
             ValidateUsrId(registerUsersDto.Id, errors);
-            ValidateUsr(registerUsersDto.Usr, errors);
+            //ValidateUsr(registerUsersDto.Usr, errors);
             ValidatePassword(registerUsersDto.Psswd, errors);
             ValidateName(registerUsersDto.Name, errors);
             ValidateLastname(registerUsersDto.Lastname, errors);
             ValidatePosition(registerUsersDto.Position, errors);
             ValidateRole(registerUsersDto.Role, errors);
+            ValidateStatus(registerUsersDto.Status, errors);
             ValidateSpecialtie(registerUsersDto.Specialtie, errors);
             return errors.IsEmpty;
         }
@@ -126,6 +127,14 @@ public sealed class UpdateUsersRequest : IRequest<UpdateUsersResponse>
             }
         }
 
+        private static void ValidateStatus(string status, ErrorList errors)
+        {
+            if (string.IsNullOrWhiteSpace(status))
+            {
+                errors.Add("El status es obligatorio");
+            }
+        }
+        
         /// <summary>
         /// 
         /// </summary>
@@ -194,7 +203,8 @@ public sealed class UpdateUsersRequest : IRequest<UpdateUsersResponse>
             Lastname = registerUsersDto.Lastname;
             Position = registerUsersDto.Position;
             Role = registerUsersDto.Role;
-            Specialtie = registerUsersDto.Specialtie;   
+            Specialtie = registerUsersDto.Specialtie;
+            Status = registerUsersDto.Status;
         }
 
         public long Id { get; }
@@ -209,6 +219,8 @@ public sealed class UpdateUsersRequest : IRequest<UpdateUsersResponse>
         public string Position { get; }
 
         public string Role { get; }
+        
+        public string Status { get; }
 
         public string Specialtie { get; }
 }

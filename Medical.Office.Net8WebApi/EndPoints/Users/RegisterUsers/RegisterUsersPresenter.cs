@@ -19,7 +19,8 @@ namespace Medical.Office.Net8WebApi.EndPoints.Users.RegisterUsers
                 _viewModel.Fail(failure.Message);
                 await Task.CompletedTask;
             }
-            else if (notification is SuccessRegisterUsersResponse successRegisterUsersResponse)
+            //else if (notification is SuccessRegisterUsersResponse successRegisterUsersResponse)
+            else if (notification is ISuccess successRegisterUsersResponse)
             {
                 _viewModel.OK(successRegisterUsersResponse);
                 await Task.CompletedTask;

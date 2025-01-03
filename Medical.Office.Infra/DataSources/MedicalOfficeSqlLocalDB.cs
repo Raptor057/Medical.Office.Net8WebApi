@@ -28,6 +28,29 @@ namespace Medical.Office.Infra.DataSources
         
         #region MedicalAppointmentCalendar
 
+        public async Task<int> MedicalAppointmentCalendarIsOverlapping(long IDDoctor, DateTime AppointmentDateTime)
+            => await _con.QueryFirstAsync<int>(@"SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM MedicalAppointmentCalendar
+        WHERE IDDoctor = @IDDoctor
+          AND (
+              (dbo.UfnToUniversalTime(@AppointmentDateTime) >= AppointmentDateTime AND dbo.UfnToUniversalTime(@AppointmentDateTime) < EndOfAppointmentDateTime)
+              OR (DATEADD(MINUTE, 
+                   (SELECT TOP 1 MedicalConsultationMinutesForPatients FROM ConsultingTime), dbo.UfnToUniversalTime(@AppointmentDateTime)) 
+                  > AppointmentDateTime 
+                  AND DATEADD(MINUTE, 
+                   (SELECT TOP 1 MedicalConsultationMinutesForPatients FROM ConsultingTime), dbo.UfnToUniversalTime(@AppointmentDateTime)) 
+                  <= EndOfAppointmentDateTime)
+              OR (dbo.UfnToUniversalTime(@AppointmentDateTime) <= AppointmentDateTime AND DATEADD(MINUTE, 
+                   (SELECT TOP 1 MedicalConsultationMinutesForPatients FROM ConsultingTime), dbo.UfnToUniversalTime(@AppointmentDateTime)) 
+                  >= EndOfAppointmentDateTime)
+          )
+    )
+    THEN 1
+    ELSE 0
+    END AS IsOverlapping", new {IDDoctor,AppointmentDateTime }).ConfigureAwait(false);
+
         public async Task InsertMedicalAppointmentCalendar(MedicalAppointmentCalendar medicalAppointmentCalendar)
             => await _con.ExecuteAsync(@"INSERT INTO MedicalAppointmentCalendar 
                 (IDPatient,IDDoctor,AppointmentDateTime,ReasonForVisit,Notes,EndOfAppointmentDateTime,TypeOfAppointment) 
@@ -400,7 +423,7 @@ namespace Medical.Office.Infra.DataSources
                     public async Task UpdateUsers(Users users)
                         => await _con.ExecuteAsync(@"UPDATE [Medical.Office.SqlLocalDB].[dbo].[Users] 
                         SET Psswd = @Psswd, [Name] = @Name, [Role] = @Role, [Position] = @Position, [Status] = @Status, Specialtie = @Specialtie, TimeSnap = GETUTCDATE() 
-                        WHERE Id = @Id", new {users.Psswd,users.Name,users.Role,users.Position,users.Status,users.Specialtie }).ConfigureAwait(false);
+                        WHERE Id = @Id", new {users.Psswd,users.Name,users.Role,users.Position,users.Status,users.Specialtie,users.Id }).ConfigureAwait(false);
 
                     /// <summary>
                     ///
