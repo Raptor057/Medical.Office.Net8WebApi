@@ -45,10 +45,12 @@ services:
       context: '../Medical.Office.ReactWebClient/'
       dockerfile: Dockerfile
       args:
-        - NEXT_PUBLIC_API_URL=http://77.37.74.202:8080
+        #- NEXT_PUBLIC_API_URL=http://77.37.74.202:8080
+        - NEXT_PUBLIC_API_URL=http://localhost:8080
     container_name: medicalofficewebclient
     environment:
-      - NEXT_PUBLIC_API_URL=http://77.37.74.202:8080
+      #- NEXT_PUBLIC_API_URL=http://77.37.74.202:8080
+      - NEXT_PUBLIC_API_URL=http://localhost:8080
     ports:
       - "3000:80"
     depends_on:
